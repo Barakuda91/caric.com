@@ -2,26 +2,30 @@ module.exports = function(serviceLocator)
 {
     var colors  = serviceLocator.get('colors');
     var config  = serviceLocator.get('config');
-
+    
+    // вынести логир отдельным под приложением, и залить на гит
     return {
-        logir: function(text, level)
+        logir: function(name)
         {
-            level = level || 3;
-            // если логи включены
-            if(config.__logir)
+            return function(text, level)
             {
-                if(level <= config.__logirLevel)
+                level = level || 3;
+                // если логи включены
+                if(config.__logir)
                 {
-                    var type;
-                    switch (level)
+                    if(level <= config.__logirLevel)
                     {
-                        case 1:type = '('+'Ошибка  '.red+') ';      break;
-                        case 2:type = '('+'Внимание'.yellow+') ';   break;
-                        case 3:type = '('+'Лог     '.blue+') ';     break;
+                        var type;
+                        switch (level)
+                        {
+                            case 1:type = '('+'Ошибка  '.red+') ';      break;
+                            case 2:type = '('+'Внимание'.yellow+') ';   break;
+                            case 3:type = '('+'Лог     '.blue+') ';     break;
+                        }
+                        console.log(type+name.green+': '+text);
                     }
-                    console.log(type+text);
-                }
-            }else{return false;}
+                }else{return false;}
+            }
         }
     }
 }

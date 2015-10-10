@@ -4,7 +4,7 @@ module.exports = function(serviceLocator)
     var http    = serviceLocator.get('http');
     var fs      = serviceLocator.get('fs');
     var config  = serviceLocator.get('config');
-
+    var logir   = serviceLocator.get('functions').logir('Сервер');
     http.createServer(function (req, res)
     {
 
@@ -24,6 +24,6 @@ module.exports = function(serviceLocator)
 
 
     }).listen(config.__serverPort);
-    console.log('Oku');
+    logir('I`M STARTED ON PORT '.yellow+config.__serverPort,3);
 
 }
