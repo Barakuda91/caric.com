@@ -1,12 +1,12 @@
 module.exports = function(serviceLocator)
 {
     var fs      = serviceLocator.get('fs');
-    var rootDir = serviceLocator.get('config').__dir;
+    var config  = serviceLocator.get('config');
     var logir   = serviceLocator.get('functions').logir;
     var colors  = serviceLocator.get('colors');
     var name    = 'Загрузчик: ';
-
-    fs.readdir(rootDir+'/modules/', function(err, res)
+    var fileName;
+    fs.readdir(config.__serverDir+'/modules/', function(err, res)
     {
         if (err) throw (err);
 
@@ -15,7 +15,11 @@ module.exports = function(serviceLocator)
             logir(name.green+' начинаю загрузку :)'.yellow,3);
             res.forEach(function(element)
             {
-                logir(name.green+' загружаю '.yellow+element.yellow,3);
+                var fileName = element.split('.');
+                fileName[fileName.length-1] = '';
+                fileName = fileName.join('.').slice(0, -1);
+                logir(name.green+' загружаю '.yellow+fileName.yellow,3);
+                serviceLocator.register(fileName, require(config.__serverDir+'/modules/'+element));
             });
         }
         else
