@@ -1,4 +1,4 @@
-module.exports = function(serviceLocator)
+module.exports = function(serviceLocator, callback)
 {
     var fs      = serviceLocator.get('fs');
     var config  = serviceLocator.get('config');
@@ -12,6 +12,7 @@ module.exports = function(serviceLocator)
         if(res.length > 0)
         {
             logir('начинаю загрузку :)'.yellow,3);
+            var modulesCount = res.length;
             res.forEach(function(element)
             {
                 var fileName = element.split('.');
@@ -19,6 +20,9 @@ module.exports = function(serviceLocator)
                 fileName = fileName.join('.').slice(0, -1);
                 logir('загружаю '.yellow+fileName.yellow,3);
                 serviceLocator.register(fileName, require(config.__serverDir+'/modules/'+element));
+                modulesCount--;
+                if(modulesCount <= 0)
+                    callback();
             });
         }
         else

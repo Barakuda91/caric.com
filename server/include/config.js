@@ -7,6 +7,7 @@ function getPath(dirInRoot)
     return newPath.join('/');
 }
 
+// сделать хранение нектоторой конфигурационной информации в базе данных
 module.exports = {
     __serverPort         : 1622,
     __socketsPort        : 1623,
@@ -14,6 +15,6 @@ module.exports = {
     __publicDir: getPath('public'),
     __serverDir: getPath('server'),
     __rootDir: getPath(),
-    __logirLevel: 3,
+    __logirLevel: 4,
     __logir: true
 }

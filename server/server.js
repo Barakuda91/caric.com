@@ -24,6 +24,6 @@ module.exports = function(serviceLocator)
 
 
     }).listen(config.__serverPort);
-    logir('I`M STARTED ON PORT '.yellow+config.__serverPort,3);
+    logir('запустился на порту '.yellow+config.__serverPort,3);
 
 }

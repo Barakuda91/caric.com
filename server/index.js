@@ -21,8 +21,27 @@ serviceLocator.register('config',   require('./include/config'));
 // модуль пользовательских функций
 serviceLocator.register('functions',require('./include/functions')(serviceLocator));
 // загрузчик. загружает модули из ./moduls
-serviceLocator.register('uploader', require('./include/uploader')(serviceLocator));
+require('./include/uploader')(serviceLocator, function()
+{
+
+    var logir   = serviceLocator.get('functions').logir('Индекс');
+    logir('начинаю работу'.yellow,3);
+
+    var config  = serviceLocator.get('config');
+    logir('порт сервера: '.cyan+config.__serverPort,4);
+    logir('порт сокеттов: '.cyan+config.__socketsPort,4);
+    logir('БД монго: '.cyan+config.__mongoConnect,4);
+    logir('путь к папке public: '.cyan+config.__publicDir,4);
+    logir('путь к папке server: '.cyan+config.__serverDir,4);
+    logir('уровень логирования: '.cyan+config.__logirLevel,4);
+    logir('логи включены: '.cyan+config.__logir,4);
 
 
+    //require('./server.js')(serviceLocator);
 
-require('./server.js')(serviceLocator);
+    var httpServer = serviceLocator.get('httpServer')(serviceLocator);
+    httpServer.start();
+
+    var wsServer = serviceLocator.get('wsServer')(serviceLocator);
+    wsServer.start();
+});

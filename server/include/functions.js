@@ -2,7 +2,7 @@ module.exports = function(serviceLocator)
 {
     var colors  = serviceLocator.get('colors');
     var config  = serviceLocator.get('config');
-    
+
     // вынести логир отдельным под приложением, и залить на гит
     return {
         logir: function(name)
@@ -18,9 +18,18 @@ module.exports = function(serviceLocator)
                         var type;
                         switch (level)
                         {
+                            // вывод ошибок
                             case 1:type = '('+'Ошибка  '.red+') ';      break;
+
+                            // предупреждения
                             case 2:type = '('+'Внимание'.yellow+') ';   break;
+
+                            // логирование действий
                             case 3:type = '('+'Лог     '.blue+') ';     break;
+
+                            // информационное логирование
+                            // значения переменных и так далее
+                            case 4:type = '('+'Инфо    '.magenta+') ';  break;
                         }
                         console.log(type+name.green+': '+text);
                     }
