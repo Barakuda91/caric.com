@@ -1,10 +1,13 @@
 module.exports = function(serviceLocator, callback)
 {
-    var fs      = serviceLocator.get('fs');
-    var config  = serviceLocator.get('config');
-    var logir   = serviceLocator.get('functions').logir('Загрузчик');
-    var colors  = serviceLocator.get('colors');
+    var fs          = serviceLocator.get('fs');
+    var config      = serviceLocator.get('config');
+    var Functions   = serviceLocator.get('functions');
+    var funck       = new Functions();
+    var logir       = serviceLocator.get('logir')('Загрузчик');
+    var colors      = serviceLocator.get('colors');
     var fileName;
+    
     fs.readdir(config.__serverDir+'/modules/', function(err, res)
     {
         if (err) throw (err);

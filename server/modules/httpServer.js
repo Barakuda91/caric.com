@@ -1,76 +1,55 @@
 module.exports = function(serviceLocator)
 {
-    var http    = serviceLocator.get('http');
-    var fs      = serviceLocator.get('fs');
-    var config  = serviceLocator.get('config');
-    var logir   = serviceLocator.get('functions').logir('http cервер');
+    var http        = serviceLocator.get('http');
+    //var Router  = serviceLocator.get('router');
+    var path        = serviceLocator.get('path');
+    var url         = serviceLocator.get('url');
+    var fs          = serviceLocator.get('fs');
+    var config      = serviceLocator.get('config');
+    var Functions   = serviceLocator.get('functions');
+    var _           = new Functions();
+    var logir       = serviceLocator.get('logir')('http cервер');
 
-    var object =  {};
-    object.openFile = function(filename, res, callback)
+
+    return function()
     {
-        var readStream = fs.createReadStream(filename);
-console.log(filename);
-        readStream.on('open', function ()
+        this.start = function()
         {
-            readStream.pipe(res);
-        });
-
-        readStream.on('finish', function ()
-        {
-            callback(null, true);
-        });
-
-        readStream.on('error', function(err)
-        {
-            callback(err, false);
-        });
-    }
-
-    object.start = function()
-    {
-        http.createServer(function (req, res)
-        {
-            var filename = config.__publicDir+req.url;
-            fs.exists(filename, function (exists)
+            function router(req, res)
             {
-                if(!exists) filename = config.__publicDir+'/templates/404.html';
-                logir('запрошен файл '.yellow+filename, 3);
+                var parsedUrl = url.parse(req.url);
+                var query = _.queryParse(parsedUrl.query);
+                var pathname = parsedUrl.pathname;
+                var pathArray = _.clearEmpty(pathname.split('/'));
+                var module = pathArray[0] || 'index';
+                var page = pathArray[1] || 'index.html';
 
-                fs.stat(filename,function(err, stats)
+                fs.stat(config.__publicDir + "/moduls/" + module, function (err, stats)
                 {
-                    if(stats.isDirectory())
+                    console.log(config.__publicDir + "/modules/" + module);
+                    if(!err)
                     {
-                        var readStream = fs.createReadStream(filename+'index.html');
-
-                        readStream.on('open', function ()
+                        if(stats.isDirectory())
                         {
-                            readStream.pipe(res);
-                        });
-
-                        readStream.on('finish', function ()
+                            logir('запрошеный модуль найден'.cyan,4);
+                        }
+                        else
                         {
-                            console.log('finish ');
-                        });
-
-                        readStream.on('error', function(err)
-                        {
-                            console.log('error');
-                        });
+                            logir('запрошеный модуль оказался не каталогом, отдаю 404'.cyan,4);
+                        }
                     }
-                    else if(stats.isFile())
+                    else if(err.errno == -2)
                     {
-                        object.openFile(filename);
+                        logir('запрошеный модуль не найден, отдаю 404'.cyan,4);
                     }
                     else
                     {
-
+                        logir('ошибка при открытии модуля',1);
                     }
                 });
-
-            });
-        }).listen(config.__serverPort);
-        logir('запустился на порту '.yellow+config.__serverPort,3);
+            }
+            http.createServer(router).listen(config.__serverPort);
+            logir('запустился на порту '.yellow+config.__serverPort,3);
+        }
     }
-
-    return object;
 }

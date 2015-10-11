@@ -4,7 +4,9 @@ module.exports = function(serviceLocator)
     var http    = serviceLocator.get('http');
     var fs      = serviceLocator.get('fs');
     var config  = serviceLocator.get('config');
-    var logir   = serviceLocator.get('functions').logir('Сервер');
+    var Functions   = serviceLocator.get('functions');
+    var funck       = new Functions();
+    var logir       = serviceLocator.get('logir')('Cервер');
     http.createServer(function (req, res)
     {
 
