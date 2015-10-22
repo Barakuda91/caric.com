@@ -51,7 +51,7 @@ require('./include/uploader')(serviceLocator, function()
     logir('логи включены: '.cyan+config.__logir,4);
 
     var HttpServer = serviceLocator.get('httpServer')(serviceLocator);
-    var httpServer = new HttpServer()
+    var httpServer = new HttpServer();
     httpServer.start();
 
     var WsServer = serviceLocator.get('wsServer')(serviceLocator);
