@@ -7,14 +7,18 @@ function getPath(dirInRoot)
     return newPath.join('/');
 }
 
+var publicDir   = getPath('public');
+var serverDir   = getPath('server');
+var rootDir     = getPath();
+
 // сделать хранение нектоторой конфигурационной информации в базе данных
 module.exports = {
     __serverPort         : 1622,
     __socketsPort        : 1623,
     __mongoConnect: 'mongodb://localhost/caric',
-    __publicDir: getPath('public'),
-    __serverDir: getPath('server'),
-    __rootDir: getPath(),
+    __publicDir: publicDir,
+    __serverDir: serverDir,
+    __rootDir: rootDir,
     __logirLevel: 4,
     __logir: true,
     __importentFiles: [
@@ -24,5 +28,9 @@ module.exports = {
         'templates/404.html',
         'moduls/index/pages/index.html'
     ],
-    __startServerNoDependentFile: false
+    __startServerNoDependentFile: false,
+    __default: {
+        router: publicDir+'/router.json',
+        page404: publicDir+'/templates/404.html',
+    }
 }

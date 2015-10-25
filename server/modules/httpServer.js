@@ -13,13 +13,12 @@ module.exports = function(serviceLocator)
 
     return function()
     {
+        var _this = this;
 /*----------------------------start---------------------------------------------
 * метод старта http сервера, запускает preStartCheck() метод
 */
         this.start = function()
         {
-            var _this = this;
-
             _this.preStartCheck(function()
             {
                 http.createServer(_this.router).listen(config.__serverPort);
@@ -75,53 +74,93 @@ module.exports = function(serviceLocator)
                     return false;
                 }
             }
-
-            // config.__startServerNoDependentFile
         };
 //----------------------------конец-метода--------------------------------------
 
 /*----------------------------page----------------------------------------------
-* формирует html страницы, открывает запрошеный файл, отдаёт в браузер
-* сформированый html, отдает в браузер содержимое открытого файла
+* если файл есть, формирует html страницы, открывает запрошеный файл,
+* отдаёт в браузер html, отдает в браузер содержимое открытого файла
+* если файла нет проделывает тоже самое с шаблоном 404
 */
         this.page = function(modul, page, res)
         {
-            var _this = this;
+            var routerPath  = config.__publicDir+'/moduls/'+modul+'/router.json';
+            var filePath    = config.__publicDir+'/moduls/'+modul+'/pages/'+page;
 
-            options.filename = config.__publicDir + "/templates/404.html";
-
-            var readStream = fs.createReadStream(options.filename);
-
-            var html = '';
-
-            readStream.on('open', function ()
+            _.isFileExist(filePath,function(result)
             {
-                res.writeHead(options.status, options.headers);
-                res.write(html);
+                if(!result)
+                { // файл не найден, ставим дефаулт
+                    filePath = config.__default.page404;
+                }
 
-                readStream.pipe(res);
-
-
+                _.isFileExist(routerPath,function(result)
+                {
+                    if(!result)
+                    { // роутер не найден, ставим дефаулт
+                        routerPath = config.__default.router;
+                    }
+                    readRouter(openAndPipe);
+                });
             });
 
-            readStream.on('end', function(err)
+            function readRouter(callback)
             {
-                logir('передал файл '+options.filename);
-                res.write(
-'    </body>'+
-'</html>'
-                );
+                fs.readFile(routerPath, function(err, file)
+                {
+                    if(err)
+                    {
+                        logir('ошибка открытия роутера ', 1,err);
+                    }
+                    else
+                    {
+                        try {
+                            var json = JSON.parse(file.toString());
+                            callback(json);
+                        } catch (err) {
+                            logir('роутер должен соответствовать формату json ', 1)
+                        }
 
-                res.end();
-            });
+                    }
+                });
+            }
 
-            readStream.on('error', function(err)
+            function openAndPipe(router)
             {
-                if(err)
-                    logir('ошибка открытия файла '+options.filename);
-                res.write('Ошибка открытия файла');
-                res.end();
-            });
+                console.log(router);
+                return false;
+                var html = '';
+                var readStream = fs.createReadStream(filePath);
+                readStream.on('open', function ()
+                {
+                    res.writeHead('200', {headers: {"Content-Encoding": "UTF-8"}});
+                    res.write(html);
+
+                    readStream.pipe(res);
+
+
+                });
+
+                readStream.on('end', function(err)
+                {
+                    logir('передал файл '+options.filename);
+                    res.write(
+    '    </body>'+
+    '</html>'
+                    );
+
+                    res.end();
+                });
+
+                readStream.on('error', function(err)
+                {
+                    if(err)
+                        logir('ошибка открытия файла '+options.filename);
+                    res.write('Ошибка открытия файла');
+                    res.end();
+                });
+            }
+
 
         }
 //----------------------------конец-метода--------------------------------------
@@ -141,16 +180,12 @@ module.exports = function(serviceLocator)
 
             fs.stat(config.__publicDir + "/moduls/" + module, function (err, stats)
             {
-                console.log(config.__publicDir + "/moduls/" + module);
                 if(!err)
                 {
                     if(stats.isDirectory())
                     {
                         logir('запрошеный модуль найден'.cyan,4);
-                        _this.page({
-                            filename: config.__publicDir + "/moduls/"+module+"/pages/"+page,
-                            headers: {"Content-Encoding": "UTF-8"}
-                        }, res);
+                        _this.page(module, page, res);
                     }
                     else
                     {
