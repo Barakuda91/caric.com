@@ -1,0 +1,11 @@
+{
+    "title": "Page Title Index",
+    "js":[
+        "jquery",
+        "script"
+    ],
+    "css": [
+        "boostrap",
+        "style",
+    ]
+}

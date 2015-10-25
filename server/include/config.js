@@ -16,5 +16,13 @@ module.exports = {
     __serverDir: getPath('server'),
     __rootDir: getPath(),
     __logirLevel: 4,
-    __logir: true
+    __logir: true,
+    __importentFiles: [
+        'router.json',
+        'css/index.css',
+        'js/index.js',
+        'templates/404.html',
+        'moduls/index/pages/index.html'
+    ],
+    __startServerNoDependentFile: false
 }

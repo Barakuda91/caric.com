@@ -1,6 +1,7 @@
 module.exports = function(serviceLocator)
 {
-    var logir    = serviceLocator.get('logir')('Functions');
+    var logir   = serviceLocator.get('logir')('Functions');
+    var fs      = serviceLocator.get('fs');
 
     // вынести логир отдельным под приложением, и залить на гит
     return function()
@@ -15,7 +16,7 @@ module.exports = function(serviceLocator)
                     newArr.push(element);
             });
             return newArr;
-        },
+        };
         this.queryParse = function(str)
         {
             if(typeof str !== 'string') return false;
@@ -28,6 +29,20 @@ module.exports = function(serviceLocator)
                 newArr.push({k: parsedElement[0], v: parsedElement[1]});
             });
             return newArr;
+        };
+        this.isFileExist = function(path, callback)
+        {
+            fs.stat(path, function(err, stats)
+            {
+                if(err)
+                {
+                    if(err.errno-2) callback(false);
+                }
+                else
+                {
+                    callback(stats.isFile())
+                }
+            })
         }
     }
 }

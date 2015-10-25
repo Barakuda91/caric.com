@@ -1,0 +1,11 @@
+{
+    "title": "Page Title", 
+    "js":[
+        "jquery",
+        "script",
+    ],
+    "css": [
+        "boostrap",
+        "style",
+    ]
+}
