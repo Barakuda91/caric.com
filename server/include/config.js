@@ -22,15 +22,18 @@ module.exports = {
     __logirLevel: 4,
     __logir: true,
     __importentFiles: [
-        'router.json',
-        'css/index.css',
-        'js/index.js',
-        'templates/404.html',
-        'moduls/index/pages/index.html'
+        'public/router.json',
+        'public/css/index.css',
+        'public/js/index.js',
+        'public/templates/404.html',
+        'public/moduls/index/pages/index.html',
+        'server/include/htmltemplate.html'
     ],
     __startServerNoDependentFile: false,
     __default: {
         router: publicDir+'/router.json',
+        pathToRouter: '',
         page404: publicDir+'/templates/404.html',
+        htmlTemplate: serverDir+'/include/htmltemplate.html'
     }
 }

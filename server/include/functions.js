@@ -44,5 +44,21 @@ module.exports = function(serviceLocator)
                 }
             })
         }
+        this.foreach = function (array, callback, endCallback)
+        {
+            var currElement = 0;
+            var allElements = array.length;
+
+            function next()
+            {
+                currElement++;
+                if(currElement >= allElements) endCallback();
+                else
+                {
+                    callback(array[currElement-1],next);
+                }
+            }
+            next();
+        }
     }
 }
