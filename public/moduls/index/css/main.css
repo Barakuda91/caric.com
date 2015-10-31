@@ -1,0 +1,26 @@
+.text-center {
+	text-align:center;
+}
+
+.main-top-margin {
+	margin-top:150px;
+}
+
+.main-top-margin2 {
+	margin-top:50px;
+}
+
+.main-top-margin3{
+	margin-top: 20px;
+}
+
+.catalog-menu-razdel {
+	margin-top:10px;
+}
+.catalog-menu-li {
+	margin-top:10px;
+}
+
+#car-animation-span img {
+	margin-left:30px;
+}
