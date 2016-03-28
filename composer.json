@@ -1,0 +1,26 @@
+{
+    "name": "caric.com",
+    "authors": [
+        {
+            "name": "Александр Руснак",
+            "email": "barakudatm@gmail.com"
+        },
+        {
+            "name": "Евгений Юрченко",
+            "email": "padavan@gmail.com"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://packages.zendframework.com/"
+        }
+    ],
+    "require":
+    {
+        "zendframework/zend-config": "2.*",
+        "zendframework/zend-http": "2.*",
+        "php": ">=5.5",
+        "zendframework/zendframework": "~2.5"
+    }
+}
