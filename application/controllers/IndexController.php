@@ -70,9 +70,9 @@ class IndexController extends Zend_Controller_Action
                     break;
             }
         }
-        
-        header("Content-Type: text/json");
-        echo json_encode($this->result);
+        /* disable feedback post*/
+        //header("Content-Type: text/json");
+        //echo json_encode($this->result);
     }
     
     /* Register new user ident by email */
