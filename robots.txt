@@ -1,0 +1,11 @@
+User-agent: *
+Disallow: /application/
+Disallow: /library/
+Disallow: /scripts/
+Disallow: /zend-script/
+Disallow: /error_log
+
+Sitemap: http://jenstvenayamoda.ru/sitemap.xml
+
+User-agent: Yandex
+Sitemap: http://jenstvenayamoda.ru/sitemap.xml
