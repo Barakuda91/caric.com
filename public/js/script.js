@@ -181,7 +181,14 @@ $(document).ready(function() {
                 type: 'post',
                 dataType: 'json',
                 success: function (result) {
-                    window.location.reload(true);
+                    PageObj.cleanErrorLogBlock();
+                    if (result) {
+                        window.location.reload(true);
+                    } else {
+                        $('#log-email').css('border-color', 'red'); 
+                        $('#log-password').css('border-color', 'red'); 
+                        PageObj.addErrorLogMessage('Неверный Логин или Пароль');
+                    }
                 },
                 complete : function () {
                     PageObj.ajaxSendFlag = true;
