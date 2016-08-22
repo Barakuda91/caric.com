@@ -71,8 +71,8 @@ class IndexController extends Zend_Controller_Action
             }
         }
         /* disable feedback post*/
-        //header("Content-Type: text/json");
-        //echo json_encode($this->result);
+        header("Content-Type: text/json");
+        echo json_encode($this->result);
     }
     
     /* Register new user ident by email */
@@ -115,7 +115,7 @@ class IndexController extends Zend_Controller_Action
                 $message[] = 'Пароли не совпадают.';
             }
             if (count($message) == 0) {
-                //$this->addUser($data);
+                $this->addUser($data);
             }
         } catch (Exception $ex) {
             /* Here replace with Log call */
