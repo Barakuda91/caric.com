@@ -43,11 +43,12 @@ class IndexController extends Zend_Controller_Action
         ini_set('error_reporting', E_ALL);
         ini_set('display_errors', 1);
         ini_set('display_startup_errors', 1);
-        
+
     }
 
     public function indexAction()
     {
+        
         $this->view->baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
         $this->view->makes = self::$makes;
     }
@@ -64,6 +65,13 @@ class IndexController extends Zend_Controller_Action
                     $this->result = $this->registerUser($params);
                     break;
                 
+                case 'loginUser':
+                    $this->result = $this->loginUser($params);
+                    break;
+                
+                case 'logoutUser':
+                    $this->result = $this->logoutUser();
+                    break;
                 
                 default:
                     $this->result = [];
@@ -73,6 +81,74 @@ class IndexController extends Zend_Controller_Action
         /* disable feedback post*/
         header("Content-Type: text/json");
         echo json_encode($this->result);
+    }
+    
+    private function logoutUser()
+    {
+        try {
+            $result = false;
+            $auth = Zend_Auth::getInstance();
+            if ($auth->hasIdentity()) {
+                $auth->clearIdentity();
+                $result = true;
+            }
+        } catch (Exception $ex) {
+            /* Here replace with Log call */
+        }
+        
+        return $result;
+    }
+    
+    /* Login user by email */
+    private function loginUser($params) 
+    {
+        try {
+            $result = [];
+            $autorization = false;
+            $data = [];
+            $data['email'] = filter_var($params['email'], FILTER_VALIDATE_EMAIL); 
+            $data['password'] = $this->generatePasswordHash($params['password']); 
+            
+            $userData = $this->getUserData($data);
+            
+            if ($userData && $userData['email'] != "") {
+                $dbAdapter = Zend_Db_Table::getDefaultAdapter();
+                $adapter = new Zend_Auth_Adapter_DbTable(
+                    $dbAdapter,
+                    'users',
+                    'email',
+                    'password'
+                );
+
+                $adapter->setIdentity($userData['email']);
+                $adapter->setCredential($data['password']);
+
+                $auth   = Zend_Auth::getInstance();
+                $result = $auth->authenticate($adapter);
+                
+                if ($result->isValid()) {
+                    $autorization = true;
+                }
+            }
+        } catch (Exception $ex) {
+            /* Here replace with Log call */
+        }
+        
+        return $autorization;
+    }
+    
+    private function getUserData($data)
+    {
+        $result = [];
+        $dbAdapter = Zend_Db_Table::getDefaultAdapter();
+        $sql = sprintf(
+            "SELECT `email`, `name`, `date` FROM `users` WHERE `users`.`email` = '%s' AND `users`.`password` = '%s';",
+            $data['email'],
+            $data['password']
+        );
+        $result = $dbAdapter->query($sql)->fetch(); 
+        
+        return $result;
     }
     
     /* Register new user ident by email */
@@ -176,20 +252,7 @@ class IndexController extends Zend_Controller_Action
     {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
-        $timeTarget = 0.05; // 50 milliseconds 
-
-        $tes = 'FoO';
-        $blowfishSalt = bin2hex(openssl_random_pseudo_bytes(22));
-        $hash = crypt($tes, "$3a$14$" . $blowfishSalt);
-        // Save the hash but no need to save the salt
-
-        if (crypt('FoO', $hash) == $hash) {
-          //  echo  'Verified';
-        } else {
-           // echo  'NOT Verified';
-        }
-        $data['email'] = filter_var('.val();', FILTER_VALIDATE_EMAIL);
-        var_dump($data['email']);
+        
     }
             
 }

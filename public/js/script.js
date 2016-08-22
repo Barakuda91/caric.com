@@ -1,72 +1,102 @@
 var PageObj = {
     ajaxSendFlag: true,
     userNamePattern: /^[a-zA-Z]+$/,
-    cleanErrorBlock: function () {
+    initListeners: function () {
+        $('#reg-email').focus(function () {
+            $(this).css('border-color', '');
+        });
+        $('#reg-username').focus(function () {
+            $(this).css('border-color', '');
+        });
+        $('#reg-password').focus(function () {
+            $(this).css('border-color', '');
+        });
+        $('#reg-confirm-password').focus(function () {
+            $(this).css('border-color', '');
+        });
+        $('#log-email').click(function () {
+            $(this).css('border-color', '');
+        });
+        $('#log-password').click(function () {
+            $(this).css('border-color', '');
+        });
+    },
+    cleanErrorRegBlock: function () {
         $('#error-reg-block').html('');
         $('#reg-username').css('border-color', '');
         $('#reg-email').css('border-color', '');
         $('#reg-password').css('border-color', '');
         $('#reg-confirm-password').css('border-color', '');
     },
-    addErrorMessage: function (message, param) {
+    cleanErrorLogBlock: function () {
+        $('#error-log-block').html('');
+        $('#log-email').css('border-color', '');
+        $('#log-password').css('border-color', '');
+    },
+    addErrorRegMessage: function (message, param) {
         param = (param) ? param : '';
         $('#error-reg-block').append('<div class="row">' + param + message + '</div>');
     },
+    addErrorLogMessage: function (message, param) {
+        param = (param) ? param : '';
+        $('#error-log-block').append('<div class="row">' + param + message + '</div>');
+    },
     validateRegistration: function (email, name, password, password2) {
-        PageObj.cleanErrorBlock();
+        PageObj.cleanErrorRegBlock();
         var errors = 0;
         if (name.length < 4) {
             $('#reg-username').css('border-color', 'red'); 
-            PageObj.addErrorMessage('Имя меньше 4 символов.');
+            PageObj.addErrorRegMessage('Имя меньше 4 символов.');
             errors++;
         }
         if (!PageObj.userNamePattern.test(name)) {
             $('#reg-username').css('border-color', 'red'); 
-            PageObj.addErrorMessage('Имя должно содержать только латинские буквы(a-z).');
+            PageObj.addErrorRegMessage('Имя должно содержать только латинские буквы(a-z).');
             errors++;
         }
         if (!email) {
             $('#reg-email').css('border-color', 'red'); 
-            PageObj.addErrorMessage('Укажите email.');
+            PageObj.addErrorRegMessage('Укажите email.');
             errors++;
         }
         if (password != password2) {
             $('#reg-password').css('border-color', 'red'); 
             $('#reg-confirm-password').css('border-color', 'red'); 
-            PageObj.addErrorMessage('Пароли не совпадают.');
+            PageObj.addErrorRegMessage('Пароли не совпадают.');
             errors++;
         }
         if (!password) {
             $('#reg-password').css('border-color', 'red');
-            PageObj.addErrorMessage('Укажите пароль.');
+            PageObj.addErrorRegMessage('Укажите пароль.');
             errors++;
         }
         if (!password2) {
             $('#reg-confirm-password').css('border-color', 'red'); 
-            PageObj.addErrorMessage('Укажите пароль.');
+            PageObj.addErrorRegMessage('Укажите пароль.');
             errors++;
         }
         
+        return errors;
+    },
+    validateAutorization: function (email, password) {
+        PageObj.cleanErrorLogBlock();
+        var errors = 0;
+        if (email.length < 4) {
+            $('#log-email').css('border-color', 'red'); 
+            PageObj.addErrorLogMessage('Email меньше 4 символов.');
+            errors++;
+        }
+        if (!password) {
+            $('#log-password').css('border-color', 'red'); 
+            PageObj.addErrorLogMessage('Введите пароль');
+            errors++;
+        }
         return errors;
     }
 };
 
 $(document).ready(function() {
-    $('#reg-email').focus(function () {
-        $(this).css('border-color', '');
-    });
-    
-    $('#reg-username').focus(function () {
-        $(this).css('border-color', '');
-    });
-    
-    $('#reg-password').focus(function () {
-        $(this).css('border-color', '');
-    });
-    
-    $('#reg-confirm-password').focus(function () {
-        $(this).css('border-color', '');
-    });
+    PageObj.initListeners();
     
     $('#login-form-link').click(function (e) {
         $("#login-form").delay(100).fadeIn(100);
@@ -106,14 +136,14 @@ $(document).ready(function() {
                 type: 'post',
                 dataType: 'json',
                 success: function (result) {
-                    PageObj.cleanErrorBlock();
+                    PageObj.cleanErrorRegBlock();
                     if (result.data) {
                         for (var key in result.data) {
                             if (key === 'email') {
                                 $('#reg-email').css('border-color', 'red'); 
-                                PageObj.addErrorMessage(result.data[key]);
+                                PageObj.addErrorRegMessage(result.data[key]);
                             } else {
-                                PageObj.addErrorMessage(result.data[key]);
+                                PageObj.addErrorRegMessage(result.data[key]);
                             }
                         } 
                     } else {
@@ -124,6 +154,56 @@ $(document).ready(function() {
                         $('#reg-confirm-password').val('');
                         alert('Go to personal cab');
                     }
+                },
+                complete : function () {
+                    PageObj.ajaxSendFlag = true;
+                }
+            });
+        }
+    });
+    
+    $('#login-submit').click(function (e) {
+        e.preventDefault();
+        
+        var email = $('#log-email').val();
+        var password = $('#log-password').val();
+        var errorsCount = PageObj.validateAutorization(email, password);
+     
+        if (PageObj.ajaxSendFlag && errorsCount == 0) {
+            PageObj.ajaxSendFlag = false;
+            $.ajax({
+                url: '/ajax',
+                data:{
+                    case: 'loginUser',
+                    email: email,
+                    password: password
+                },
+                type: 'post',
+                dataType: 'json',
+                success: function (result) {
+                    window.location.reload(true);
+                },
+                complete : function () {
+                    PageObj.ajaxSendFlag = true;
+                }
+            });
+        }
+    });
+    
+    $('#logout-user').click(function (e) {
+        e.preventDefault();
+        
+        if (PageObj.ajaxSendFlag) {
+            PageObj.ajaxSendFlag = false;
+            $.ajax({
+                url: '/ajax',
+                data:{
+                    case: 'logoutUser',
+                },
+                type: 'post',
+                dataType: 'json',
+                success: function (result) {
+                    window.location.reload(true);
                 },
                 complete : function () {
                     PageObj.ajaxSendFlag = true;
