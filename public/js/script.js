@@ -140,7 +140,11 @@ var PageObj = {
                     if (result.status) {
                         PageObj.cleanErrorLogBlock();
                         PageObj.addErrorLogMessage('На указанный Вами емайл был выслан временный пароль.');
+
                         $('#log-email').val(email);
+                        $('#log-password').val('');
+                        $('#log-password').css('border-color', 'red');
+                        $('#log-password').attr('placeholder', 'Введите пароль из email');
                         $('#login-form-link').trigger('click');
                         
                     } else {

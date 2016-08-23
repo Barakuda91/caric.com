@@ -108,13 +108,30 @@ class IndexController extends Zend_Controller_Action
         $status = false;
         $data = [];
         $data['email'] = filter_var($params['email'], FILTER_VALIDATE_EMAIL); 
-        
         $userData = $this->getUserData($data, 'forgot');
         
         if ($userData) {
-            $newData = [];
-            $newData['password'] = $this->generateRandomString();
-            $res = $this->updateUserData($newData, $data['email']);
+            $password = $this->generateRandomString();
+            $this->updateUserPassword($password, $data['email']);
+            
+//            $config = [
+//                'auth' => 'login',
+//                'username' => 'myusername',
+//                'password' => 'password'
+//            ];
+
+            //$transport = new Zend_Mail_Transport_Smtp('mail.server.com', $config);
+            try {
+                $mail = new Zend_Mail();
+                $mail->setBodyText('This is the text of the mail.');
+                $mail->setFrom('caric.com@email.com', 'Some Sender');
+                $mail->addTo($data['email'], 'Some Recipient');
+                $mail->setSubject('New Password = ' . $password);
+                $mail->send();
+            } catch (Exception $ex) {
+                /* Here replace with Log call */
+            }
+             
             $status = true;
         }
         
@@ -302,28 +319,18 @@ class IndexController extends Zend_Controller_Action
     }
     
     /* Uppdates user row by email */
-    private function updateUserData($data, $email)
+    private function updateUserPassword($password, $email)
     {
         try {
-            $sqlArray = [];
-            if (isset($data['name']) && $data['name'] != "" && strlen($data['name']) > 3) {
-                $sqlArray[] = "`name` = '%s'";
-            }
-            if (isset($data['password']) && $data['password'] != "" && strlen($data['password']) > 3) {
-                $sqlArray[] = "`password` = '%s'";
-            }
-            
-            $innerSql = implode(',', $sqlArray);
-            
             $dbAdapter = Zend_Db_Table::getDefaultAdapter();
+            $password = $this->generatePasswordHash($password);
             $sql = sprintf(
                 "UPDATE `users` SET "
-                    . $innerSql
+                    . "`password` = '%s'"
                     . " WHERE `email` = '%s';",
-                $data['name'], $data['password'], $email
+                $password, $email
             );
-            var_dump($sql);
-            //$dbAdapter->query($sql);
+            $dbAdapter->query($sql);
         } catch (Exception $ex) {
             /* Here replace with Log call */
         }
