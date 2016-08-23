@@ -73,6 +73,10 @@ class IndexController extends Zend_Controller_Action
                     $this->result = $this->logoutUser();
                     break;
                 
+                case 'forgotPassword':
+                    $this->result = $this->userForgotPassword($params);
+                    break;
+                
                 default:
                     $this->result = [];
                     break;
@@ -83,6 +87,46 @@ class IndexController extends Zend_Controller_Action
         echo json_encode($this->result);
     }
     
+    /* simple random string generation */
+    private function generateRandomString($length = 10) 
+    {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        
+        return $randomString;
+    }
+    
+    
+    /* Function - update user data to set new password */
+    private function userForgotPassword($params) 
+    {
+        $result = [];
+        $status = false;
+        $data = [];
+        $data['email'] = filter_var($params['email'], FILTER_VALIDATE_EMAIL); 
+        
+        $userData = $this->getUserData($data, 'forgot');
+        
+        if ($userData) {
+            $newData = [];
+            $newData['password'] = $this->generateRandomString();
+            $res = $this->updateUserData($newData, $data['email']);
+            $status = true;
+        }
+        
+        $result = [
+            'status' => $status
+        ];
+        
+        
+        return $result;
+    }
+    
+    /* User logout */
     private function logoutUser()
     {
         try {
@@ -137,16 +181,25 @@ class IndexController extends Zend_Controller_Action
         return $autorization;
     }
     
-    private function getUserData($data)
+    private function getUserData($data, $flag = null)
     {
         $result = [];
         $dbAdapter = Zend_Db_Table::getDefaultAdapter();
-        $sql = sprintf(
-            "SELECT `email`, `name`, `date` FROM `users` WHERE `users`.`email` = '%s' AND `users`.`password` = '%s';",
-            $data['email'],
-            $data['password']
-        );
+        if (!$flag) {
+            $sql = sprintf(
+                "SELECT `email`, `name`, `date` FROM `users` WHERE `users`.`email` = '%s' AND `users`.`password` = '%s';",
+                $data['email'],
+                $data['password']
+            );
+        } else { /* forgot password check */
+            $sql = sprintf(
+                "SELECT `name` FROM `users` WHERE `users`.`email` = '%s';",
+                $data['email']
+            );
+        }
+        
         $result = $dbAdapter->query($sql)->fetch(); 
+        
         
         return $result;
     }
@@ -243,6 +296,34 @@ class IndexController extends Zend_Controller_Action
             );
             
             $dbAdapter->query($sql);
+        } catch (Exception $ex) {
+            /* Here replace with Log call */
+        }
+    }
+    
+    /* Uppdates user row by email */
+    private function updateUserData($data, $email)
+    {
+        try {
+            $sqlArray = [];
+            if (isset($data['name']) && $data['name'] != "" && strlen($data['name']) > 3) {
+                $sqlArray[] = "`name` = '%s'";
+            }
+            if (isset($data['password']) && $data['password'] != "" && strlen($data['password']) > 3) {
+                $sqlArray[] = "`password` = '%s'";
+            }
+            
+            $innerSql = implode(',', $sqlArray);
+            
+            $dbAdapter = Zend_Db_Table::getDefaultAdapter();
+            $sql = sprintf(
+                "UPDATE `users` SET "
+                    . $innerSql
+                    . " WHERE `email` = '%s';",
+                $data['name'], $data['password'], $email
+            );
+            var_dump($sql);
+            //$dbAdapter->query($sql);
         } catch (Exception $ex) {
             /* Here replace with Log call */
         }

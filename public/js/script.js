@@ -20,6 +20,10 @@ var PageObj = {
         $('#log-password').click(function () {
             $(this).css('border-color', '');
         });
+        $('#fog-email').click(function () {
+            $(this).css('border-color', '');
+        });
+        
     },
     cleanErrorRegBlock: function () {
         $('#error-reg-block').html('');
@@ -33,6 +37,11 @@ var PageObj = {
         $('#log-email').css('border-color', '');
         $('#log-password').css('border-color', '');
     },
+    cleanErrorForgetBlock: function () {
+        $('#error-forget-block').html('');
+        $('#fog-email').css('border-color', '');
+        $('#fog-password').css('border-color', '');
+    },
     addErrorRegMessage: function (message, param) {
         param = (param) ? param : '';
         $('#error-reg-block').append('<div class="row">' + param + message + '</div>');
@@ -40,6 +49,10 @@ var PageObj = {
     addErrorLogMessage: function (message, param) {
         param = (param) ? param : '';
         $('#error-log-block').append('<div class="row">' + param + message + '</div>');
+    },
+    addErrorForgetMessage: function (message, param) {
+        param = (param) ? param : '';
+        $('#error-forget-block').append('<div class="row">' + param + message + '</div>');
     },
     validateRegistration: function (email, name, password, password2) {
         PageObj.cleanErrorRegBlock();
@@ -92,26 +105,91 @@ var PageObj = {
             errors++;
         }
         return errors;
+    },
+    validateForgotPassword: function (email) {
+        var errors = 0;
+        if (!email) {
+            $('#fog-email').css('border-color', 'red');
+            PageObj.addErrorForgetMessage('Введите email.');
+            errors++;
+        }
+        if (email.length < 4) {
+            $('#fog-email').css('border-color', 'red'); 
+            PageObj.addErrorForgetMessage('Email меньше 4 символов.');
+            errors++;
+        }
+        
+        return errors;
+    },
+    forgotPassword: function () {
+        PageObj.cleanErrorForgetBlock();
+        var email = $('#fog-email').val();
+        var errors = PageObj.validateForgotPassword(email);
+        
+        if (PageObj.ajaxSendFlag && errors == 0) {
+            PageObj.ajaxSendFlag = false;
+            $.ajax({
+                url: '/ajax',
+                data:{
+                    case: 'forgotPassword',
+                    email: email
+                },
+                type: 'post',
+                dataType: 'json',
+                success: function (result) {
+                    if (result.status) {
+                        PageObj.cleanErrorLogBlock();
+                        PageObj.addErrorLogMessage('На указанный Вами емайл был выслан временный пароль.');
+                        $('#log-email').val(email);
+                        $('#login-form-link').trigger('click');
+                        
+                    } else {
+                        PageObj.addErrorForgetMessage('Введите верный email адрес.');
+                    }
+                },
+                complete : function () {
+                    PageObj.ajaxSendFlag = true;
+                }
+            });
+        }
     }
+    
 };
 
 $(document).ready(function() {
     PageObj.initListeners();
     
+    $('#forgot-password-link').click(function (e) {
+        e.preventDefault();
+        $('#login-form').hide();
+        $('#forgot-form').show();
+        $('#fog-email').val('');
+    });
+   
     $('#login-form-link').click(function (e) {
-        $("#login-form").delay(100).fadeIn(100);
-        $("#register-form").fadeOut(100);
+        e.preventDefault();
+        $('#forgot-form').hide();
+        $("#login-form").show();
+        $("#register-form").hide();
         $('#register-form-link').removeClass('active');
         $(this).addClass('active');
-        e.preventDefault();
+        
     });
     $('#register-form-link').click(function (e) {
-        $("#register-form").delay(100).fadeIn(100);
-        $("#login-form").fadeOut(100);
+        e.preventDefault();
+        $('#forgot-form').hide();
+        $("#register-form").show();
+        $("#login-form").hide();
         $('#login-form-link').removeClass('active');
         $(this).addClass('active');
-        e.preventDefault();
+        
     });
+    
+    $('#forgot-submit').click(function (e) {
+        e.preventDefault();
+        PageObj.forgotPassword();
+    });
+   
    
     $('#register-submit').click(function (e) {
         e.preventDefault();
@@ -218,5 +296,6 @@ $(document).ready(function() {
             });
         }
     });
+    
    
 });
