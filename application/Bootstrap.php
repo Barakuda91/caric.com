@@ -24,7 +24,18 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         );
        
         $router->addRoute('postsCall', $routeAjax);
-        
+
+        /* personal user account */
+        $routeUser = new Zend_Controller_Router_Route_Regex(
+            '(user)',
+            [
+                'controller' => 'index',
+                'action' => 'test'
+            ]
+        );
+
+        $router->addRoute('routeUser', $routeUser);
+
          /* Set action for TEST requests */
         $routeTest = new Zend_Controller_Router_Route_Regex(
             '(test)',
