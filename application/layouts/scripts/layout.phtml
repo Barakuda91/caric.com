@@ -30,11 +30,10 @@
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 col-xxs-12 text-right text-xs-center text-xxs-center">
                                     <div class="form-group"></div>
-                                        <?php 
-                                            $auth = Zend_Auth::getInstance();
-                                            if ($auth->hasIdentity()) : ?>
+                                        <?php
+                                            if ($this->autorizated) : ?>
                                             <button type="button" class="btn btn-orange btn-lg" data-toggle="" data-target="#">
-                                                Личный Кабинет
+                                                <?= $this->userName['name']; ?>
                                             </button>
                                             <button type="button" id="logout-user" class="btn btn-orange btn-lg">
                                                 Выйти
