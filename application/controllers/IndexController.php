@@ -48,6 +48,16 @@ class IndexController extends Zend_Controller_Action
 
     public function indexAction()
     {
+        $auth = Zend_Auth::getInstance();
+        if ($auth->hasIdentity()) {
+            $this->view->autorizated = true;
+            $data = [];
+            $data['email'] = $auth->getIdentity();
+            $this->view->userName = $this->getUserData($data, 'flag');
+        } else {
+            $this->view->autorizated = false;
+        }
+        
         
         $this->view->baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
         $this->view->makes = self::$makes;
@@ -208,7 +218,7 @@ class IndexController extends Zend_Controller_Action
                 $data['email'],
                 $data['password']
             );
-        } else { /* forgot password check */
+        } else { 
             $sql = sprintf(
                 "SELECT `name` FROM `users` WHERE `users`.`email` = '%s';",
                 $data['email']
