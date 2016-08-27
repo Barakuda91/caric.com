@@ -1,4 +1,17 @@
 var PageObj = {
+    // Networck: {
+    //    send: function (objeck)
+    //    {
+    //        type: 'ajsx|socket',
+    //        action: 'ajax',
+    //        data: {},
+    //        dataType:{},
+    //        preSend: : function () { },
+    //        postSend : function () { },
+    //        success : function () { },
+    //        error : function () { },
+    //    }
+    // },
     ajaxSendFlag: true,
     userNamePattern: /^[a-zA-Z]+$/,
     initListeners: function () {
