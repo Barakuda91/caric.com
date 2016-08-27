@@ -169,10 +169,8 @@ fieldset[disabled] .btn-orange.active {
 }
 
 
-.main_slider_wrap{
-    padding: 2rem 0;
-    background: url("../images/banner.jpg") top center/cover no-repeat;
-}
+.main_slider_wrap { padding: 2rem 0; background: url("../images/banner.jpg") top center/cover no-repeat;}
+.main_slider_wrap .container .row>div.content { padding: 10px;  background: #fff; }
 
 .stylish-input-group .input-group-addon{
     background: white !important;

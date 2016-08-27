@@ -44,7 +44,7 @@ class IndexController extends Zend_Controller_Action
         ini_set('display_startup_errors', 1);
 
         $auth = Zend_Auth::getInstance();
-        
+
         if ($auth->hasIdentity()) {
             $user = new User();
             $this->view->autorizated = true;
@@ -56,10 +56,19 @@ class IndexController extends Zend_Controller_Action
         }
     }
 
+    // index action
     public function indexAction()
     {
         $this->view->makes = self::$makes;
     }
+
+    // add new ad
+    public function addAction()
+    {
+
+    }
+
+    // testing action
     public function testAction()
     {
 
