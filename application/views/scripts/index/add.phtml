@@ -1,0 +1,96 @@
+<?php
+/*мфссив объектов
+    'title' заголовок объявления (string)
+    'important' важное или нет  (bool)
+    'dataTitle' (string)
+    'optionValues' массив объектов выпадающего списка (array)
+    'inputSmall' если тру - поле ввода наполовину меньше (bool)
+ *
+ * */
+$elementsArray = array([
+        'title' => 'Название',
+        'important' => true,
+        'inputSmall'=> false
+    ],
+    [
+        'title' => 'Тип',
+        'important' => false,
+        'dataTitle' => 'Some to write',
+        'optionValues' => [['Шины',1],['Диски',2],['Проставки',3],['Прочее',4]],
+        'inputSmall'=> true
+    ],
+    [
+        'title' => 'Что-то ещё',
+        'important' => true,
+        'dataTitle' => 'Some to write',
+        'inputSmall'=> false
+    ]);
+
+?>
+
+<div class="main_slider_wrap">
+    <div class="container">
+        <div class="row">
+            <div class="content">
+                <div class="ttl">Продать у нас свои шины, диски, проставки или что-либо ещё - легко!</div>
+                <?php foreach ($elementsArray as $element):?>
+
+                <div class="line">
+                    <div class="inline_trate"><?php if($element['important']) echo'<i class="important">*</i>';?><?= $element['title'] ?></div>
+                    <div class="inline_midelt <?php if($element['inputSmall']) echo'smaller';?><?php if(!empty($element['dataTitle'])) echo' question"><i class="question" data-title="'.$element['dataTitle'].'">?</i>'; else echo'">';?>
+                    <?php
+                        if(!empty($element['optionValues']))
+                        {
+                            echo'<select><option disabled selected></option>';
+                            foreach ($element['optionValues'] as $type){
+                                if(is_array($type))
+                                    echo'<option value="'.$type[1].'">'.$type[0].'</option>';
+                            }
+                            echo'</select>';
+                        } else
+                            echo '<input type="text">';?></div>
+                    <div class="inline_holder"><span class="error"><i class="fa fa-angle-left "></i></span></div>
+                </div>
+                <?php endforeach;?>
+                <div class="postprend">
+                    <div class="info_place">
+                        Блок с некой информацией
+                    </div>
+                    <div class="btn_place">
+                        <button type="submit">отправить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .main_slider_wrap .container .row .ttl { border-bottom: 1px solid #e2e2e2; font-weight: 700; padding-bottom: 10px; margin-bottom: 10px;}
+    .main_slider_wrap .container .row .line {}
+    .main_slider_wrap .container .row .line>div { display: inline-block; padding: 13px 5px;}
+
+    .main_slider_wrap .container .row .line .inline_trate { width: 270px; font-weight: 700; text-align: right; font-size: smaller;}
+    .main_slider_wrap .container .row .line .inline_trate i.important { color: #c30000; margin-right: 5px; font-size: 13pt; }
+
+    .main_slider_wrap .container .row .line .inline_midelt { width: 500px; height: auto; position:relative; text-align: left; background: #fff; border-left: 2px solid #dddcdc; padding: 0; }
+    .main_slider_wrap .container .row .line .inline_midelt input,
+    .main_slider_wrap .container .row .line .inline_midelt select { width: 100%; height: 26px; padding-left: 5px; background: #fff; border: none; border: 2px solid #dddcdc; border-left: none; }
+    .main_slider_wrap .container .row .line .inline_midelt input:focus,
+    .main_slider_wrap .container .row .line .inline_midelt select:focus { outline: none; }
+    .main_slider_wrap .container .row .line .inline_midelt i.question { position: absolute; left: 5px; top: 2px;color: #005564; cursor: pointer;}
+    .main_slider_wrap .container .row .line .inline_midelt.smaller input,
+    .main_slider_wrap .container .row .line .inline_midelt.smaller select { width: 50%; }
+    .main_slider_wrap .container .row .line .inline_midelt.question input ,
+    .main_slider_wrap .container .row .line .inline_midelt.question select { padding-left: 18px; }
+
+    .main_slider_wrap .container .row .line .inline_holder {  }
+    .main_slider_wrap .container .row .line .inline_holder span.error { display: none; color: #c30000; font-size: 11pt; }
+    .main_slider_wrap .container .row .line .inline_holder span.error i { color: #000; margin-right: 5px; font-size: 13pt;}
+
+    .main_slider_wrap .container .row .postprend { border-top: 1px solid #e2e2e2; padding: 10px 0px; }
+    .main_slider_wrap .container .row .postprend>div { display: inline-block;}
+    .main_slider_wrap .container .row .postprend .info_place {  width: 500px; font-size: 11px; }
+    .main_slider_wrap .container .row .postprend .btn_place { width: 270px; text-align: right; vertical-align: top;}
+
+
+</style>

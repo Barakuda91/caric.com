@@ -42,26 +42,36 @@ class IndexController extends Zend_Controller_Action
         ini_set('error_reporting', E_ALL);
         ini_set('display_errors', 1);
         ini_set('display_startup_errors', 1);
-    }
 
-    public function indexAction()
-    {
         $auth = Zend_Auth::getInstance();
+
         if ($auth->hasIdentity()) {
+            $user = new User();
             $this->view->autorizated = true;
             $data = [];
             $data['email'] = $auth->getIdentity();
-            $this->view->userName = $this->getUserData($data, 'flag');
+            $this->view->userName = $user->getUserData($data, 'flag');
         } else {
             $this->view->autorizated = false;
         }
+    }
 
-        $this->view->baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
+    // index action
+    public function indexAction()
+    {
         $this->view->makes = self::$makes;
     }
+
+    // add new ad
+    public function addAction()
+    {
+
+    }
+
+    // testing action
     public function testAction()
     {
-        die('FUCK');
+
 
     }
 
