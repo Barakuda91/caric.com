@@ -18,7 +18,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $routeAjax = new Zend_Controller_Router_Route_Regex(
             '([a-z0-9-]+)',
             [
-                'controller' => 'index',
+                'controller' => 'ajax',
                 'action' => 'ajax'
             ]
         );
@@ -29,7 +29,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $routeUser = new Zend_Controller_Router_Route_Regex(
             '(user)',
             [
-                'controller' => 'index',
+                'controller' => 'user',
                 'action' => 'test'
             ]
         );
