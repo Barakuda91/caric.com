@@ -48,10 +48,11 @@ class IndexController extends Zend_Controller_Action
     {
         $auth = Zend_Auth::getInstance();
         if ($auth->hasIdentity()) {
+            $user = new User();
             $this->view->autorizated = true;
             $data = [];
             $data['email'] = $auth->getIdentity();
-            $this->view->userName = $this->getUserData($data, 'flag');
+            $this->view->userName = $user->getUserData($data, 'flag');
         } else {
             $this->view->autorizated = false;
         }
@@ -62,7 +63,5 @@ class IndexController extends Zend_Controller_Action
     public function testAction()
     {
         die('FUCK');
-
     }
-
 }
