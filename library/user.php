@@ -14,8 +14,7 @@ class User
 
         return $randomString;
     }
-
-
+    
     /* Function - update user data to set new password */
     public function userForgotPassword($params)
     {
@@ -252,4 +251,3 @@ class User
     }
 
 }
-
