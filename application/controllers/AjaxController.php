@@ -9,7 +9,6 @@ class AjaxController extends Zend_Controller_Action
 
 
         $params = $this->getAllParams();
-        $ert = Zend_Loader::loadClass('library');
         if (isset($params['case'])) {
             switch ($params['case']) {
                 case 'registerUser':

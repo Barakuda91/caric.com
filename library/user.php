@@ -251,12 +251,5 @@ class User
         }
     }
 
-    public function testAction()
-    {
-        $this->_helper->layout->disableLayout();
-        $this->_helper->viewRenderer->setNoRender(true);
-
-    }
-
 }
 

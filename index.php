@@ -1,1 +1,1 @@
-<?php i nclude 'public/index.php';?>
+<?php include 'public/index.php';?>

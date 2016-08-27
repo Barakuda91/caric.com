@@ -59,4 +59,10 @@ class IndexController extends Zend_Controller_Action
         $this->view->baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
         $this->view->makes = self::$makes;
     }
+    public function testAction()
+    {
+        die('FUCK');
+
+    }
+
 }
