@@ -507,3 +507,10 @@ screen and (max--moz-device-pixel-ratio: 1.5) {
 
 
 }
+
+.main-logined-dropdawn {
+    width: 330px;
+}
+.margin-dropwown {
+    margin-left: -25px;
+}
