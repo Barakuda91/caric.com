@@ -22,8 +22,8 @@
 $elementsArray = [
     [
         'title' => 'Название',
+        'name' => 'title',
         'important' => true,
-        'inputSmall'=> false
     ],
     [
         'title' => 'Тип',
@@ -39,12 +39,7 @@ $elementsArray = [
         'important' => false,
         'inputSmall'=> true,
         'dataTitle' => 'Some to write',
-        'optionValues' => [
-            ['Шины',1],
-            ['Диски',2],
-            ['Проставки',3],
-            ['Прочее',4]
-        ],
+        'optionValues' => [12,13,14,15,16,17,18,19,20,21,22,23],
         'inputSmall'=> true
     ],
     [
@@ -82,25 +77,25 @@ $elementsArray = [
             <div class="content">
                 <div class="ttl">Продать у нас свои шины, диски, проставки или что-либо ещё - легко!</div>
                 <?php foreach ($elementsArray as $element):?>
-                <?php if(empty($element['title']) OR empty($element['name'])) continue;?>
-                <div class="line<?php if(isset($element['showIfDependent']) AND !$element['showIfDependent']) echo' hide';?>" data-name="<?= $element['name'];?>">
-                    <div class="inline_trate"><?php if(empty($element['important']) OR  !$element['important']) echo'<i class="important">*</i>';?><?= $element['title'] ?></div>
-                    <div class="inline_midelt <?php if($element['inputSmall']) echo'smaller';?><?php if(!empty($element['dataTitle'])) echo' question"><i class="question" data-title="'.$element['dataTitle'].'">?</i>'; else echo'">';?>
-                    <?php
-                        if(!empty($element['optionValues']))
-                        {
-                            echo'<select><option disabled selected></option>';
-                            foreach ($element['optionValues'] as $type){
-                                if(is_array($type))
-                                    echo'<option value="'.$type[1].'">'.$type[0].'</option>';
-                                else
-                                    echo'<option value="'.$type.'">'.$type.'</option>';
-                            }
-                            echo'</select>';
-                        } else
-                            echo '<input type="text">';?></div>
-                    <div class="inline_holder"><span class="error"><i class="fa fa-angle-left "></i></span></div>
-                </div>
+                    <?php if(empty($element['title']) OR empty($element['name'])) continue;?>
+                    <div class="line<?php if(isset($element['showIfDependent']) AND !$element['showIfDependent']) echo' hide';?>" data-name="<?= $element['name'];?>">
+                        <div class="inline_trate"><?php if(empty($element['important']) OR  !$element['important']) echo'<i class="important">*</i>';?><?= $element['title'] ?></div>
+                        <div class="inline_midelt <?php if(!empty($element['inputSmall'])) echo'smaller';?><?php if(!empty($element['dataTitle'])) echo' question"><i class="question" data-title="'.$element['dataTitle'].'">?</i>'; else echo'">';?>
+                        <?php
+                            if(!empty($element['optionValues']))
+                            {
+                                echo'<select><option disabled selected></option>';
+                                foreach ($element['optionValues'] as $type){
+                                    if(is_array($type))
+                                        echo'<option value="'.$type[1].'">'.$type[0].'</option>';
+                                    else
+                                        echo'<option value="'.$type.'">'.$type.'</option>';
+                                }
+                                echo'</select>';
+                            } else
+                                echo '<input type="text">';?></div>
+                        <div class="inline_holder"><span class="error"><i class="fa fa-angle-left "></i></span></div>
+                    </div>
                 <?php endforeach;?>
                 <div class="postprend">
                     <div class="info_place">
@@ -144,6 +139,13 @@ $elementsArray = [
     .main_slider_wrap .container .row .postprend .info_place {  width: 500px; font-size: 11px; }
     .main_slider_wrap .container .row .postprend .btn_place { width: 270px; text-align: right; vertical-align: top;}
 /* END   page for adding ad*/
+@media (max-width: 1000px) {
+    .main_slider_wrap .container .row .ttl { font-size: smaller; }
+    .main_slider_wrap .container .row .line .inline_trate { width: 30%; }
+    .main_slider_wrap .container .row .line .inline_midelt { width: 65%;  }
+    .main_slider_wrap .container .row .line .inline_holder {  display: none; }
 
+
+}
 
 </style>
