@@ -506,11 +506,14 @@ screen and (max--moz-device-pixel-ratio: 1.5) {
 
 }
 
-.main-logined-dropdawn {
-    width: 330px;
+.main-menu-disk {
+    height: 34px;
+    width: auto;
+    margin: 5px;
+
 }
-.margin-dropwown {
-    margin-left: -25px;
+.main-logined-dropdawn {
+    width: 100%;
 }
 
 button .button_link{ display: block; width: 100%; height: 100%; color: #ffffff; text-decoration: none;}
