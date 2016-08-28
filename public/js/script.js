@@ -175,7 +175,11 @@ var PageObj = {
 
 $(document).ready(function() {
     PageObj.initListeners();
-    
+
+    $('#add-advert').click(function () {
+        window.location.href = '/add';
+    });
+
     $('#forgot-password-link').click(function (e) {
         e.preventDefault();
         $('#login-form').hide();

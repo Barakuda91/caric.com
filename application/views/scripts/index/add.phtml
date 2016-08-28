@@ -7,7 +7,8 @@
     'inputSmall' если тру - поле ввода наполовину меньше (bool)
  *
  * */
-$elementsArray = array([
+$elementsArray = [
+    [
         'title' => 'Название',
         'important' => true,
         'inputSmall'=> false
@@ -16,7 +17,12 @@ $elementsArray = array([
         'title' => 'Тип',
         'important' => false,
         'dataTitle' => 'Some to write',
-        'optionValues' => [['Шины',1],['Диски',2],['Проставки',3],['Прочее',4]],
+        'optionValues' => [
+            ['Шины',1],
+            ['Диски',2],
+            ['Проставки',3],
+            ['Прочее',4]
+        ],
         'inputSmall'=> true
     ],
     [
@@ -24,7 +30,8 @@ $elementsArray = array([
         'important' => true,
         'dataTitle' => 'Some to write',
         'inputSmall'=> false
-    ]);
+    ]
+];
 
 ?>
 

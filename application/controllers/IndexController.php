@@ -2,6 +2,7 @@
 class IndexController extends Zend_Controller_Action
 {
     public $result = [];
+    public $autorized;
 
     public static $makes = [
         'ac' => 'ac',
@@ -51,8 +52,10 @@ class IndexController extends Zend_Controller_Action
             $data = [];
             $data['email'] = $auth->getIdentity();
             $this->view->userName = $user->getUserData($data, 'flag');
+            $this->autorized = true;
         } else {
             $this->view->autorizated = false;
+            $this->autorized = false;
         }
     }
 
@@ -65,7 +68,9 @@ class IndexController extends Zend_Controller_Action
     // add new ad
     public function addAction()
     {
-
+        if (!$this->autorized) {
+            $this->redirect('/');
+        }
     }
 
     // testing action
