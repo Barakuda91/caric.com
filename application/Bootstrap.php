@@ -37,7 +37,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $router->addRoute('routeUser', $routeUser);
 
         /* add new ad */
-        $routeUser = new Zend_Controller_Router_Route_Regex(
+        $routeAdvert = new Zend_Controller_Router_Route_Regex(
             '(add)',
             [
                 'controller' => 'index',
@@ -45,7 +45,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             ]
         );
 
-        $router->addRoute('routeUser', $routeUser);
+        $router->addRoute('routeAdvert', $routeAdvert);
 
          /* Set action for TEST requests */
         $routeTest = new Zend_Controller_Router_Route_Regex(

@@ -19,10 +19,11 @@
  * добавить зависимости
  * добавить скрипт для всплывающих подсказок
  * */
-$elementsArray = array([
-        'title' => 'Заголовок',
-        'name' => 'title',
-        'dataTitle' => 'Some to write'
+$elementsArray = [
+    [
+        'title' => 'Название',
+        'important' => true,
+        'inputSmall'=> false
     ],
     [
         'title' => 'Тип',
@@ -38,7 +39,13 @@ $elementsArray = array([
         'important' => false,
         'inputSmall'=> true,
         'dataTitle' => 'Some to write',
-        'showIfDependent' => false
+        'optionValues' => [
+            ['Шины',1],
+            ['Диски',2],
+            ['Проставки',3],
+            ['Прочее',4]
+        ],
+        'inputSmall'=> true
     ],
     [
         'title' => 'Диаметр шины',
@@ -64,7 +71,8 @@ $elementsArray = array([
     [
         'title' => '',
         'name' => ''
-    ]);
+    ]
+];
 
 ?>
 
