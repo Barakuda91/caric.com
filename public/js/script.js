@@ -296,7 +296,7 @@ $(document).ready(function() {
         }
     });
     
-    $('#logout-user').click(function (e) {
+    $('.logout-user').click(function (e) {
         e.preventDefault();
         
         if (PageObj.ajaxSendFlag) {

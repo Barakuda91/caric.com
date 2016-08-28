@@ -65,6 +65,56 @@ class IndexController extends Zend_Controller_Action
         $this->view->makes = self::$makes;
     }
 
+    /* personal cab data */
+    public function personalAction()
+    {
+        if (!$this->autorized) {
+            $this->redirect('/');
+        }
+
+        $this->view->htmlMenu = $this->renderPersonalCabTopMenu();
+        $this->_helper->viewRenderer('/personalcab/personal');
+    }
+    /* personal cab adverts */
+    public function advertsAction()
+    {
+        if (!$this->autorized) {
+            $this->redirect('/');
+        }
+
+        $this->view->htmlMenu = $this->renderPersonalCabTopMenu();
+        $this->_helper->viewRenderer('/personalcab/adverts');
+    }
+
+    /* personal cab messages */
+    public function messagesAction()
+    {
+        if (!$this->autorized) {
+            $this->redirect('/');
+        }
+
+        $this->view->htmlMenu = $this->renderPersonalCabTopMenu();
+        $this->_helper->viewRenderer('/personalcab/messages');
+    }
+
+    /* personal cab settings */
+    public function settingsAction()
+    {
+        if (!$this->autorized) {
+            $this->redirect('/');
+        }
+
+        $this->view->htmlMenu = $this->renderPersonalCabTopMenu();
+        $this->_helper->viewRenderer('/personalcab/settings');
+    }
+
+    private function renderPersonalCabTopMenu()
+    {
+        $html = $this->view->render('index/personalcab/userCabTopMenu.phtml');
+
+        return $html;
+    }
+
     // add new ad
     public function addAction()
     {
