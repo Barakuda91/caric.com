@@ -3,6 +3,7 @@ class IndexController extends Zend_Controller_Action
 {
     public $result = [];
     public $autorized;
+    public $autorizeEmailId;
 
     public static $makes = [
         'ac' => 'ac',
@@ -52,9 +53,11 @@ class IndexController extends Zend_Controller_Action
             $data = [];
             $data['email'] = $auth->getIdentity();
             $this->view->userName = $user->getUserData($data, 'flag');
+            $this->autorizeEmailId = $auth->getIdentity();
             $this->autorized = true;
         } else {
             $this->view->autorizated = false;
+            $this->autorizeEmailId = '';
             $this->autorized = false;
         }
     }
@@ -70,10 +73,12 @@ class IndexController extends Zend_Controller_Action
     {
         if (!$this->autorized) {
             $this->redirect('/');
+        } else {
+            $user = new User($this->autorizeEmailId);
+            $this->view->userData = $user;
+            $this->view->htmlMenu = $this->renderPersonalCabTopMenu();
+            $this->_helper->viewRenderer('/personalcab/personal');
         }
-
-        $this->view->htmlMenu = $this->renderPersonalCabTopMenu();
-        $this->_helper->viewRenderer('/personalcab/personal');
     }
     /* personal cab adverts */
     public function advertsAction()
@@ -110,6 +115,8 @@ class IndexController extends Zend_Controller_Action
 
     private function renderPersonalCabTopMenu()
     {
+        $urlParams = $this->getAllParams();
+        $this->view->currentUrl = $urlParams[1] ? $urlParams[1] : 'user';
         $html = $this->view->render('index/personalcab/userCabTopMenu.phtml');
 
         return $html;

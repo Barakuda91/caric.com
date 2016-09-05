@@ -14,6 +14,8 @@ var PageObj = {
     // },
     ajaxSendFlag: true,
     userNamePattern: /^[a-zA-Z]+$/,
+    userPhonePattern: /^[+]{0,1}[0-9]+$/,
+    userPasswordPattern: /^[a-zA-Z0-9]+$/,
     initListeners: function () {
         $('#reg-email').focus(function () {
             $(this).css('border-color', '');
@@ -134,6 +136,48 @@ var PageObj = {
         
         return errors;
     },
+    validatePersonalData: function (phone, linkVK, linkDrive) {
+        var errors = 0;
+        if (phone != '' && !PageObj.userPhonePattern.test(phone)) {
+            $('#input-phone').css('border-color', 'red');
+            errors++;
+        }
+
+        if (linkVK != '' && linkVK.indexOf('vk.com') == -1) {
+            $('#input-link-vk').css('border-color', 'red');
+            errors++;
+        }
+
+        if (linkDrive != '' && linkDrive.indexOf('drive2.ru') == -1) {
+            $('#input-link-dr').css('border-color', 'red');
+            errors++;
+        }
+
+        return errors;
+    },
+    validateSettingData: function (pass, pass2) {
+        var errors = 0;
+        if (pass == '') {
+            $('#input-pass').css('border-color', 'red');
+            errors++;
+        }
+        if (pass2 == '') {
+            $('#input-pass2').css('border-color', 'red');
+            errors++;
+        }
+        if (pass != pass2) {
+            $('#input-pass').css('border-color', 'red');
+            $('#input-pass2').css('border-color', 'red');
+            errors++;
+        }
+        if (!PageObj.userPasswordPattern.test(pass)) {
+            $('#input-pass').css('border-color', 'red');
+            $('#input-pass2').css('border-color', 'red');
+            errors++;
+        }
+
+        return errors;
+    },
     forgotPassword: function () {
         PageObj.cleanErrorForgetBlock();
         var email = $('#fog-email').val();
@@ -246,12 +290,13 @@ $(document).ready(function() {
                             }
                         } 
                     } else {
-                        $('#loginModal').modal('hide');
                         $('#reg-username').val('');
                         $('#reg-email').val('');
                         $('#reg-password').val('');
                         $('#reg-confirm-password').val('');
-                        alert('Go to personal cab');
+                        /* go to login page */
+                        $('#log-email').val(email);
+                        $('#login-form-link').trigger('click');
                     }
                 },
                 complete : function () {
@@ -318,5 +363,62 @@ $(document).ready(function() {
         }
     });
     
-   
+   $('#save-personal-data').click(function (e) {
+       e.preventDefault();
+       var phone = $('#input-phone').val();
+       var email = $('#input-email').val();
+       var linkVK = $('#input-link-vk').val();
+       var linkDrive = $('#input-link-dr').val();
+       var errors = PageObj.validatePersonalData(phone, linkVK, linkDrive);
+
+       if (PageObj.ajaxSendFlag && errors == 0) {
+           PageObj.ajaxSendFlag = false;
+           $.ajax({
+               url: '/ajax',
+               data:{
+                   case: 'savePersonalData',
+                   contactPhone: phone,
+                   contactEmail: email,
+                   linkVK: linkVK,
+                   linkDrive: linkDrive
+               },
+               type: 'post',
+               dataType: 'json',
+               success: function (result) {
+                   window.location.reload(true);
+               },
+               complete : function () {
+                   PageObj.ajaxSendFlag = true;
+               }
+           });
+       }
+   });
+
+   $('#save-settings-data').click(function (e) {
+       e.preventDefault();
+       var pass = $('#input-pass').val();
+       var pass2 = $('#input-pass2').val();
+       var errors = PageObj.validateSettingData(pass, pass2);
+
+       if (PageObj.ajaxSendFlag && errors == 0) {
+           PageObj.ajaxSendFlag = false;
+           $.ajax({
+               url: '/ajax',
+               data:{
+                   case: 'saveSettingsData',
+                   pass: pass,
+                   pass2: pass2
+               },
+               type: 'post',
+               dataType: 'json',
+               success: function (result) {
+                   window.location.reload(true);
+               },
+               complete : function () {
+                   PageObj.ajaxSendFlag = true;
+               }
+           });
+       }
+   })
+
 });

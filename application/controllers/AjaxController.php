@@ -27,6 +27,14 @@ class AjaxController extends Zend_Controller_Action
                     $this->result = $user->userForgotPassword($params);
                     break;
 
+                case 'savePersonalData':
+                    $this->result = $user->savePersonalData($params);
+                    break;
+
+                case 'saveSettingsData':
+                    $this->result = $user->saveSettingsData($params);
+                    break;
+
                 default:
                     $this->result = [];
                     break;
