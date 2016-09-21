@@ -135,7 +135,7 @@ fieldset[disabled] .btn-orange.active {
 
 .navbar-default .navbar-nav > li > a:hover{
     color: #ffffff;
-    background: #AFCB1F;
+    background: #FF7200;
 }
 
 .navbar-nav .dropdown-menu .dropdown-header,
@@ -346,7 +346,14 @@ fieldset[disabled] .btn-orange.active {
 
 
 /* No media query -> mobile first strategy */
-
+@media (max-width: 992px) {
+    .main-logined-dropdawn {
+        margin-top: 50px;
+    }
+    .full-desktop-height {
+        height: 100%;
+    }
+}
 
 /* Small devices (tablets, 768px and up) */
 
@@ -372,7 +379,7 @@ fieldset[disabled] .btn-orange.active {
         .navbar-default .navbar-nav > .open > a:focus,
         .navbar-default .navbar-nav > .open > a:hover{
             color: #ffffff;
-            background: #AFCB1F;
+            background: #FF7200;
         }
 
         .main_slider_wrap{
@@ -394,7 +401,7 @@ fieldset[disabled] .btn-orange.active {
         opacity: 0;
         -webkit-transition: all 1s ease-out;
         transition: all 1s ease-out;
-        border: 1rem solid #B0CB1F;
+        border: 1rem solid #FF7200;
 
     }
 
@@ -407,7 +414,7 @@ fieldset[disabled] .btn-orange.active {
 
     ul.nav li.dropdown:hover > ul.dropdown-menu > li > a:hover{
         color: #ffffff;
-        background:#B0CB1F;
+        background: #FF7200;
     }
 
     .navbar-brand-centered {
@@ -516,4 +523,11 @@ screen and (max--moz-device-pixel-ratio: 1.5) {
     width: 100%;
 }
 
-button .button_link{ display: block; width: 100%; height: 100%; color: #ffffff; text-decoration: none;}
+button .button_link {
+    display: block;
+    width: 100%;
+    height: 100%;
+    color: #ffffff;
+    text-decoration: none;
+}
+

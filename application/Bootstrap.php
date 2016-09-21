@@ -25,16 +25,51 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
        
         $router->addRoute('postsCall', $routeAjax);
 
-        /* personal user account */
+        /* personal user account( pers data) */
         $routeUser = new Zend_Controller_Router_Route_Regex(
             '(user)',
             [
-                'controller' => 'user',
-                'action' => 'test'
+                'controller' => 'index',
+                'action' => 'personal'
             ]
         );
 
         $router->addRoute('routeUser', $routeUser);
+
+        /* personal user account(adverts) */
+        $routeUserAdverts = new Zend_Controller_Router_Route_Regex(
+            '(user/adverts)',
+            [
+                'controller' => 'index',
+                'action' => 'adverts'
+            ]
+        );
+
+        $router->addRoute('routeUserAdverts', $routeUserAdverts);
+
+        /* personal user account(Messages) */
+        $routeUserMessages = new Zend_Controller_Router_Route_Regex(
+            '(user/messages)',
+            [
+                'controller' => 'index',
+                'action' => 'messages'
+            ]
+        );
+
+        $router->addRoute('routeUserMessages', $routeUserMessages);
+
+
+        /* personal user account(Settings) */
+        $routeUserSettings = new Zend_Controller_Router_Route_Regex(
+            '(user/settings)',
+            [
+                'controller' => 'index',
+                'action' => 'settings'
+            ]
+        );
+
+        $router->addRoute('routeUserSettings', $routeUserSettings);
+
 
         /* add new ad */
         $routeAdvert = new Zend_Controller_Router_Route_Regex(

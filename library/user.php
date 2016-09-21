@@ -1,6 +1,92 @@
 <?php
 class User
 {
+    public $userPhoneRegExp = '/^\+{0,1}[0-9]+$/';
+    public $userPassRegExp = '/^[a-zA-Z0-9]+$/';
+    public $name;
+    public $roleId;
+    public $email;
+    public $date;
+    public $contactPhone;
+    public $contactEmail;
+    public $contactLink1;
+    public $contactLink2;
+
+    const ROLE_ADMIN = 10;
+    const ROLE_USER = 0;
+
+    public function __construct($id = null)
+    {
+        if ($id) {
+            $send = [];
+            $send['email'] = $id;
+            $data = $this->getUserData($send, 'flag');
+            $this->name = $data['name'];
+            $this->roleId = $data['role_id'];
+            $this->email = $id;
+            $this->date = $data['date'];
+            $this->contactPhone = $data['contact_phone'];
+            $this->contactEmail = $data['contact_email'];
+            $this->contactLink1 = $data['contact_profile_1'];
+            $this->contactLink2 = $data['contact_profile_2'];
+        }
+    }
+
+    public function savePersonalData($params)
+    {
+        try {
+            $phone = $params['contactPhone'];
+            $email = filter_var($params['contactEmail'], FILTER_VALIDATE_EMAIL);
+            $linkVK = filter_var($params['linkVK'], FILTER_VALIDATE_URL);
+            $linkDrive = filter_var($params['linkDrive'], FILTER_VALIDATE_URL);
+            $data = [];
+            if (preg_match($this->userPhoneRegExp, $phone)) {
+                $data['contact_phone'] = $phone;
+            } else {
+                $data['contact_phone'] = '';
+            }
+            if ($email) {
+                $data['contact_email'] = $email;
+            } else {
+                $data['contact_email'] = '';
+            }
+            if ($linkVK) {
+                $data['contact_profile_1'] = $linkVK;
+            } else {
+                $data['contact_profile_1'] = '';
+            }
+            if ($linkDrive) {
+                $data['contact_profile_2'] = $linkDrive;
+            } else {
+                $data['contact_profile_2'] = '';
+            }
+
+            if (count($data) > 0) {
+                $auth = Zend_Auth::getInstance();
+                $emailId = $auth->getIdentity();
+                $sql = 'UPDATE `users` SET ';
+                $n = count($data);
+                $m = 1;
+                foreach ($data as $key => $value) {
+                    $sql .= '`' . $key . '` = "' . $value . '"';
+                    if ($m < $n) {
+                        $sql .= ',';
+                    }
+                    $m++;
+                }
+                $sql .= ' WHERE `email` = "' . $emailId . '"';
+                $dbAdapter = Zend_Db_Table::getDefaultAdapter();
+                $dbAdapter->query($sql);
+            }
+
+            $result = ['status' => true];
+        } catch (Exception $ex) {
+            $result = ['status' => false];
+            /* Here log calls */
+        }
+
+        return $result;
+    }
 
     /* simple random string generation */
     public function generateRandomString($length = 10)
@@ -124,7 +210,7 @@ class User
             );
         } else {
             $sql = sprintf(
-                "SELECT `name` FROM `users` WHERE `users`.`email` = '%s';",
+                "SELECT `role_id`, `date`, `email` ,`name`, `contact_phone`, `contact_email`, `contact_profile_1`, `contact_profile_2` FROM `users` WHERE `users`.`email` = '%s';",
                 $data['email']
             );
         }
@@ -248,6 +334,42 @@ class User
         } catch (Exception $ex) {
             /* Here replace with Log call */
         }
+    }
+
+    public function saveSettingsData($params)
+    {
+        try {
+            $pass = $params['pass'];
+            $pass2 = $params['pass2'];
+            $data = [];
+
+            if (
+                preg_match($this->userPassRegExp, $pass)
+                && $pass == $pass2
+            ) {
+                $data['password'] = $this->generatePasswordHash($pass);
+            }
+            if (count($data) > 0) {
+                $auth = Zend_Auth::getInstance();
+                $emailId = $auth->getIdentity();
+                $sql = 'UPDATE `users` SET ';
+                $sql .= '`password` = "' . $data['password'] . '"';
+                $sql .= ' WHERE `email` = "' . $emailId . '"';
+                $dbAdapter = Zend_Db_Table::getDefaultAdapter();
+                $dbAdapter->query($sql);
+
+                $result = ['status' => true];
+            } else {
+                $result = ['status' => false];
+            }
+
+
+        } catch (Exception $ex) {
+            $result = ['status' => false];
+            /* Here log calls */
+        }
+
+        return $result;
     }
 
 }
