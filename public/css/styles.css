@@ -531,3 +531,9 @@ button .button_link {
     text-decoration: none;
 }
 
+div.main-auto-img {
+    margin-top: 6px;
+}
+div.main-disk-img {
+    margin-top: 6px;
+}

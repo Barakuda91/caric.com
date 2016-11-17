@@ -36,22 +36,129 @@
 <div class="gallery_wrap panel-body">
     <div class="container">
         <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxs-12">
-               <h1>
-                   Поиск по марке автомобиля
-               </h1>
+            <!-- auto start-->
+            <div class="col-lg-2 col-md-3 col-sm-4 main-makes hidden-xs">
+                <?php echo $this->partial('index/mainPageTemplates/verticalLogos.phtml', [
+                    'makes' => $this->makes,
+                    'screenSize' => 'lg',
+                    'h1' => 'Авто',
+                ]);
+                ?>
             </div>
-            <?php 
-            if ($this->makes === (array) $this->makes && count($this->makes) > 0) :
-                foreach ($this->makes as $key => $value) : ?>
-                    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 col-xxs-6 text-center">
-                        <div class="logo_block inline">
-                            <a class="<?= $value; ?>" href="#"></a>
-                        </div>
+            <div class="col-xs-12 col-xxs-12 main-makes visible-xs">
+                <?php echo $this->partial('index/mainPageTemplates/verticalLogos.phtml', [
+                    'makes' => $this->makes,
+                    'screenSize' => 'xs',
+                    'h1' => 'Авто',
+                ]);
+                ?>
+            </div>
+            <!-- auto end-->
+            <!-- disk start -->
+            <div class="col-lg-2 col-md-3 col-sm-4 main-makes hidden-xs">
+                <?php echo $this->partial('index/mainPageTemplates/verticalLogos.phtml', [
+                    'makes' => $this->makes,
+                    'screenSize' => 'lg',
+                    'h1' => 'Бренды',
+                ]);
+                ?>
+            </div>
+            <div class="col-xs-12 col-xxs-12 main-makes visible-xs">
+                <?php echo $this->partial('index/mainPageTemplates/verticalLogos.phtml', [
+                    'makes' => $this->makes,
+                    'screenSize' => 'xs',
+                    'h1' => 'Бренды',
+                ]);
+                ?>
+            </div>
+            <!-- disk end -->
+            <!-- horizontal blocks start-->
+            <div class="col-lg-8 col-md-6 col-sm-4 hidden-xs">
+                <div class="row">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxs-12"><h1>Шины</h1></div>
                     </div>
-            <?php 
-                endforeach;
-            endif; ?>
+                    <?php
+                        $dataSizeArray = [
+                            'lg' => [
+                                'visible-lg','hidden-sm hidden-md'
+                            ],
+                            'md' => [
+                                'visible-md','hidden-sm hidden-lg'
+                            ],
+                            'sm' => [
+                                'visible-sm','hidden-md hidden-lg'
+                            ],
+                        ];
+
+                        foreach ($dataSizeArray as $screenSize => $className) : ?>
+                            <div class="<?= $className[0]; ?> hidden-xs <?= $className[1]; ?>">
+                                <?php echo $this->partial('index/mainPageTemplates/horizontalLogos.phtml', [
+                                    'makes' => $this->makes,
+                                    'screenSize' => $screenSize,
+                                ]);
+                                ?>
+                            </div>
+                        <?php endforeach;
+                    ?>
+                </div>
+                <div class="row">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxs-12"><h1>Диски</h1></div>
+                    </div>
+                    <?php
+                        foreach ($dataSizeArray as $screenSize => $className) : ?>
+                        <div class="<?= $className[0]; ?> hidden-xs <?= $className[1]; ?>">
+                            <?php echo $this->partial('index/mainPageTemplates/horizontalLogos.phtml', [
+                                'makes' => $this->makes,
+                                'screenSize' => $screenSize,
+                            ]);
+                            ?>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+                <div class="row">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxs-12"><h1>Проставки</h1></div>
+                    </div>
+                    <?php
+                    foreach ($dataSizeArray as $screenSize => $className) : ?>
+                        <div class="<?= $className[0]; ?> hidden-xs <?= $className[1]; ?>">
+                            <?php echo $this->partial('index/mainPageTemplates/horizontalLogos.phtml', [
+                                'makes' => $this->makes,
+                                'screenSize' => $screenSize,
+                            ]);
+                            ?>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+            <div class="visible-xs">
+                <div class="col-xs-12 col-xxs-12 main-makes visible-xs">
+                    <?php echo $this->partial('index/mainPageTemplates/verticalLogos.phtml', [
+                        'makes' => $this->makes,
+                        'screenSize' => 'xs',
+                        'h1' => 'Шины',
+                    ]);
+                    ?>
+                </div>
+                <div class="col-xs-12 col-xxs-12 main-makes visible-xs">
+                    <?php echo $this->partial('index/mainPageTemplates/verticalLogos.phtml', [
+                        'makes' => $this->makes,
+                        'screenSize' => 'xs',
+                        'h1' => 'Диски',
+                    ]);
+                    ?>
+                </div>
+                <div class="col-xs-12 col-xxs-12 main-makes visible-xs">
+                    <?php echo $this->partial('index/mainPageTemplates/verticalLogos.phtml', [
+                        'makes' => $this->makes,
+                        'screenSize' => 'xs',
+                        'h1' => 'Проставки',
+                    ]);
+                    ?>
+                </div>
+            </div>
         </div>
     </div>
 </div>

@@ -1,0 +1,58 @@
+<?php
+
+    if ($this->screenSize != 'xs') { /* if non bootstrap xss drow verical */
+        if ($this->makes === (array)$this->makes && count($this->makes) > 0) {
+            $i = 0;
+            ?>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxs-12 text-center">
+                <h1><?= $this->h1; ?></h1>
+            </div>
+            <?php
+            foreach ($this->makes as $key => $value) :
+                if ($i > 6) :
+                    break;
+                endif; ?>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxs-12 text-center">
+                    <?php
+                    $x = $value['x'];
+                    $background = "background-image: url('../public/images/avto_makes.png');";
+                    $background .= "background-size: cover;";
+                    $background .= "background-position: -" . $x . "px 0";
+                    ?>
+                    <div class="logo_block inline main-auto-img" style="<?= $background; ?>">
+                        <a class="" href="#" title="<?= $value['name']; ?>"></a>
+                    </div>
+                </div>
+                <?php $i++;
+            endforeach;
+        }
+    } else {
+            if ($this->makes === (array) $this->makes && count($this->makes) > 0) {
+                $i = 0;
+                ?>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxs-12 text-center dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <h1><?= $this->h1; ?></h1>
+                </div>
+                <ul class="dropdown-menu">
+                    <?php
+                    foreach ($this->makes as $key => $value) :
+                        if ($i > 6) :
+                            break;
+                        endif; ?>
+                        <div class="col-xs-4 col-xxs-4 text-center">
+                            <?php
+                            $x = $value['x'];
+                            $background = "background-image: url('../public/images/avto_makes.png');";
+                            $background .= "background-size: cover;";
+                            $background .= "background-position: -" . $x . "px 0";
+                            ?>
+                            <div class="logo_block inline main-auto-img" style="<?= $background; ?>">
+                                <a class="" href="#" title="<?= $value['name']; ?>"></a>
+                            </div>
+                        </div>
+                        <?php $i++;
+                    endforeach; ?>
+                </ul>
+            <? }
+        }
+?>
