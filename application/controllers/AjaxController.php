@@ -2,11 +2,11 @@
 
 class AjaxController extends Zend_Controller_Action
 {
-    public function ajaxAction() {
+    public function ajaxAction()
+    {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $user = new User();
-
 
         $params = $this->getAllParams();
         if (isset($params['case'])) {
@@ -35,6 +35,10 @@ class AjaxController extends Zend_Controller_Action
                     $this->result = $user->saveSettingsData($params);
                     break;
 
+                case 'search':
+                    $this->result = $this->searchRequest($params);
+                    break;
+
                 default:
                     $this->result = [];
                     break;
@@ -45,6 +49,30 @@ class AjaxController extends Zend_Controller_Action
         echo json_encode($this->result);
     }
 
+    protected function searchRequest($params)
+    {
+        try {
+            /* getting some data from db */
+            $search = new Search();
+            $data = $search->getDummyData();
+            $jsonArray = [];
+            if (is_array($data)) {
+                foreach ($data as $key => $value) {
+                    $jsonArray[$value['id']] = $value;
+                }
+            }
+            $jsonData = [
+                'status' => 1,
+                'adverts' => $jsonArray
+            ];
+
+        } catch (Exception $e) {
+            $jsonData = ['status' => 0];
+            /* log error entry */
+        }
+
+        return $jsonData;
+    }
 }
 
 ?>
