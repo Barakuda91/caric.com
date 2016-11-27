@@ -38,7 +38,60 @@ var PageObj = {
         $('#fog-email').click(function () {
             $(this).css('border-color', '');
         });
+
+        /* Search events */
+        $('.main_search_input').on('keyup', function () {
+            var value = $(this).val();
+            if (value.length) {
+                $('.main_slider_wrap').addClass('hidden-search');
+                $('.main_search_block').addClass('show-search')
+                $('#main_search_input').focus();
+                $('#main_search_input').val(value);
+            }
+        });
+        $('#main_search_input').on('keyup',function (event) {
+            var value = $(this).val();
+            if (event.keyCode == 13) {
+                PageObj.sendSearchRequest(value);
+            }
+        });
+        $('.subbmit-search-request').on('click',function () {
+            var value = $(this).closest('div').find('input').val();
+            if (value.length) {
+                PageObj.sendSearchRequest(value);
+            }
+        });
+    },
+    sendSearchRequest: function (value) {
+        if (PageObj.ajaxSendFlag) {
+            PageObj.ajaxSendFlag = false;
+            $.ajax({
+                url: '/ajax',
+                data:{
+                    case: 'search',
+                    val: value
+                },
+                type: 'post',
+                dataType: 'json',
+                success: function (result) {
+                    if (result.status && Object.keys(result.adverts).length) {
+                        $('.main-search-tips').hide();
+                        PageObj.generateHtmlFromSearchResults(result.adverts);
+                    } else {
+                        console.log('NO DATA');
+                    }
+                },
+                complete : function () {
+                    PageObj.ajaxSendFlag = true;
+                }
+            });
+        }
+    },
+    generateHtmlFromSearchResults: function (adverts) {
+        var templateResults = '';
         
+        $('#main_page_logos_div').hide();
+
     },
     cleanErrorRegBlock: function () {
         $('#error-reg-block').html('');
