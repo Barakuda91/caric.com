@@ -64,10 +64,9 @@
         <div class="row">
             <!-- auto start-->
             <div class="col-lg-4 col-md-4 col-sm-4">
-                <div class="col-lg-6 col-md-6 col-sm-6 main-makes hidden-xs"> <?php
-                    var_dump($this->top); ?>
+                <div class="col-lg-6 col-md-6 col-sm-6 main-makes hidden-xs">
                     <?php echo $this->partial('index/mainPageTemplates/verticalLogos.phtml', [
-                        'makes' => $this->makes,
+                        'makes' => $this->topTires,
                         'screenSize' => 'lg',
                         'maxSize' => 6,
                         'h1' => 'Шины',
@@ -77,7 +76,7 @@
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6 main-makes hidden-xs">
                     <?php echo $this->partial('index/mainPageTemplates/verticalLogos.phtml', [
-                        'makes' => $this->makes,
+                        'makes' => $this->topWheels,
                         'screenSize' => 'lg',
                         'maxSize' => 6,
                         'h1' => 'Диски',
@@ -89,7 +88,7 @@
             <div class="col-lg-4 col-md-4 col-sm-4">
                 <div class="col-lg-12 col-md-12 col-sm-12 main-makes hidden-xs">
                     <?php echo $this->partial('index/mainPageTemplates/verticalLogos.phtml', [
-                        'makes' => $this->makes,
+                        'makes' => $this->topAuto,
                         'screenSize' => 'lg',
                         'double' => 1,
                         'maxSize' => 13,
@@ -103,7 +102,7 @@
             <div class="col-lg-4 col-md-4 col-sm-4">
                 <div class="col-lg-6 col-md-6 col-sm-6 main-makes hidden-xs">
                     <?php echo $this->partial('index/mainPageTemplates/verticalLogos.phtml', [
-                        'makes' => $this->makes,
+                        'makes' => $this->topSpaces,
                         'screenSize' => 'lg',
                         'maxSize' => 6,
                         'h1' => 'Проставки',
@@ -113,7 +112,7 @@
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6 main-makes hidden-xs">
                     <?php echo $this->partial('index/mainPageTemplates/verticalLogos.phtml', [
-                        'makes' => $this->makes,
+                        'makes' => $this->topBrands,
                         'screenSize' => 'lg',
                         'maxSize' => 6,
                         'h1' => 'Бренды',
@@ -124,7 +123,7 @@
             </div>
             <div class="col-xs-12 col-xxs-12 main-makes visible-xs">
                 <?php echo $this->partial('index/mainPageTemplates/verticalLogos.phtml', [
-                    'makes' => $this->makes,
+                    'makes' => $this->topTires,
                     'screenSize' => 'xs',
                     'h1' => 'Шины',
                     'href' => '/search/tire'
@@ -136,7 +135,7 @@
 
             <div class="col-xs-12 col-xxs-12 main-makes visible-xs">
                 <?php echo $this->partial('index/mainPageTemplates/verticalLogos.phtml', [
-                    'makes' => $this->makes,
+                    'makes' => $this->topWheels,
                     'screenSize' => 'xs',
                     'h1' => 'Диски',
                     'href' => '/search/disk'
@@ -148,7 +147,7 @@
 
             <div class="col-xs-12 col-xxs-12 main-makes visible-xs">
                 <?php echo $this->partial('index/mainPageTemplates/verticalLogos.phtml', [
-                    'makes' => $this->makes,
+                    'makes' => $this->topAuto,
                     'screenSize' => 'xs',
                     'h1' => 'Авто',
                     'href' => '/search/auto'
@@ -160,7 +159,7 @@
 
             <div class="col-xs-12 col-xxs-12 main-makes visible-xs">
                 <?php echo $this->partial('index/mainPageTemplates/verticalLogos.phtml', [
-                    'makes' => $this->makes,
+                    'makes' => $this->topSpaces,
                     'screenSize' => 'xs',
                     'h1' => 'Проставки',
                     'href' => '/search/sets'
@@ -171,7 +170,7 @@
             <!-- sets start -->
             <div class="col-xs-12 col-xxs-12 main-makes visible-xs">
                 <?php echo $this->partial('index/mainPageTemplates/verticalLogos.phtml', [
-                    'makes' => $this->makes,
+                    'makes' => $this->topBrands,
                     'screenSize' => 'xs',
                     'h1' => 'Бренды',
                     'href' => '/search/brend'

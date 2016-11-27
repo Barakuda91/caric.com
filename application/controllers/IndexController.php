@@ -33,10 +33,21 @@ class IndexController extends Zend_Controller_Action
     // index action
     public function indexAction()
     {
-        $resourses = new Resourses;
-        $makes = $resourses->getListMakes();
-        $this->view->makes      = $makes;
-        $this->view->top   = $this->config->index->top->toArray();
+        $resourses  = new Resourses;
+
+        $topTires   = $this->config->index->top->tires->toArray();
+        $topWheels  = $this->config->index->top->wheels->toArray();
+        $topBrands  = $this->config->index->top->brands->toArray();
+        $topSpaces  = $this->config->index->top->spaces->toArray();
+
+        $topAuto = $resourses->getManufactureList('car', $this->config->index->top->auto->toArray());
+        
+        $this->view->topAuto    = $topAuto;
+        $this->view->topTires   = $topTires;
+        $this->view->topWheels  = $topWheels;
+        $this->view->topBrands  = $topBrands;
+        $this->view->topSpaces  = $topSpaces;
+
     }
 
     /* personal cab data */

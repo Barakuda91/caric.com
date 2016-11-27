@@ -15,25 +15,25 @@
                     if ($this->double) : ?>
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 col-xxs-12 text-center">
                             <?php
-                            $x = $value['x'];
-                            $background = "background-image: url('../public/images/avto_makes.png');";
-                            $background .= "background-size: cover;";
+                            $x = ($value['img_position']*100)-100;
+                            $background = "background-image: url('../public/images/avto_makes.png'); ";
+                            $background .= "background-size: cover; ";
                             $background .= "background-position: -" . $x . "px 0";
                             ?>
                             <div class="logo_block inline main-auto-img" style="<?= $background; ?>">
-                                <a class="" href="#" title="<?= $value['name']; ?>"></a>
+                                <a class="<?= $value['img_position'];?>" href="#" title="<?= $value['title']; ?>"></a>
                             </div>
                         </div>
                     <?php else : ?>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxs-12 text-center">
                             <?php
-                            $x = $value['x'];
+                            $x = ($value['img_position']*100)-100;
                             $background = "background-image: url('../public/images/avto_makes.png');";
                             $background .= "background-size: cover;";
                             $background .= "background-position: -" . $x . "px 0";
                             ?>
                             <div class="logo_block inline main-auto-img" style="<?= $background; ?>">
-                                <a class="" href="#" title="<?= $value['name']; ?>"></a>
+                                <a class="" href="#" title="<?= $value['title']; ?>"></a>
                             </div>
                         </div>
                     <?php endif; ?>
@@ -60,13 +60,13 @@
                     endif; ?>
                     <li class="col-xs-4 col-xxs-4 text-center">
                         <?php
-                        $x = $value['x'];
+                        $x = ($value['img_position']*100)-100;
                         $background = "background-image: url('../public/images/avto_makes.png');";
                         $background .= "background-size: cover;";
                         $background .= "background-position: -" . $x . "px 0";
                         ?>
                         <div class="logo_block inline main-auto-img" style="<?= $background; ?>">
-                            <a class="" href="#" title="<?= $value['name']; ?>"></a>
+                            <a class="" href="#" title="<?= $value['title']; ?>"></a>
                         </div>
                     </li>
                     <?php if ($i == 6) : ?>

@@ -2,11 +2,11 @@
 return [
     'index' => [
         'top' => [
-            'tyres' => [],
+            'tires' => [],
             'wheels' => [],
             'auto'  => [
                 'BMW',
-                'VAZ',
+                'LADA',
                 'TOYOTA',
                 'VOLKSWAGEN',
                 'OPEL',
@@ -20,7 +20,8 @@ return [
                 'CHEVROLET',
                 'MITSUBISHI',
             ],
-            'brands' => []
+            'brands' => [],
+            'spaces' => []
         ]
     ]
 ];

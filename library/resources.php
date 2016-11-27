@@ -1,13 +1,28 @@
 <?php
 class Resourses
 {
-    public function getListMakes()
+    /**
+     * Возвращает массив производителей
+     *
+     * @param string - тип производителя
+     * @param array - массив топов
+     * @return array
+     */
+    public function getManufactureList($type, $makes = null)
     {
         $dbAdapter = Zend_Db_Table::getDefaultAdapter();
-        $sql = "SELECT `id`, `name`, `x` FROM `makes`";
-        $result = $dbAdapter->query($sql)->fetchAll();
-
-        return $result;
+        if($makes) {
+            $where = ' `title` IN (';
+            foreach($makes as $mark) {
+                $where .= " '$mark',";
+            }
+            $where = substr($where, 0, -1);
+            $where .= ')';
+            $sql = "SELECT `id`, `title`, `img_position` FROM `manufacture` WHERE $where";
+        } else { // отдаём весь список мануфактуры
+            $sql = "SELECT `id`, `title`, `img_position` FROM `manufacture` WHERE `type` = '$type'";
+        }
+        return $dbAdapter->query($sql)->fetchAll();
     }
 
 }
