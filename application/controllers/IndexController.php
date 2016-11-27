@@ -13,6 +13,7 @@ class IndexController extends Zend_Controller_Action
         ini_set('display_startup_errors', 1);
 
         $auth = Zend_Auth::getInstance();
+        $this->config = new Zend_Config(include APPLICATION_PATH . '/configs/front.php', false);
 
         if ($auth->hasIdentity()) {
             $user = new User();
@@ -34,8 +35,8 @@ class IndexController extends Zend_Controller_Action
     {
         $resourses = new Resourses;
         $makes = $resourses->getListMakes();
-        $this->view->makes = $makes;
-
+        $this->view->makes      = $makes;
+        $this->view->top   = $this->config->index->top->toArray();
     }
 
     /* personal cab data */

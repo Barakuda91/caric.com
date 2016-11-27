@@ -64,7 +64,8 @@
         <div class="row">
             <!-- auto start-->
             <div class="col-lg-4 col-md-4 col-sm-4">
-                <div class="col-lg-6 col-md-6 col-sm-6 main-makes hidden-xs">
+                <div class="col-lg-6 col-md-6 col-sm-6 main-makes hidden-xs"> <?php
+                    var_dump($this->top); ?>
                     <?php echo $this->partial('index/mainPageTemplates/verticalLogos.phtml', [
                         'makes' => $this->makes,
                         'screenSize' => 'lg',
@@ -168,7 +169,6 @@
             </div>
             <!-- dist end -->
             <!-- sets start -->
-
             <div class="col-xs-12 col-xxs-12 main-makes visible-xs">
                 <?php echo $this->partial('index/mainPageTemplates/verticalLogos.phtml', [
                     'makes' => $this->makes,
