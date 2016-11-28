@@ -5,39 +5,6 @@ class IndexController extends Zend_Controller_Action
     public $autorized;
     public $autorizeEmailId;
 
-    public static $makes = [
-        'ac' => 'ac',
-        'acura' => 'acura',
-        'audi' => 'audi',
-        'aromeo' => 'aromeo',
-        'alpina' => 'alpina',
-        'as_martin' => 'as_martin',
-        'bmw' => 'bmw',
-        'bentley' => 'bentley',
-        'bjc' => 'bjc',
-        'tatra' => 'tatra',
-        'bugatti' => 'bugatti',
-        'venturi' => 'venturi',
-        'wall' => 'wall',
-        'venturi' => 'venturi',
-        'byd' => 'byd',
-        'cadilac' => 'cadilac',
-        'chana' => 'chana',
-        'shkoda' => 'shkoda',
-        'suzuki' => 'suzuki',
-        'chevrolet' => 'chevrolet',
-        'volvo' => 'volvo',
-        'daimler' => 'daimler',
-        'daikin' => 'daikin',
-        'eagle' => 'eagle',
-        'ford' => 'ford',
-        'ferrary' => 'ferrary',
-        'ducati' => 'ducati',
-        'iveco' => 'iveco',
-        'fiat' => 'fiat',
-        'chrisler' => 'chrisler',
-        'geely' => 'geely',
-    ];
     
     public function init()
     {
@@ -46,6 +13,7 @@ class IndexController extends Zend_Controller_Action
         ini_set('display_startup_errors', 1);
 
         $auth = Zend_Auth::getInstance();
+        $this->config = new Zend_Config(include APPLICATION_PATH . '/configs/front.php', false);
 
         if ($auth->hasIdentity()) {
             $user = new User();
@@ -65,7 +33,21 @@ class IndexController extends Zend_Controller_Action
     // index action
     public function indexAction()
     {
-        $this->view->makes = self::$makes;
+        $resourses  = new Resourses;
+
+        $topTires   = $this->config->index->top->tires->toArray();
+        $topWheels  = $this->config->index->top->wheels->toArray();
+        $topBrands  = $this->config->index->top->brands->toArray();
+        $topSpaces  = $this->config->index->top->spaces->toArray();
+
+        $topAuto = $resourses->getManufactureList('car', $this->config->index->top->auto->toArray());
+
+        $this->view->topAuto    = $topAuto;
+        $this->view->topTires   = $topTires;
+        $this->view->topWheels  = $topWheels;
+        $this->view->topBrands  = $topBrands;
+        $this->view->topSpaces  = $topSpaces;
+
     }
 
     /* personal cab data */

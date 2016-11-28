@@ -1,0 +1,49 @@
+<?php
+    switch ($this->screenSize) {
+        case 'lg':
+            $maxCount = 12;
+            break;
+
+        case 'md':
+            $maxCount = 8;
+            break;
+
+        case 'sm':
+            $maxCount = 4;
+            break;
+
+        default:
+            $maxCount = 12;
+            break;
+    }
+
+
+    if ($this->makes === (array) $this->makes && count($this->makes) > 0) :
+        $i = 1;
+        foreach ($this->makes as $key => $value) : ?>
+            <?php if ($i > $maxCount) :
+                break;
+            endif; ?>
+            <?php if ($i == 1 || $i == ($maxCount/2 + 1)) :?>
+                <div class="row">
+            <?php endif; ?>
+            <div class="col-lg-2 col-md-3 col-sm-6 col-xs-12 col-xxs-12 text-center">
+                <?php
+                $x = $value['x'];
+                $background = "background-image: url('../public/images/avto_makes.png');";
+                $background .= "background-size: cover;";
+                $background .= "background-position: -" . $x . "px 0";
+                ?>
+                <div class="logo_block inline" style="<?= $background; ?>">
+                    <a class="" href="#" title="<?= $value['name']; ?>"></a>
+                </div>
+            </div>
+            <?php if ($i == ($maxCount/2) || $i == $maxCount) :?>
+                </div>
+            <?php endif; ?>
+
+            <?php $i++;
+        endforeach;
+    endif;
+
+?>

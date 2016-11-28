@@ -1,0 +1,85 @@
+<?php
+    switch ($this->screenSize) :
+        case 'lg':
+            if ($this->makes === (array)$this->makes && count($this->makes) > 0) {
+                $i = 0;
+                ?>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxs-12 text-center bottom-line">
+                    <h1><?= $this->h1; ?></h1>
+                </div>
+                <?php
+                foreach ($this->makes as $key => $value) :
+                    if ($i > $this->maxSize) :
+                        break;
+                    endif;
+                    if ($this->double) : ?>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 col-xxs-12 text-center">
+                            <?php
+                            $x = ($value['img_position']*100)-100;
+                            $background = "background-image: url('../public/images/avto_makes.png'); ";
+                            $background .= "background-size: cover; ";
+                            $background .= "background-position: -" . $x . "px 0";
+                            ?>
+                            <div class="logo_block inline main-auto-img" style="<?= $background; ?>">
+                                <a class="<?= $value['img_position'];?>" href="#" title="<?= $value['title']; ?>"></a>
+                            </div>
+                        </div>
+                    <?php else : ?>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxs-12 text-center">
+                            <?php
+                            $x = ($value['img_position']*100)-100;
+                            $background = "background-image: url('../public/images/avto_makes.png');";
+                            $background .= "background-size: cover;";
+                            $background .= "background-position: -" . $x . "px 0";
+                            ?>
+                            <div class="logo_block inline main-auto-img" style="<?= $background; ?>">
+                                <a class="" href="#" title="<?= $value['title']; ?>"></a>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                    <?php $i++;
+                endforeach; ?>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxs-12 text-center bottom-line">
+                    <a href="<?= $this->href; ?>" target="_blank">Все ...</a>
+                </div>
+            <?php }
+            break;
+
+        case 'xs':
+            if ($this->makes === (array) $this->makes && count($this->makes) > 0) :
+            $i = 0;
+            ?>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxs-12 text-center dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                <h1><?= $this->h1; ?></h1>
+            </div>
+            <ul class="dropdown-menu">
+                <?php
+                foreach ($this->makes as $key => $value) :
+                    if ($i > 6) :
+                        break;
+                    endif; ?>
+                    <li class="col-xs-4 col-xxs-4 text-center">
+                        <?php
+                        $x = ($value['img_position']*100)-100;
+                        $background = "background-image: url('../public/images/avto_makes.png');";
+                        $background .= "background-size: cover;";
+                        $background .= "background-position: -" . $x . "px 0";
+                        ?>
+                        <div class="logo_block inline main-auto-img" style="<?= $background; ?>">
+                            <a class="" href="#" title="<?= $value['title']; ?>"></a>
+                        </div>
+                    </li>
+                    <?php if ($i == 6) : ?>
+                    <li class="col-xs-4 col-xxs-4 text-center">
+                        <div class="" style="height: 100px;padding-top: 50px;">
+                            <a style="margin-top:40px;" href="<?= $this->href; ?>" target="_self">Все...</a>
+                        </div>
+                    </li>
+                    <?php endif; ?>
+                    <?php $i++;
+                endforeach; ?>
+            </ul>
+            <?php
+            break;
+         endif;
+    endswitch;

@@ -13,14 +13,13 @@
                 </div>
                 <div class="form-group"></div>
             </div>
-
             <div class="col-lg-4 col-md-6 col-sm-6 col-xs-8 col-xxs-10 col-xxs-push-1 col-xs-push-2 col-sm-push-3 col-md-push-3 col-lg-push-4">
                 <div class="m_srch">
                     <div id="imaginary_container">
                         <div class="input-group stylish-input-group">
-                            <input type="text" class="form-control"  placeholder="Поиск" >
+                            <input type="text" class="form-control main_search_input"  placeholder="Поиск">
                             <span class="input-group-addon">
-                                <button type="submit">
+                                <button type="submit" class="subbmit-search-request">
                                     <span class="fa fa-search"></span>
                                 </button>
                             </span>
@@ -31,27 +30,155 @@
         </div>
     </div>
 </div>
-<!-- SLIDER END-->
-<!-- GALLERY BLOCK -->
-<div class="gallery_wrap panel-body">
+<div class="main_search_block">
     <div class="container">
-        <div class="row">
+        <div class="row" style="position:relative;">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxs-12">
-               <h1>
-                   Поиск по марке автомобиля
-               </h1>
-            </div>
-            <?php 
-            if ($this->makes === (array) $this->makes && count($this->makes) > 0) :
-                foreach ($this->makes as $key => $value) : ?>
-                    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 col-xxs-6 text-center">
-                        <div class="logo_block inline">
-                            <a class="<?= $value; ?>" href="#"></a>
+                <div class="input-group stylish-input-group search-input-div">
+                    <input type="text" class="" id="main_search_input"  placeholder="Ищем по марке, бренду авто, шинам, дискам, проставкам">
+                    <span class="input-group-addon">
+                        <button type="submit" class="subbmit-search-request">
+                            <span class="fa fa-lg fa-search"></span>
+                        </button>
+                    </span>
+                    <div class="main-search-tips">
+                        <div class="search-tips-row">
+                            <span>Результат подбора 1</span>
+                        </div>
+                        <div class="search-tips-row">
+                            <span>Результат подбора 2</span>
+                        </div>
+                        <div class="search-tips-row">
+                            <span>Результат подбора 3</span>
                         </div>
                     </div>
-            <?php 
-                endforeach;
-            endif; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- SLIDER END-->
+<!-- GALLERY BLOCK -->
+<div class="gallery_wrap panel-body" id="main_page_logos_div">
+    <div class="container">
+        <div class="row">
+            <!-- auto start-->
+            <div class="col-lg-4 col-md-4 col-sm-4">
+                <div class="col-lg-6 col-md-6 col-sm-6 main-makes hidden-xs">
+                    <?php echo $this->partial('index/mainPageTemplates/verticalLogos.phtml', [
+                        'makes' => $this->topTires,
+                        'screenSize' => 'lg',
+                        'maxSize' => 6,
+                        'h1' => 'Шины',
+                        'href' => '/search/tire'
+                    ]);
+                    ?>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 main-makes hidden-xs">
+                    <?php echo $this->partial('index/mainPageTemplates/verticalLogos.phtml', [
+                        'makes' => $this->topWheels,
+                        'screenSize' => 'lg',
+                        'maxSize' => 6,
+                        'h1' => 'Диски',
+                        'href' => '/search/disk'
+                    ]);
+                    ?>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4">
+                <div class="col-lg-12 col-md-12 col-sm-12 main-makes hidden-xs">
+                    <?php echo $this->partial('index/mainPageTemplates/verticalLogos.phtml', [
+                        'makes' => $this->topAuto,
+                        'screenSize' => 'lg',
+                        'double' => 1,
+                        'maxSize' => 13,
+                        'h1' => 'Авто',
+                        'href' => '/search/auto'
+                    ]);
+                    ?>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-4 col-sm-4">
+                <div class="col-lg-6 col-md-6 col-sm-6 main-makes hidden-xs">
+                    <?php echo $this->partial('index/mainPageTemplates/verticalLogos.phtml', [
+                        'makes' => $this->topSpaces,
+                        'screenSize' => 'lg',
+                        'maxSize' => 6,
+                        'h1' => 'Проставки',
+                        'href' => '/search/sets'
+                    ]);
+                    ?>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 main-makes hidden-xs">
+                    <?php echo $this->partial('index/mainPageTemplates/verticalLogos.phtml', [
+                        'makes' => $this->topBrands,
+                        'screenSize' => 'lg',
+                        'maxSize' => 6,
+                        'h1' => 'Бренды',
+                        'href' => '/search/brend'
+                    ]);
+                    ?>
+                </div>
+            </div>
+            <div class="col-xs-12 col-xxs-12 main-makes visible-xs">
+                <?php echo $this->partial('index/mainPageTemplates/verticalLogos.phtml', [
+                    'makes' => $this->topTires,
+                    'screenSize' => 'xs',
+                    'h1' => 'Шины',
+                    'href' => '/search/tire'
+                ]);
+                ?>
+            </div>
+            <!-- auto end-->
+            <!-- brend start -->
+
+            <div class="col-xs-12 col-xxs-12 main-makes visible-xs">
+                <?php echo $this->partial('index/mainPageTemplates/verticalLogos.phtml', [
+                    'makes' => $this->topWheels,
+                    'screenSize' => 'xs',
+                    'h1' => 'Диски',
+                    'href' => '/search/disk'
+                ]);
+                ?>
+            </div>
+            <!-- brend end -->
+            <!-- tires start -->
+
+            <div class="col-xs-12 col-xxs-12 main-makes visible-xs">
+                <?php echo $this->partial('index/mainPageTemplates/verticalLogos.phtml', [
+                    'makes' => $this->topAuto,
+                    'screenSize' => 'xs',
+                    'h1' => 'Авто',
+                    'href' => '/search/auto'
+                ]);
+                ?>
+            </div>
+            <!-- tires end -->
+            <!-- disk start -->
+
+            <div class="col-xs-12 col-xxs-12 main-makes visible-xs">
+                <?php echo $this->partial('index/mainPageTemplates/verticalLogos.phtml', [
+                    'makes' => $this->topSpaces,
+                    'screenSize' => 'xs',
+                    'h1' => 'Проставки',
+                    'href' => '/search/sets'
+                ]);
+                ?>
+            </div>
+            <!-- dist end -->
+            <!-- sets start -->
+            <div class="col-xs-12 col-xxs-12 main-makes visible-xs">
+                <?php echo $this->partial('index/mainPageTemplates/verticalLogos.phtml', [
+                    'makes' => $this->topBrands,
+                    'screenSize' => 'xs',
+                    'h1' => 'Бренды',
+                    'href' => '/search/brend'
+                ]);
+                ?>
+            </div>
+            <!-- sets end -->
+
         </div>
     </div>
 </div>
