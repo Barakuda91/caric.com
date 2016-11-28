@@ -41,7 +41,7 @@ class IndexController extends Zend_Controller_Action
         $topSpaces  = $this->config->index->top->spaces->toArray();
 
         $topAuto = $resourses->getManufactureList('car', $this->config->index->top->auto->toArray());
-        
+
         $this->view->topAuto    = $topAuto;
         $this->view->topTires   = $topTires;
         $this->view->topWheels  = $topWheels;

@@ -6,7 +6,7 @@ return [
             'wheels' => [],
             'auto'  => [
                 'BMW',
-                'LADA',
+                'NISSAN',
                 'TOYOTA',
                 'VOLKSWAGEN',
                 'OPEL',
