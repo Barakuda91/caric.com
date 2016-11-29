@@ -92,6 +92,25 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         );
        
         $router->addRoute('testCall', $routeTest);
+
+        /* Set action for render main page reulst */
+        $data = [
+            'tires', 'wheels', 'makes', 'spacers', 'brands'
+        ];
+        $i = 0;
+        foreach ($data as $key => $item) {
+            $urlRender = new Zend_Controller_Router_Route_Regex(
+                '(' . $item . ')',
+                [
+                    'controller' => 'index',
+                    'action' => 'rendermain',
+                    'urlParam' => $item,
+                ]
+            );
+            $router->addRoute('mainpage_' . $i, $urlRender);
+            $i++;
+        }
+
     }
 }
 
