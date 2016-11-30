@@ -15,8 +15,8 @@ CREATE TABLE IF NOT EXISTS `users` (
   KEY `email_2` (`email`)
 );
 INSERT INTO `users` (`id`, `name`, `role_id`, `password`, `email`, `date`, `contact_email`, `contact_phone`, `contact_profile_1`, `contact_profile_2`) VALUES
-('', 'Padavan', 10, '$3M16C4djjygQ', 'padavanzp1@gmail.com', 1472070707, 'rtyrty@qwe.we5', '53453453', 'https://vk.com/id=2', 'https://www.drive2.ru/r/mitsubishi/662517/'),
-('', 'Barakuda', 10, '$3M16C4djjygQ', 'barakudatm@gmail.com', 1472070707, 'rtyrty@qwe.we5', '53453453', 'https://vk.com/id=1', 'https://www.drive2.ru/r/mitsubishi/662517/');
+('', 'Padavan', 10, '$3M16C4djjygQ', 'padavanzp1@gmail.com', 1472070707, 'rtyrty@qwe.we5', '53453453', 'https://vk.com/id=2', 'https://www.drive2.ru/r/opel/857268/'),
+('', 'Barakuda', 10, '$3M16C4djjygQ', 'barakudatm@gmail.com', 1472070707, 'rtyrty@qwe.we5', '53453453', 'https://vk.com/id=1', 'https://www.drive2.ru/r/volvo/1327899/');
 
 
 DROP TABLE IF EXISTS models;
@@ -78,11 +78,11 @@ CREATE TABLE advert (
 `price` INT(11) DEFAULT 0 NOT NULL,
 PRIMARY KEY (id)
 ) COMMENT = 'таблица объявлений';
-INSERT INTO advert (`title`,`description`,`model_id`,`manufacture_id`,`price`) VALUES
-('Продам диски крутые r15','купи самые крутые диски, ёпта, тебе что впадлу,ска??',10,20,400),
-('В продаже отличные проставки','Простаки переходные с 4х100 в 4х108',51,42,9000),
-('проставки 5х120 10mm','проставки',110,29,6700),
-('диски на опель астра','оригинал, штампы',71,23,7899);
+INSERT INTO advert (`title`,`description`,`model_id`,`manufacture_id`,`user_id`,`price`) VALUES
+('Продам диски крутые r15','купи самые крутые диски, ёпта, тебе что впадлу,ска??',10,20,1,400),
+('В продаже отличные проставки','Простаки переходные с 4х100 в 4х108',51,42,2,9000),
+('проставки 5х120 10mm','проставки',110,29,2,6700),
+('диски на опель астра','оригинал, штампы',71,23,1,7899);
 
 
 
