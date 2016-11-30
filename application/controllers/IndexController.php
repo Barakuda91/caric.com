@@ -81,6 +81,8 @@ class IndexController extends Zend_Controller_Action
         }
 
         $this->_helper->viewRenderer('/mainpagetemplates/mainpagerender');
+
+
     }
 
     /* personal cab data */
