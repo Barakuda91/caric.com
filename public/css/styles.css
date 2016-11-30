@@ -624,4 +624,19 @@ div.bottom-line {
     border-bottom: 2px solid #FF7200;
 }
 
+a.personal-a {
+    color: #787878;
+}
+
+ul#main-line-menu li.active{
+    background-color: #ff7200;
+}
+ul#main-line-menu li.active a:hover {
+    background-color: #ff7200 !important;
+}
+ul#main-line-menu li.active a {
+    color: #ffffff;
+}
+
+
 

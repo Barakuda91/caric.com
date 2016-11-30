@@ -50,6 +50,41 @@ class IndexController extends Zend_Controller_Action
 
     }
 
+    /* render url data from main page 1 view */
+    public function rendermainAction()
+    {
+        switch ($this->getParam('urlParam')) {
+            case 'tires':
+                $this->view->data = ['tires'];
+                break;
+
+            case 'wheels':
+                $this->view->data = ['wheels'];
+                break;
+
+            case 'makes':
+                $this->view->data = ['makes'];
+                break;
+
+            case 'spacers':
+                $this->view->data = ['spacers'];
+                break;
+
+            case 'brands':
+                $this->view->data = ['brands'];
+                break;
+
+            default:
+                $data = ['makes'];
+                $this->view->data = $data;
+                break;
+        }
+
+        $this->_helper->viewRenderer('/mainpagetemplates/mainpagerender');
+
+
+    }
+
     /* personal cab data */
     public function personalAction()
     {

@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default no-margin">
+<nav class="navbar no-margin">
     <div class="container">
         <!-- mobile display -->
         <div class="navbar-header">
@@ -11,17 +11,27 @@
         </div>
         <!-- desktop display -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
+            <ul class="nav navbar-nav" id="main-line-menu">
                 <?php if (isset($this->userData->roleId) && $this->userData->roleId == User::ROLE_ADMIN) : ?>
                     <li>Admin</li>
                 <?php endif; ?>
-                <li <?= ($this->currentUrl == 'user') ? 'class="active"' : ""; ?>><a href="/user" >Личные Данные</a></li>
-                <li <?= ($this->currentUrl == 'user/adverts') ? 'class="active"' : ""; ?>><a href="/user/adverts">Обьявления</a></li>
-                <li <?= ($this->currentUrl == 'user/messages') ? 'class="active"' : ""; ?>><a href="/user/messages">Сообщения</a></li>
-                <li <?= ($this->currentUrl == 'user/settings') ? 'class="active"' : ""; ?>><a href="/user/settings">Настройки</a></li>
-                <li><a class="logout-user" href="javascript:void(0);">Выход</a></li>
+                <li <?= ($this->currentUrl == 'user') ? 'class="active"' : ""; ?>>
+                    <a class="personal-a" href="/user" >Личные Данные</a>
+                </li>
+                <li <?= ($this->currentUrl == 'user/adverts') ? 'class="active"' : ""; ?>>
+                    <a class="personal-a" href="/user/adverts">Обьявления</a>
+                </li>
+                <li <?= ($this->currentUrl == 'user/messages') ? 'class="active"' : ""; ?>>
+                    <a class="personal-a" href="/user/messages">Сообщения</a>
+                </li>
+                <li <?= ($this->currentUrl == 'user/settings') ? 'class="active"' : ""; ?>>
+                    <a class="personal-a" href="/user/settings">Настройки</a>
+                </li>
+                <li><a class="personal-a logout-user" href="javascript:void(0);">Выход</a></li>
             </ul>
 
         </div>
     </div>
 </nav>
+
+
