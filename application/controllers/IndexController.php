@@ -145,7 +145,7 @@ class IndexController extends Zend_Controller_Action
     {
         $urlParams = $this->getAllParams();
         $this->view->currentUrl = $urlParams[1] ? $urlParams[1] : 'user';
-        $html = $this->view->render('index/personalcab/userCabTopMenu.phtml');
+        $html = $this->view->render('index/personalcab/usercabtopmenu.phtml');
 
         return $html;
     }
