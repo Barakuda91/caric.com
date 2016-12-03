@@ -33,7 +33,7 @@ class IndexController extends Zend_Controller_Action
     // index action
     public function indexAction()
     {
-        $resourses  = new Resourses;
+        $resourses  = new Resourses($this->config);
 
         $topTires   = $this->config->index->top->tires->toArray();
         $topWheels  = $this->config->index->top->wheels->toArray();
@@ -53,36 +53,47 @@ class IndexController extends Zend_Controller_Action
     /* render url data from main page 1 view */
     public function rendermainAction()
     {
+        $resourses  = new Resourses($this->config);
+        $currentPage = 1;
+
         switch ($this->getParam('urlParam')) {
-            case 'tires':
-                $this->view->data = ['tires'];
-                break;
-
-            case 'wheels':
-                $this->view->data = ['wheels'];
-                break;
-
-            case 'makes':
-                $this->view->data = ['makes'];
-                break;
-
+            // разболтовка проставок
             case 'spacers':
-                $this->view->data = ['spacers'];
-                break;
+                $this->view->title = 'Виды проставок';
 
+            break;
+            // разболтовка дисков
+            case 'wheels':
+                $this->view->title = 'Виды дисков';
+                $type = 'wheel';
+            break;
+            // производители дисков
             case 'brands':
-                $this->view->data = ['brands'];
-                break;
+                $this->view->title = 'Производители дисков';
 
+            break;
+            // производители шин
+            case 'tires':
+                $this->view->title = 'Производители шин';
+                $type = 'tire';
+            break;
+            // производители автомобилей
+            case 'makes':
             default:
-                $data = ['makes'];
-                $this->view->data = $data;
-                break;
+                $this->view->title = 'Производители автомобилей';
+                $type = 'car';
+            break;
+        }
+
+        if($type) {
+            $allList = $resourses->getManufactureList($type, null, $currentPage);
+            $this->view->data = $allList;
+        } else {
+            $this->view->title = 'Результат отсутствует';
+            $this->view->data = [];
         }
 
         $this->_helper->viewRenderer('/mainpagetemplates/mainpagerender');
-
-
     }
 
     /* personal cab data */
