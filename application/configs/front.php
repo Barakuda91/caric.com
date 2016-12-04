@@ -28,6 +28,6 @@ return [
     // настройки пагинации
     'pagination' => [
         // количество элементов на странице полных списков
-        'manufactureList' => 25
+        'manufactureList' => 48
     ]
 ];

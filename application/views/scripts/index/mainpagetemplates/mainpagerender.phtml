@@ -3,27 +3,26 @@
         <div class="row">
             <!-- auto start-->
             <div class="col-lg-12 col-md-12 col-sm-12">
-                <div class="col-lg-12 col-md-12 col-sm-12">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxs-12 text-center bottom-line">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxs-12 text-center bottom-line">
-                            <h1><?= $this->title; ?></h1>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxs-12 text-center bottom-line">
+                    <h1><?= $this->title; ?></h1>
+                </div>
+                <?php foreach ($this->data as $value):?>
+                    <?php
+                    $x = ($value['img_position']*100);
+                    $background = "background-image: url('../public/images/avto_makes.png');";
+                    $background .= "background-size: cover;";
+                    $background .= "background-position: -" . $x . "px 0";
+                    ?>
+                <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xxs-6 text-center fixed-heigth_200" >
+                    <div class="logo_block_mass" style="margin-top: 6px;">
+                        <div class="inline" style="<?= $background; ?>">
+                            <a class="not-cell" href="#" title="<?= $value['title']; ?>"></a>
                         </div>
-                                <?php foreach ($this->data as $value):?>
-                                    <?php
-                                    $x = ($value['img_position']*100);
-                                    $background = "background-image: url('../public/images/avto_makes.png');";
-                                    $background .= "background-size: cover;";
-                                    $background .= "background-position: -" . $x . "px 0";
-                                    ?>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxs-12 text-center">
-                                    <div class="logo_block inline" style="<?= $background; ?>">
-                                        <a class="" href="#" title="<?= $value['title']; ?>"></a>
-                                    </div>
-
-                        </div>
-                                <?php endforeach;?>
+                        <div class="text-center models-count" style="width:100%;display:inline-block">Models(1)</div>
+                        <div class="text-center adverts-count" style="width:100%;display:inline-block">Adverts(4)</div>
                     </div>
                 </div>
+                <?php endforeach;?>
             </div>
         </div>
     </div>

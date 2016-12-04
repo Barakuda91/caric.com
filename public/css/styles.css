@@ -212,7 +212,7 @@ fieldset[disabled] .btn-orange.active {
     transition: all 0.3s ease-out;
 
 }
-.logo_block a:hover{
+.logo_block a:hover {
 /*    -webkit-transform: scale(1.1);
     -ms-transform: scale(1.1);
     transform: scale(1.1);*/
@@ -222,100 +222,100 @@ fieldset[disabled] .btn-orange.active {
 }
 
 
-.logo_block a.ac{
-    background:url("../images/logos_light_100_list.png") 0 0 no-repeat;;
-}
-.logo_block a.acura{
-    background:url("../images/logos_light_100_list.png") -10rem 0 no-repeat;;
-}
-.logo_block a.audi{
-     background:url("../images/logos_light_100_list.png") -20rem 0 no-repeat;;
- }
-.logo_block a.aromeo{
-    background:url("../images/logos_light_100_list.png") -30rem 0 no-repeat;;
-}
-.logo_block a.alpina{
-    background:url("../images/logos_light_100_list.png") -40rem 0 no-repeat;;
-}
-.logo_block a.as_martin{
-    background:url("../images/logos_light_100_list.png") -50rem 0 no-repeat;;
-}
-.logo_block a.bmw{
-    background:url("../images/logos_light_100_list.png") -60rem 0 no-repeat;;
-}
-.logo_block a.bentley{
-    background:url("../images/logos_light_100_list.png") -70rem 0 no-repeat;;
-}
-.logo_block a.bjc{
-    background:url("../images/logos_light_100_list.png") -80rem 0 no-repeat;;
-}
-.logo_block a.tatra{
-    background:url("../images/logos_light_100_list.png") -90rem 0 no-repeat;;
-}
+/*.logo_block a.ac{*/
+    /*background:url("../images/logos_light_100_list.png") 0 0 no-repeat;;*/
+/*}*/
+/*.logo_block a.acura{*/
+    /*background:url("../images/logos_light_100_list.png") -10rem 0 no-repeat;;*/
+/*}*/
+/*.logo_block a.audi{*/
+     /*background:url("../images/logos_light_100_list.png") -20rem 0 no-repeat;;*/
+ /*}*/
+/*.logo_block a.aromeo{*/
+    /*background:url("../images/logos_light_100_list.png") -30rem 0 no-repeat;;*/
+/*}*/
+/*.logo_block a.alpina{*/
+    /*background:url("../images/logos_light_100_list.png") -40rem 0 no-repeat;;*/
+/*}*/
+/*.logo_block a.as_martin{*/
+    /*background:url("../images/logos_light_100_list.png") -50rem 0 no-repeat;;*/
+/*}*/
+/*.logo_block a.bmw{*/
+    /*background:url("../images/logos_light_100_list.png") -60rem 0 no-repeat;;*/
+/*}*/
+/*.logo_block a.bentley{*/
+    /*background:url("../images/logos_light_100_list.png") -70rem 0 no-repeat;;*/
+/*}*/
+/*.logo_block a.bjc{*/
+    /*background:url("../images/logos_light_100_list.png") -80rem 0 no-repeat;;*/
+/*}*/
+/*.logo_block a.tatra{*/
+    /*background:url("../images/logos_light_100_list.png") -90rem 0 no-repeat;;*/
+/*}*/
 
 
-.logo_block a.bugatti{
-    background:url("../images/logos_light_100_list.png") 0 -10rem no-repeat;;
-}
-.logo_block a.venturi{
-    background:url("../images/logos_light_100_list.png") -10rem -10rem no-repeat;;
-}
-.logo_block a.wall{
-    background:url("../images/logos_light_100_list.png") -20rem -10rem no-repeat;;
-}
-.logo_block a.byd{
-    background:url("../images/logos_light_100_list.png") -30rem -10rem no-repeat;;
-}
-.logo_block a.cadilac{
-    background:url("../images/logos_light_100_list.png") -40rem -10rem no-repeat;;
-}
-.logo_block a.chana{
-    background:url("../images/logos_light_100_list.png") -50rem -10rem no-repeat;;
-}
-.logo_block a.shkoda{
-    background:url("../images/logos_light_100_list.png") -60rem -10rem no-repeat;;
-}
-.logo_block a.suzuki{
-    background:url("../images/logos_light_100_list.png") -70rem -10rem no-repeat;;
-}
-.logo_block a.chevrolet{
-    background:url("../images/logos_light_100_list.png") -80rem -10rem no-repeat;;
-}
-.logo_block a.volvo{
-    background:url("../images/logos_light_100_list.png") -90rem -10rem no-repeat;;
-}
+/*.logo_block a.bugatti{*/
+    /*background:url("../images/logos_light_100_list.png") 0 -10rem no-repeat;;*/
+/*}*/
+/*.logo_block a.venturi{*/
+    /*background:url("../images/logos_light_100_list.png") -10rem -10rem no-repeat;;*/
+/*}*/
+/*.logo_block a.wall{*/
+    /*background:url("../images/logos_light_100_list.png") -20rem -10rem no-repeat;;*/
+/*}*/
+/*.logo_block a.byd{*/
+    /*background:url("../images/logos_light_100_list.png") -30rem -10rem no-repeat;;*/
+/*}*/
+/*.logo_block a.cadilac{*/
+    /*background:url("../images/logos_light_100_list.png") -40rem -10rem no-repeat;;*/
+/*}*/
+/*.logo_block a.chana{*/
+    /*background:url("../images/logos_light_100_list.png") -50rem -10rem no-repeat;;*/
+/*}*/
+/*.logo_block a.shkoda{*/
+    /*background:url("../images/logos_light_100_list.png") -60rem -10rem no-repeat;;*/
+/*}*/
+/*.logo_block a.suzuki{*/
+    /*background:url("../images/logos_light_100_list.png") -70rem -10rem no-repeat;;*/
+/*}*/
+/*.logo_block a.chevrolet{*/
+    /*background:url("../images/logos_light_100_list.png") -80rem -10rem no-repeat;;*/
+/*}*/
+/*.logo_block a.volvo{*/
+    /*background:url("../images/logos_light_100_list.png") -90rem -10rem no-repeat;;*/
+/*}*/
 
 
-.logo_block a.daimler{
-    background:url("../images/logos_light_100_list.png") 0 -20rem no-repeat;;
-}
-.logo_block a.daikin{
-    background:url("../images/logos_light_100_list.png") -10rem -20rem no-repeat;;
-}
-.logo_block a.eagle{
-    background:url("../images/logos_light_100_list.png") -20rem -20rem no-repeat;;
-}
-.logo_block a.ford{
-    background:url("../images/logos_light_100_list.png") -30rem -20rem no-repeat;;
-}
-.logo_block a.ferrary{
-    background:url("../images/logos_light_100_list.png") -40rem -20rem no-repeat;;
-}
-.logo_block a.ducati{
-    background:url("../images/logos_light_100_list.png") -50rem -20rem no-repeat;;
-}
-.logo_block a.iveco{
-    background:url("../images/logos_light_100_list.png") -60rem -20rem no-repeat;;
-}
-.logo_block a.fiat{
-    background:url("../images/logos_light_100_list.png") -70rem -20rem no-repeat;;
-}
-.logo_block a.chrisler{
-    background:url("../images/logos_light_100_list.png") -80rem -20rem no-repeat;;
-}
-.logo_block a.geely{
-    background:url("../images/logos_light_100_list.png") -90rem -20rem no-repeat;;
-}
+/*.logo_block a.daimler{*/
+    /*background:url("../images/logos_light_100_list.png") 0 -20rem no-repeat;;*/
+/*}*/
+/*.logo_block a.daikin{*/
+    /*background:url("../images/logos_light_100_list.png") -10rem -20rem no-repeat;;*/
+/*}*/
+/*.logo_block a.eagle{*/
+    /*background:url("../images/logos_light_100_list.png") -20rem -20rem no-repeat;;*/
+/*}*/
+/*.logo_block a.ford{*/
+    /*background:url("../images/logos_light_100_list.png") -30rem -20rem no-repeat;;*/
+/*}*/
+/*.logo_block a.ferrary{*/
+    /*background:url("../images/logos_light_100_list.png") -40rem -20rem no-repeat;;*/
+/*}*/
+/*.logo_block a.ducati{*/
+    /*background:url("../images/logos_light_100_list.png") -50rem -20rem no-repeat;;*/
+/*}*/
+/*.logo_block a.iveco{*/
+    /*background:url("../images/logos_light_100_list.png") -60rem -20rem no-repeat;;*/
+/*}*/
+/*.logo_block a.fiat{*/
+    /*background:url("../images/logos_light_100_list.png") -70rem -20rem no-repeat;;*/
+/*}*/
+/*.logo_block a.chrisler{*/
+    /*background:url("../images/logos_light_100_list.png") -80rem -20rem no-repeat;;*/
+/*}*/
+/*.logo_block a.geely{*/
+    /*background:url("../images/logos_light_100_list.png") -90rem -20rem no-repeat;;*/
+/*}*/
 
 .footer_wrap{
     background: #FF7200;
@@ -609,20 +609,27 @@ div.main_search_block.show-search {
     h1 {
         font-size: 20px;
     }
+    div.bottom-line {
+        border-bottom: 2px solid #FF7200;
+    }
 }
 @media (min-width:991px) and (max-width:1200px){
     h1 {
         font-size: 25px;
+    }
+    div.bottom-line {
+        border-bottom: 2px solid #FF7200;
     }
 }
 @media (min-width:1200px) {
     h1 {
         font-size: 30px;
     }
+    div.bottom-line {
+        border-bottom: 2px solid #FF7200;
+    }
 }
-div.bottom-line {
-    border-bottom: 2px solid #FF7200;
-}
+
 
 a.personal-a {
     color: #787878;
@@ -638,5 +645,39 @@ ul#main-line-menu li.active a {
     color: #ffffff;
 }
 
+.logo_block_mass:hover{
+    /*    -webkit-transform: scale(1.1);
+        -ms-transform: scale(1.1);
+        transform: scale(1.1);*/
+    border:1px solid #ccc;
+    box-shadow: 5px 5px 5px 5px #ccc;
+    -webkit-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
 
+}
+.logo_block_mass a{
+    display:block;
+    height: 10rem;
+    width: 10rem;
+    -webkit-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+
+}
+.fixed-heigth_200 {
+    height:150px;
+}
+.adverts-count {
+    cursor: pointer;
+    color:#787878;
+}
+.adverts-count:hover{
+    color:#ff7200;
+}
+.models-count {
+    cursor: pointer;
+    color:#787878;
+}
+.models-count:hover {
+    color:#ff7200;
+}
 
