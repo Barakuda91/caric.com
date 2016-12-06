@@ -100,7 +100,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $i = 0;
         foreach ($data as $key => $item) {
             $urlRender = new Zend_Controller_Router_Route_Regex(
-                '(' . $item . ')',
+                '(' . $item . ')(_p[0-9]*)?',
                 [
                     'controller' => 'index',
                     'action' => 'rendermain',

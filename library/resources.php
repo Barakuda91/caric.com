@@ -18,7 +18,7 @@ class Resourses
         $dbAdapter = Zend_Db_Table::getDefaultAdapter();
 
         $limitCols = $this->config->pagination->manufactureList;
-        $limitStart = ($page-1)*$limitCols;
+        $limitStart = ($page - 1) * $limitCols;
 
         $limit = " LIMIT $limitStart,$limitCols ";
 
@@ -34,6 +34,9 @@ class Resourses
         } else { // отдаём весь список мануфактуры
             $sql = "SELECT `id`, `title`, `img_position` FROM `manufacture` WHERE `type` = '$type' $limit";
         }
-        return $dbAdapter->query($sql)->fetchAll();
+
+        $result = $dbAdapter->query($sql)->fetchAll();
+
+        return $result;
     }
 }

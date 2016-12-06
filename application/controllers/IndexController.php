@@ -55,8 +55,14 @@ class IndexController extends Zend_Controller_Action
     {
         $resourses  = new Resourses($this->config);
         $currentPage = 1;
+        $urlParams = $this->getAllParams();
+        $typePage = $urlParams['urlParam'];
 
-        switch ($this->getParam('urlParam')) {
+        if (isset($urlParams[2])) {
+            $currentPage = (int) str_replace('_p','',$urlParams[2]);
+            $currentPage = ($currentPage) ? $currentPage : 1;
+        }
+        switch ($typePage) {
             // разболтовка проставок
             case 'spacers':
                 $this->view->title = 'Виды проставок';
