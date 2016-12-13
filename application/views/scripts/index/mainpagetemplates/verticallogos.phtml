@@ -16,7 +16,7 @@
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 col-xxs-12 text-center">
                             <?php
                             $x = ($value['img_position']*100);
-                            $background = "background-image: url('../public/images/avto_makes.png'); ";
+                            $background = "background-image: url('$this->urlImg/get_from_makes?$this->topAutoJson'); ";
                             $background .= "background-size: cover; ";
                             $background .= "background-position: -" . $x . "px 0";
                             ?>

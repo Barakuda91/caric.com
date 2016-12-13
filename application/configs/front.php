@@ -1,12 +1,15 @@
 <?php
 return [
+    'siteUtl' => 'http://caric.com',
+    'serverPort' => 8080,
+    'socketPort' => 7788,
     // настройки вида главной страницы
     'index' => [
         'top' => [
             'tires' => [],
             'wheels' => [],
             'auto'  => [
-                'BMW',
+                'VOLVO',
                 'NISSAN',
                 'TOYOTA',
                 'VOLKSWAGEN',
@@ -17,7 +20,7 @@ return [
                 'AUDI',
                 'MERCEDES_BENZ',
                 'FIAT',
-                'VOLVO',
+                'BMW',
                 'CHEVROLET',
                 'MITSUBISHI',
             ],

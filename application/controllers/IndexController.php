@@ -15,6 +15,9 @@ class IndexController extends Zend_Controller_Action
         $auth = Zend_Auth::getInstance();
         $this->config = new Zend_Config(include APPLICATION_PATH . '/configs/front.php', false);
 
+        $this->view->serverPort = $this->config->serverPort;
+        $this->view->siteUtl = $this->config->siteUtl;
+
         if ($auth->hasIdentity()) {
             $user = new User();
             $this->view->autorizated = true;
@@ -23,6 +26,8 @@ class IndexController extends Zend_Controller_Action
             $this->view->userName = $user->getUserData($data, 'flag');
             $this->autorizeEmailId = $auth->getIdentity();
             $this->autorized = true;
+            $user = new User($this->autorizeEmailId);
+            $this->view->userData = $user;
         } else {
             $this->view->autorizated = false;
             $this->autorizeEmailId = '';
@@ -41,6 +46,20 @@ class IndexController extends Zend_Controller_Action
         $topSpaces  = $this->config->index->top->spaces->toArray();
 
         $topAuto = $resourses->getManufactureList('car', $this->config->index->top->auto->toArray());
+//
+        $topAutoJson = '';
+
+        foreach ($topAuto as $item) {
+            $length = strlen($item['img_position']);
+            $id = '';
+            switch ($length) {
+                case 1: $id .= '0';
+                case 2: $id .= '0';
+            }
+            $id .= $item['img_position'];
+            $topAutoJson .= $id;
+        }
+        $this->view->topAutoJson = $topAutoJson;
 
         $this->view->topAuto    = $topAuto;
         $this->view->topTires   = $topTires;
@@ -102,8 +121,8 @@ class IndexController extends Zend_Controller_Action
         if (!$this->autorized) {
             $this->redirect('/');
         } else {
-            $user = new User($this->autorizeEmailId);
-            $this->view->userData = $user;
+            //$user = new User($this->autorizeEmailId);
+           // $this->view->userData = $user;
             $this->view->htmlMenu = $this->renderPersonalCabTopMenu();
             $this->_helper->viewRenderer('/personalcab/personal');
         }

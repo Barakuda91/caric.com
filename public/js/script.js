@@ -1,17 +1,58 @@
-var PageObj = {
-    // Networck: {
-    //    send: function (objeck)
-    //    {
-    //        type: 'ajsx|socket',
-    //        action: 'ajax',
-    //        data: {},
-    //        dataType:{},
-    //        preSend: : function () { },
-    //        postSend : function () { },
-    //        success : function () { },
-    //        error : function () { },
-    //    }
-    // },
+var P = {
+    log: function(mess) {
+        if( $('body').is('#dev') ) console.log(mess);
+    },
+    Swapper: function( type ) {
+        if (['ajax','socket','a','s'].indexOf(type) < 0) {
+            P.log('Swapper Type is not defined');
+            return false;
+        } else {
+            switch (type) {
+                case 'ajax': case 'a': this.type = 'ajax';
+
+
+                break;
+                case 'socket': case 's': this.type = 'socket';
+                    var socket = new WebSocket("ws://localhost:7788");
+                    socket.onopen = function() {
+                        P.log("Соединение установлено.");
+                    };
+
+                    socket.onclose = function(event) {
+                        if (event.wasClean) {
+                            P.log('Соединение закрыто чисто');
+                        } else {
+                            P.log('Обрыв соединения'); // например, "убит" процесс сервера
+                        }
+                        P.log('Код: ' + event.code + ' причина: ' + event.reason);
+                    };
+
+                    socket.onmessage = function(event) {
+                        P.log("Получены данные " + event.data);
+                    };
+
+                    socket.onerror = function(error) {
+                        P.log("Ошибка " + error.message);
+                    };
+                    socket.send('fd');
+
+                break;
+            }
+
+            P.log('Swapper Type set '+this.type);
+
+            this.send = function (obj) {
+                action = obj.action || 'default';
+                data = obj.data || '';
+                dataType = obj.dataType || 'string';
+                preSend = obj.preSend || null;
+                postSend = obj.postSend || null;
+                success = obj.success || null;
+                error = obj.error || null;
+            }
+        }
+
+    },
     ajaxSendFlag: true,
     userNamePattern: /^[a-zA-Z]+$/,
     userPhonePattern: /^[+]{0,1}[0-9]+$/,
@@ -52,19 +93,19 @@ var PageObj = {
         $('#main_search_input').on('keyup',function (event) {
             var value = $(this).val();
             if (event.keyCode == 13) {
-                PageObj.sendSearchRequest(value);
+                P.sendSearchRequest(value);
             }
         });
         $('.subbmit-search-request').on('click',function () {
             var value = $(this).closest('div').find('input').val();
             if (value.length) {
-                PageObj.sendSearchRequest(value);
+                P.sendSearchRequest(value);
             }
         });
     },
     sendSearchRequest: function (value) {
-        if (PageObj.ajaxSendFlag) {
-            PageObj.ajaxSendFlag = false;
+        if (P.ajaxSendFlag) {
+            P.ajaxSendFlag = false;
             $.ajax({
                 url: '/ajax',
                 data:{
@@ -76,13 +117,13 @@ var PageObj = {
                 success: function (result) {
                     if (result.status && Object.keys(result.adverts).length) {
                         $('.main-search-tips').hide();
-                        PageObj.generateHtmlFromSearchResults(result.adverts);
+                        P.generateHtmlFromSearchResults(result.adverts);
                     } else {
                         console.log('NO DATA');
                     }
                 },
                 complete : function () {
-                    PageObj.ajaxSendFlag = true;
+                    P.ajaxSendFlag = true;
                 }
             });
         }
@@ -123,53 +164,53 @@ var PageObj = {
         $('#error-forget-block').append('<div class="row">' + param + message + '</div>');
     },
     validateRegistration: function (email, name, password, password2) {
-        PageObj.cleanErrorRegBlock();
+        P.cleanErrorRegBlock();
         var errors = 0;
         if (name.length < 4) {
             $('#reg-username').css('border-color', 'red'); 
-            PageObj.addErrorRegMessage('Имя меньше 4 символов.');
+            P.addErrorRegMessage('Имя меньше 4 символов.');
             errors++;
         }
-        if (!PageObj.userNamePattern.test(name)) {
+        if (!P.userNamePattern.test(name)) {
             $('#reg-username').css('border-color', 'red'); 
-            PageObj.addErrorRegMessage('Имя должно содержать только латинские буквы(a-z).');
+            P.addErrorRegMessage('Имя должно содержать только латинские буквы(a-z).');
             errors++;
         }
         if (!email) {
             $('#reg-email').css('border-color', 'red'); 
-            PageObj.addErrorRegMessage('Укажите email.');
+            P.addErrorRegMessage('Укажите email.');
             errors++;
         }
         if (password != password2) {
             $('#reg-password').css('border-color', 'red'); 
             $('#reg-confirm-password').css('border-color', 'red'); 
-            PageObj.addErrorRegMessage('Пароли не совпадают.');
+            P.addErrorRegMessage('Пароли не совпадают.');
             errors++;
         }
         if (!password) {
             $('#reg-password').css('border-color', 'red');
-            PageObj.addErrorRegMessage('Укажите пароль.');
+            P.addErrorRegMessage('Укажите пароль.');
             errors++;
         }
         if (!password2) {
             $('#reg-confirm-password').css('border-color', 'red'); 
-            PageObj.addErrorRegMessage('Укажите пароль.');
+            P.addErrorRegMessage('Укажите пароль.');
             errors++;
         }
         
         return errors;
     },
     validateAutorization: function (email, password) {
-        PageObj.cleanErrorLogBlock();
+        P.cleanErrorLogBlock();
         var errors = 0;
         if (email.length < 4) {
             $('#log-email').css('border-color', 'red'); 
-            PageObj.addErrorLogMessage('Email меньше 4 символов.');
+            P.addErrorLogMessage('Email меньше 4 символов.');
             errors++;
         }
         if (!password) {
             $('#log-password').css('border-color', 'red'); 
-            PageObj.addErrorLogMessage('Введите пароль');
+            P.addErrorLogMessage('Введите пароль');
             errors++;
         }
         return errors;
@@ -178,12 +219,12 @@ var PageObj = {
         var errors = 0;
         if (!email) {
             $('#fog-email').css('border-color', 'red');
-            PageObj.addErrorForgetMessage('Введите email.');
+            P.addErrorForgetMessage('Введите email.');
             errors++;
         }
         if (email.length < 4) {
             $('#fog-email').css('border-color', 'red'); 
-            PageObj.addErrorForgetMessage('Email меньше 4 символов.');
+            P.addErrorForgetMessage('Email меньше 4 символов.');
             errors++;
         }
         
@@ -191,7 +232,7 @@ var PageObj = {
     },
     validatePersonalData: function (phone, linkVK, linkDrive) {
         var errors = 0;
-        if (phone != '' && !PageObj.userPhonePattern.test(phone)) {
+        if (phone != '' && !P.userPhonePattern.test(phone)) {
             $('#input-phone').css('border-color', 'red');
             errors++;
         }
@@ -223,7 +264,7 @@ var PageObj = {
             $('#input-pass2').css('border-color', 'red');
             errors++;
         }
-        if (!PageObj.userPasswordPattern.test(pass)) {
+        if (!P.userPasswordPattern.test(pass)) {
             $('#input-pass').css('border-color', 'red');
             $('#input-pass2').css('border-color', 'red');
             errors++;
@@ -232,12 +273,12 @@ var PageObj = {
         return errors;
     },
     forgotPassword: function () {
-        PageObj.cleanErrorForgetBlock();
+        P.cleanErrorForgetBlock();
         var email = $('#fog-email').val();
-        var errors = PageObj.validateForgotPassword(email);
+        var errors = P.validateForgotPassword(email);
         
-        if (PageObj.ajaxSendFlag && errors == 0) {
-            PageObj.ajaxSendFlag = false;
+        if (P.ajaxSendFlag && errors == 0) {
+            P.ajaxSendFlag = false;
             $.ajax({
                 url: '/ajax',
                 data:{
@@ -248,8 +289,8 @@ var PageObj = {
                 dataType: 'json',
                 success: function (result) {
                     if (result.status) {
-                        PageObj.cleanErrorLogBlock();
-                        PageObj.addErrorLogMessage('На указанный Вами емайл был выслан временный пароль.');
+                        P.cleanErrorLogBlock();
+                        P.addErrorLogMessage('На указанный Вами емайл был выслан временный пароль.');
 
                         $('#log-email').val(email);
                         $('#log-password').val('');
@@ -258,11 +299,11 @@ var PageObj = {
                         $('#login-form-link').trigger('click');
                         
                     } else {
-                        PageObj.addErrorForgetMessage('Введите верный email адрес.');
+                        P.addErrorForgetMessage('Введите верный email адрес.');
                     }
                 },
                 complete : function () {
-                    PageObj.ajaxSendFlag = true;
+                    P.ajaxSendFlag = true;
                 }
             });
         }
@@ -270,8 +311,16 @@ var PageObj = {
     
 };
 
+
+
+/*
+* слушатели
+* */
+
 $(document).ready(function() {
-    PageObj.initListeners();
+    P.initListeners();
+
+    //var swapper = new P.Swapper('s');
 
     $('#add-advert').click(function () {
         window.location.href = '/add';
@@ -305,7 +354,7 @@ $(document).ready(function() {
     
     $('#forgot-submit').click(function (e) {
         e.preventDefault();
-        PageObj.forgotPassword();
+        P.forgotPassword();
     });
    
    
@@ -316,10 +365,10 @@ $(document).ready(function() {
         var name = $('#reg-username').val();
         var password = $('#reg-password').val();
         var password2 = $('#reg-confirm-password').val();
-        var errorsCount = PageObj.validateRegistration(email, name, password, password2);
+        var errorsCount = P.validateRegistration(email, name, password, password2);
         
-        if (PageObj.ajaxSendFlag && errorsCount == 0) {
-            PageObj.ajaxSendFlag = false;
+        if (P.ajaxSendFlag && errorsCount == 0) {
+            P.ajaxSendFlag = false;
             $.ajax({
                 url: '/ajax',
                 data:{
@@ -332,14 +381,14 @@ $(document).ready(function() {
                 type: 'post',
                 dataType: 'json',
                 success: function (result) {
-                    PageObj.cleanErrorRegBlock();
+                    P.cleanErrorRegBlock();
                     if (result.data) {
                         for (var key in result.data) {
                             if (key === 'email') {
                                 $('#reg-email').css('border-color', 'red'); 
-                                PageObj.addErrorRegMessage(result.data[key]);
+                                P.addErrorRegMessage(result.data[key]);
                             } else {
-                                PageObj.addErrorRegMessage(result.data[key]);
+                                P.addErrorRegMessage(result.data[key]);
                             }
                         } 
                     } else {
@@ -353,7 +402,7 @@ $(document).ready(function() {
                     }
                 },
                 complete : function () {
-                    PageObj.ajaxSendFlag = true;
+                    P.ajaxSendFlag = true;
                 }
             });
         }
@@ -364,10 +413,10 @@ $(document).ready(function() {
         
         var email = $('#log-email').val();
         var password = $('#log-password').val();
-        var errorsCount = PageObj.validateAutorization(email, password);
+        var errorsCount = P.validateAutorization(email, password);
      
-        if (PageObj.ajaxSendFlag && errorsCount == 0) {
-            PageObj.ajaxSendFlag = false;
+        if (P.ajaxSendFlag && errorsCount == 0) {
+            P.ajaxSendFlag = false;
             $.ajax({
                 url: '/ajax',
                 data:{
@@ -378,17 +427,17 @@ $(document).ready(function() {
                 type: 'post',
                 dataType: 'json',
                 success: function (result) {
-                    PageObj.cleanErrorLogBlock();
+                    P.cleanErrorLogBlock();
                     if (result) {
                         window.location.reload(true);
                     } else {
                         $('#log-email').css('border-color', 'red'); 
                         $('#log-password').css('border-color', 'red'); 
-                        PageObj.addErrorLogMessage('Неверный Логин или Пароль');
+                        P.addErrorLogMessage('Неверный Логин или Пароль');
                     }
                 },
                 complete : function () {
-                    PageObj.ajaxSendFlag = true;
+                    P.ajaxSendFlag = true;
                 }
             });
         }
@@ -397,8 +446,8 @@ $(document).ready(function() {
     $('.logout-user').click(function (e) {
         e.preventDefault();
         
-        if (PageObj.ajaxSendFlag) {
-            PageObj.ajaxSendFlag = false;
+        if (P.ajaxSendFlag) {
+            P.ajaxSendFlag = false;
             $.ajax({
                 url: '/ajax',
                 data:{
@@ -410,7 +459,7 @@ $(document).ready(function() {
                     window.location.reload(true);
                 },
                 complete : function () {
-                    PageObj.ajaxSendFlag = true;
+                    P.ajaxSendFlag = true;
                 }
             });
         }
@@ -422,10 +471,10 @@ $(document).ready(function() {
        var email = $('#input-email').val();
        var linkVK = $('#input-link-vk').val();
        var linkDrive = $('#input-link-dr').val();
-       var errors = PageObj.validatePersonalData(phone, linkVK, linkDrive);
+       var errors = P.validatePersonalData(phone, linkVK, linkDrive);
 
-       if (PageObj.ajaxSendFlag && errors == 0) {
-           PageObj.ajaxSendFlag = false;
+       if (P.ajaxSendFlag && errors == 0) {
+           P.ajaxSendFlag = false;
            $.ajax({
                url: '/ajax',
                data:{
@@ -441,7 +490,7 @@ $(document).ready(function() {
                    window.location.reload(true);
                },
                complete : function () {
-                   PageObj.ajaxSendFlag = true;
+                   P.ajaxSendFlag = true;
                }
            });
        }
@@ -451,10 +500,10 @@ $(document).ready(function() {
        e.preventDefault();
        var pass = $('#input-pass').val();
        var pass2 = $('#input-pass2').val();
-       var errors = PageObj.validateSettingData(pass, pass2);
+       var errors = P.validateSettingData(pass, pass2);
 
-       if (PageObj.ajaxSendFlag && errors == 0) {
-           PageObj.ajaxSendFlag = false;
+       if (P.ajaxSendFlag && errors == 0) {
+           P.ajaxSendFlag = false;
            $.ajax({
                url: '/ajax',
                data:{
@@ -468,7 +517,7 @@ $(document).ready(function() {
                    window.location.reload(true);
                },
                complete : function () {
-                   PageObj.ajaxSendFlag = true;
+                   P.ajaxSendFlag = true;
                }
            });
        }
