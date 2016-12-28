@@ -1,4 +1,4 @@
-var serverPort = 8080;
+var serverPort = 8888;
 var socketPort = 7788;
 var http    = require('http');
 var fs      = require('fs');

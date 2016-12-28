@@ -1,7 +1,7 @@
 <?php
 return [
     'siteUtl' => 'http://caric.com',
-    'serverPort' => 8080,
+    'serverPort' => 8888,
     'socketPort' => 7788,
     // настройки вида главной страницы
     'index' => [
