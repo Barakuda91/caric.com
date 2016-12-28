@@ -2,6 +2,14 @@
 
 class AjaxController extends Zend_Controller_Action
 {
+
+    public function configsoverwriteAction()
+    {
+
+        $this->redirect('/');
+    }
+
+
     public function ajaxAction()
     {
         $this->_helper->layout->disableLayout();

@@ -57,8 +57,8 @@ http.createServer(function(request, response) {
                     img.append('/var/www/caric.com/public/images/data/auto/'+queryArray[i]+'_'+rows[i].title+'.PNG', true);
                     console.log(queryArray[i]+'_'+rows[i].title+'.PNG');
                     if(i == rows.length - 1) {
-                        response.writeHead(200, {'Content-Type': 'image/png'});
-                        img.stream('png').pipe(response);
+                        response.writeHead(200, {'Content-Type': 'image/jpg'});
+                        img.stream('jpg').pipe(response);
                     }
                 }
 
