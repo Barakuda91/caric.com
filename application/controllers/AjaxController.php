@@ -39,6 +39,10 @@ class AjaxController extends Zend_Controller_Action
                     $this->result = $this->searchRequest($params);
                     break;
 
+                case 'addAdvert':
+                    $this->result = $this->addAdvert($params);
+                    break;
+
                 default:
                     $this->result = [];
                     break;
@@ -47,6 +51,18 @@ class AjaxController extends Zend_Controller_Action
         /* disable feedback post*/
         header("Content-Type: text/json");
         echo json_encode($this->result);
+    }
+
+    protected function addAdvert($data)
+    {
+        $result = false;
+        try {
+            var_dump($data);
+        } catch (Exception $e) {
+            /* log error entry */
+        }
+
+        return $result;
     }
 
     protected function searchRequest($params)
@@ -61,9 +77,15 @@ class AjaxController extends Zend_Controller_Action
                     $jsonArray[$value['id']] = $value;
                 }
             }
+
+            $searchUrl = Search::clearString($params['val']);
+            $pattern = '/[\s]+/';
+            $replacement = '+';
+            $searchUrl = preg_replace($pattern, $replacement, $searchUrl);
             $jsonData = [
                 'status' => 1,
-                'adverts' => $jsonArray
+                'adverts' => $jsonArray,
+                'searchUrl' => $searchUrl,
             ];
 
         } catch (Exception $e) {

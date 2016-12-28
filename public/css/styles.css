@@ -681,3 +681,15 @@ ul#main-line-menu li.active a {
     color:#ff7200;
 }
 
+.advert-img {
+    padding: 10px;
+}
+
+/* search */
+.search-result-h1 {
+    padding: 10px;
+}
+
+.search-result-cost {
+    bottom: 0;
+}

@@ -110,9 +110,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             $router->addRoute('mainpage_' . $i, $urlRender);
             $i++;
         }
-
-
-
     }
 }
 

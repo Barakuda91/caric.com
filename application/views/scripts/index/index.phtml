@@ -32,29 +32,7 @@
 </div>
 <div class="main_search_block">
     <div class="container">
-        <div class="row" style="position:relative;">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxs-12">
-                <div class="input-group stylish-input-group search-input-div">
-                    <input type="text" class="" id="main_search_input"  placeholder="Ищем по марке, бренду авто, шинам, дискам, проставкам">
-                    <span class="input-group-addon">
-                        <button type="submit" class="subbmit-search-request">
-                            <span class="fa fa-lg fa-search"></span>
-                        </button>
-                    </span>
-                    <div class="main-search-tips">
-                        <div class="search-tips-row">
-                            <span>Результат подбора 1</span>
-                        </div>
-                        <div class="search-tips-row">
-                            <span>Результат подбора 2</span>
-                        </div>
-                        <div class="search-tips-row">
-                            <span>Результат подбора 3</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <?php echo $this->partial('index/mainpagetemplates/mainsearchinputblock.phtml'); ?>
     </div>
 </div>
 <!-- SLIDER END-->
@@ -179,6 +157,15 @@
             </div>
             <!-- sets end -->
 
+        </div>
+    </div>
+</div>
+<!-- SEARCH RESULTS BLOCK -->
+<div class="search-main-ajax-results" style="display:none;">
+    <div class="container">
+        <div class="row">
+            <div id="search-results">
+            </div>
         </div>
     </div>
 </div>

@@ -34,9 +34,16 @@ class Resourses
         } else { // отдаём весь список мануфактуры
             $sql = "SELECT `id`, `title`, `img_position` FROM `manufacture` WHERE `type` = '$type' $limit";
         }
-
         $result = $dbAdapter->query($sql)->fetchAll();
 
         return $result;
     }
+}
+
+
+function __d($data)
+{
+    echo '<pre>';
+    var_dump($data);
+    echo '</pre>';
 }
