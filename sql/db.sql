@@ -207,7 +207,7 @@ INSERT INTO `manufacture` (`img_position`,`title`,`counrty_id`) VALUES
 (70,'MITSUBISHI',10),
 (71,'MORGAN',2),
 (72,'NISSAN',10),
-(73,'MOBLE',2),
+(73,'NOBLE',2),
 (74,'OLDSMOBILE',5),
 (75,'OPEL',3),
 (76,'PACKARD',5),

@@ -67,6 +67,8 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 main-makes hidden-xs">
                     <?php echo $this->partial('index/mainpagetemplates/verticallogos.phtml', [
                         'makes' => $this->topAuto,
+                        'topAutoJson' => $this->topAutoJson,
+                        'urlImg' => "$this->siteUtl:$this->serverPort",
                         'screenSize' => 'lg',
                         'double' => 1,
                         'maxSize' => 13,
