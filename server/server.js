@@ -1,12 +1,18 @@
-var serverPort = 8888;
-var socketPort = 7788;
-var http    = require('http');
-var fs      = require('fs');
-var gm      = require('gm');
-var url     = require('url');
-var ws      = require('ws').Server;
-var mysql      = require('mysql');
-var wss     = new ws({ port: socketPort });
+var serverPort  = 8888;
+var socketPort  = 7788;
+
+let Includer    = new require('./includer');
+let includer = new Includer();
+includer.set('http', require('http'));
+includer.set('fs', require('fs'));
+includer.set('gm', require('gm'));
+includer.set('url', require('url'));
+includer.set('mysql', require('mysql'));
+let ws  = includer.set('ws', require('ws').Server);
+let wss = includer.set('wss', new ws({ port: socketPort });
+
+console.log(includer);
+return;
 
 var connection = mysql.createConnection({
     host     : 'localhost',
@@ -15,11 +21,6 @@ var connection = mysql.createConnection({
     database : 'db_caric_new'
 });
 connection.connect();
-
-
-
-
-
 
 http.createServer(function(request, response) {
     var headers = request.headers;
