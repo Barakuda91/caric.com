@@ -1,4 +1,10 @@
-"{
+{
     "backendServerPort": 8888,
-    "socketPort": 7788
-}"
+    "socketPort": 7788,
+    "db": {
+        "host": "localhost",
+        "user": "root",
+        "password": "",
+        "database": "db_caric_new"
+    }
+}

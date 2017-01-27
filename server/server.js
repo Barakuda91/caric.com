@@ -1,26 +1,32 @@
-var serverPort  = 8888;
-var socketPort  = 7788;
-
 let Includer    = new require('./includer');
-let includer = new Includer();
-includer.set('http', require('http'));
-includer.set('fs', require('fs'));
-includer.set('gm', require('gm'));
-includer.set('url', require('url'));
-includer.set('mysql', require('mysql'));
-let ws  = includer.set('ws', require('ws').Server);
-let wss = includer.set('wss', new ws({ port: socketPort });
+let includer    = new Includer();
+let fs          = includer.set('fs', require('fs-promise'));
 
-console.log(includer);
+fs.readFile(__dirname+'/../config/config.json')
+    .then((d) => {
+         includer.set('config', JSON.parse(d.toString()));
+         return includer;
+    })
+    .catch((e) => {
+        console.log('Cant get configs:');
+        console.log(e.message);
+    })
+    .then((includer) => {
+        let conf = includer.get('config');
+        includer.set('http', require('http'));
+        includer.set('gm', require('gm'));
+        includer.set('url', require('url'));
+        includer.set('MySQL', require('mysql'));
+        let ws  = includer.set('ws', require('ws').Server);
+        let wss = includer.set('wss', new ws({ port: conf.socketPort }));
+        return includer;
+    })
+    .then((includer) => {
+        includer.set('mysql', require('./mysql'));
+        console.log(wss);
+    });
+
 return;
-
-var connection = mysql.createConnection({
-    host     : 'localhost',
-    user     : 'root',
-    password : '',
-    database : 'db_caric_new'
-});
-connection.connect();
 
 http.createServer(function(request, response) {
     var headers = request.headers;
