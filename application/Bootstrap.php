@@ -38,7 +38,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                 ]
             );
 
-
             $router->addRoute('routeUser', $routeUser);
 
             /* personal user account(adverts) */
@@ -51,7 +50,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                 [
                     2 => 'page'
                 ]
-
             );
 
             $router->addRoute('routeUserAdverts', $routeUserAdverts);
