@@ -50,6 +50,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                 [
                     2 => 'page'
                 ]
+
             );
 
             $router->addRoute('routeUserAdverts', $routeUserAdverts);
