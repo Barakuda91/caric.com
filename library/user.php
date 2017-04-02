@@ -4,6 +4,7 @@ class User
     public $userPhoneRegExp = '/^\+{0,1}[0-9]+$/';
     public $userPassRegExp = '/^[a-zA-Z0-9]+$/';
     public $name;
+    public $userId;
     public $roleId;
     public $email;
     public $date;
@@ -21,6 +22,7 @@ class User
             $send = [];
             $send['email'] = $id;
             $data = $this->getUserData($send, 'flag');
+            $this->userId = $data['id'];
             $this->name = $data['name'];
             $this->roleId = $data['role_id'];
             $this->email = $id;
@@ -204,13 +206,13 @@ class User
         $dbAdapter = Zend_Db_Table::getDefaultAdapter();
         if (!$flag) {
             $sql = sprintf(
-                "SELECT `email`, `name`, `date` FROM `users` WHERE `users`.`email` = '%s' AND `users`.`password` = '%s';",
+                "SELECT `id`, `email`, `name`, `date` FROM `users` WHERE `users`.`email` = '%s' AND `users`.`password` = '%s';",
                 $data['email'],
                 $data['password']
             );
         } else {
             $sql = sprintf(
-                "SELECT `role_id`, `date`, `email` ,`name`, `contact_phone`, `contact_email`, `contact_profile_1`, `contact_profile_2` FROM `users` WHERE `users`.`email` = '%s';",
+                "SELECT `id`, `role_id`, `date`, `email` ,`name`, `contact_phone`, `contact_email`, `contact_profile_1`, `contact_profile_2` FROM `users` WHERE `users`.`email` = '%s';",
                 $data['email']
             );
         }
@@ -371,5 +373,97 @@ class User
 
         return $result;
     }
+
+    /**
+     * get all users adverts
+     */
+    public function getUserAdverts($advertId = false, $status = Resourses::ADVERT_STATUS_ACTIVE)
+    {
+        try {
+            $table = new Zend_Db_Table('advert');
+            $select = $table->select()
+                ->setIntegrityCheck(false)
+                ->from('advert',
+                    [
+                        'advert.id as advert_id',
+                        'advert.description as advert_description',
+                        'advert.price as advert_price',
+                        'advert.currency as advert_currency',
+                        'advert.date as advert_date',
+                        'advert.type as advert_condition',
+                        'advert.manufacture_id as advert_manufacture_id',
+                        'advert.model_id as advert_model_id',
+                        'advert.status as advert_status',
+                        'manufacture.title as manufacture_title',
+                        'models.title as model_title',
+                        'wheel_id as wheel_id',
+                        'tires_id as tires_id',
+                        'spacers_id as spacers_id',
+                        'tires.type as tires_type'
+
+
+                    ]
+                )
+                ->joinLeft('manufacture', 'manufacture.id = advert.manufacture_id', ['*'])
+                ->joinLeft('models', 'models.id = advert.model_id', '*')
+                ->joinLeft('wheels', 'wheels.id = advert.wheel_id', [
+                    'wheels.nn as wheels_nn',
+                    'wheels.pcd as wheels_pcd',
+                    'wheels.et as wheels_et',
+                    'wheels.co_dia as wheels_co_dia',
+                    'wheels.ww as wheels_ww',
+                    'wheels.w_dia as wheels_w_dia'
+                ])
+                ->joinLeft('tires', 'tires.id = advert.tires_id', [
+                    'tires.wt as tires_wt',
+                    'tires.ph as tires_ph',
+                    'tires.t_dia as tires_t_dia',
+                    'tires.type as tires_type'
+                ])
+                ->joinLeft('spacers', 'spacers.id = advert.spacers_id', '*')
+                ->where('advert.user_id =?', $this->userId)
+                ->where('advert.status =?', $status);
+            if ($advertId && is_numeric($advertId)) {
+                $select->where('advert.id =?', $advertId);
+            } else {
+                $select->order('date DESC');
+            }
+
+            $result = $table->fetchAll($select)->toArray();
+            $resultFormatted = User::formatAdvertResult($result);
+
+        } catch (Exception $e) {
+            var_dump($e);
+        }
+
+        return $resultFormatted;
+    }
+
+    /**
+     * Форматирует результат выборки по типу обьявлений
+     *
+     * @param $result
+     * @return array
+     */
+    public static function formatAdvertResult($result)
+    {
+        $resultFormatted = [];
+        if (is_array($result)) {
+            foreach ($result as $key => $value) {
+                if (isset($value['wheel_id']) && $value['wheel_id']) {
+                    $resultFormatted[$key] = array_merge(['advert_type' => 'wheels', 'type_advert_int' => 1], $value);
+                } elseif (isset($value['tires_id']) && $value['tires_id']) {
+                    $resultFormatted[$key] = array_merge(['advert_type' => 'tires', 'type_advert_int' => 2], $value);
+                } elseif (isset($value['spacers_id']) && $value['spacers_id']) {
+                    $resultFormatted[$key] = array_merge(['advert_type' => 'spacers', 'type_advert_int' => 3], $value);
+                } else {
+                    $resultFormatted[$key] = array_merge(['advert_type' => 'other', 'type_advert_int' => 4], $value);
+                }
+            }
+        }
+
+        return $resultFormatted;
+    }
+
 
 }

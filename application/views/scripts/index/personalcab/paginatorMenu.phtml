@@ -1,0 +1,25 @@
+<?php if (is_array($this->params['pages']->pagesInRange) && $this->params['pages']->first != $this->params['pages']->last) : ?>
+    <ul class="pagination">
+        <?php if (isset($this->params['pages']->previous)) : ?>
+            <li>
+                <a href="/user/adverts/<?= $this->params['pages']->previous; ?>" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+        <?php endif; ?>
+        <?php foreach ($this->params['pages']->pagesInRange as $key => $value) : ?>
+            <? if ($this->params['currentPageNumber'] == $value) : ?>
+                <li class="active"><a href="/user/adverts/<?= $value; ?>"><?= $value; ?></a></li>
+            <? else : ?>
+                <li><a href="/user/adverts/<?= $value; ?>"><?= $value; ?></a></li>
+            <? endif; ?>
+        <?php endforeach; ?>
+        <?php if (isset($this->params['pages']->next)) : ?>
+            <li>
+                <a href="/user/adverts/<?= $this->params['pages']->next; ?>" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        <?php endif; ?>
+    </ul>
+<?php endif; ?>

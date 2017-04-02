@@ -1,0 +1,339 @@
+<?php
+
+$dependArray = Resourses::addAdvertDataSelects();
+
+//var_dump($this->adverstInfo);
+?>
+<?php if ($this->adverstInfo) : ?>
+    <div class="main_slider_wrap">
+        <div class="container">
+            <div class="row">
+                <div class="content">
+                    <form id="form_add_advert" class="form-horizontal" role="form" action="" target="_self"
+                          method="post">
+                        <input type="hidden" id="advertId" value="<?= $this->adverstInfo[0]['advert_id']; ?>">
+                        <fieldset>
+                            <div class="full-width-in-thin col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <legend>Продать у нас свои шины, диски, проставки или что-либо ещё - легко!</legend>
+                            </div>
+                            <div class="full-width-in-thin col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label for="select"
+                                           class="col-lg-4 col-md-4 control-label"><?= $dependArray['type']['title']; ?>
+                                        :</label>
+                                    <div class="col-lg-8 col-md-8">
+                                        <select name="<?= $dependArray['type']['name']; ?>" disabled="disabled"
+                                                class="form-control">
+                                            <?php foreach ($dependArray['type']['options'] as $key => $value) : ?>
+                                                <?php if ($this->adverstInfo[0]['type_advert_int'] == $key) : ?>
+                                                    <option selected="selected"
+                                                            value="<?= $key; ?>"><?= $value; ?></option>
+                                                <?php endif; ?>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="full-width-in-thin col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label for="select"
+                                           class="col-lg-4 col-md-4 control-label"><?= $dependArray['condition']['title']; ?>
+                                        :</label>
+                                    <div class="col-lg-8 col-md-8">
+                                        <select name="<?= $dependArray['condition']['name']; ?>" class="form-control">
+                                            <?php foreach ($dependArray['condition']['options'] as $key => $value) : ?>
+                                                <?php if ($this->adverstInfo[0]['advert_condition'] == $key) : ?>
+                                                    <option selected="selected"
+                                                            value="<?= $key; ?>"><?= $value; ?></option>
+                                                <?php else : ?>
+                                                    <option value="<?= $key; ?>"><?= $value; ?></option>
+                                                <?php endif; ?>
+
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="full-width-in-thin col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label for="select"
+                                           class="col-lg-4 col-md-4 control-label"><?= $dependArray['price']['title']; ?>
+                                        :</label>
+                                    <div class="col-lg-8 col-md-8">
+                                        <input class="form-control add-advert-text"
+                                               name="<?= $dependArray['price']['name']; ?>"
+                                               type="text"
+                                               value="<?= number_format($this->adverstInfo[0]['advert_price'], 0); ?>"
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="full-width-in-thin col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label for="select"
+                                           class="col-lg-4 col-md-4 control-label"><?= $dependArray['currency']['title']; ?>
+                                        :</label>
+                                    <div class="col-lg-8 col-md-8">
+                                        <select name="<?= $dependArray['currency']['name']; ?>" class="form-control">
+                                            <?php foreach ($dependArray['currency']['options'] as $key => $value) : ?>
+                                                <?php if ($this->adverstInfo[0]['advert_currency'] == $key) : ?>
+                                                    <option selected="selected"
+                                                            value="<?= $key; ?>"><?= $value; ?></option>
+                                                <?php else : ?>
+                                                    <option value="<?= $key; ?>"><?= $value; ?></option>
+                                                <?php endif; ?>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="full-width-in-thin col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label for="select"
+                                           class="col-lg-4 col-md-4 control-label"><?= $dependArray['wheel-4']['title']; ?>
+                                        :</label>
+                                    <div class="col-lg-8 col-md-8">
+                                        <select name="<?= $dependArray['wheel-4']['name']; ?>" class="form-control">
+                                            <?php foreach ($dependArray['wheel-4']['options'] as $key => $value) : ?>
+                                                <?php if ($this->adverstInfo[0]['advert_manufacture_id'] == $key) : ?>
+                                                    <option selected="selected"
+                                                            value="<?= $key; ?>"><?= $value; ?></option>
+                                                <?php else : ?>
+                                                    <option value="<?= $key; ?>"><?= $value; ?></option>
+                                                <?php endif; ?>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="full-width-in-thin col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label for="select"
+                                           class="col-lg-4 col-md-4 control-label"><?= $dependArray['wheel-5']['title']; ?>
+                                        :</label>
+                                    <div class="col-lg-8 col-md-8">
+                                        <select name="<?= $dependArray['wheel-5']['name']; ?>" class="form-control">
+                                            <?php foreach ($dependArray['wheel-5']['options'] as $key => $value) : ?>
+                                                <?php if ($this->adverstInfo[0]['advert_model_id'] == $key) : ?>
+                                                    <option selected="selected"
+                                                            value="<?= $key; ?>"><?= $value; ?></option>
+                                                <?php else : ?>
+                                                    <option value="<?= $key; ?>"><?= $value; ?></option>
+                                                <?php endif; ?>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php if ('wheels' == $this->adverstInfo[0]['advert_type']) : ?>
+                                <div class="advert-type-1">
+                                    <div class="full-width-in-thin col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label for="select"
+                                                   class="col-lg-4 col-md-4 control-label"><?= $dependArray['wheel-1']['title']; ?>
+                                                :</label>
+                                            <div class="col-lg-8 col-md-8">
+                                                <select name="<?= $dependArray['wheel-1']['name']; ?>"
+                                                        class="form-control">
+                                                    <?php foreach ($dependArray['wheel-1']['options'] as $key => $value) : ?>
+                                                        <?php if ($this->adverstInfo[0]['wheels_w_dia'] == $value) : ?>
+                                                            <option selected="selected"
+                                                                    value="<?= $value; ?>"><?= $value; ?></option>
+                                                        <?php else : ?>
+                                                            <option value="<?= $value; ?>"><?= $value; ?></option>
+                                                        <?php endif; ?>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="full-width-in-thin col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label for="select" class="col-lg-4 col-md-4 control-label">Разболтовка
+                                                диска:</label>
+                                            <div class="col-lg-8 col-md-8">
+                                                <div class="col-lg-4 col-md-4 custom-padding-disable">
+                                                    <select name="<?= $dependArray['wheel-2']['name']; ?>"
+                                                            class="form-control custom-inline custom-width1">
+                                                        <?php foreach ($dependArray['wheel-2']['options'] as $key => $value) : ?>
+                                                            <?php if ($this->adverstInfo[0]['wheels_nn'] == $value) : ?>
+                                                                <option selected="selected"
+                                                                        value="<?= $value; ?>"><?= $value; ?></option>
+                                                            <?php else : ?>
+                                                                <option value="<?= $value; ?>"><?= $value; ?></option>
+                                                            <?php endif; ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                </div>
+                                                <div class="col-lg-2 col-md-4">
+                                                    <span class="separator-custom">X</span>
+                                                </div>
+                                                <div class="col-lg-6 col-md-4 custom-padding-disable">
+                                                    <select name="<?= $dependArray['wheel-3']['name']; ?>"
+                                                            class="form-control custom-inline custom-width2">
+                                                        <?php foreach ($dependArray['wheel-3']['options'] as $key => $value) : ?>
+                                                            <?php if ($this->adverstInfo[0]['wheels_pcd'] == $value) : ?>
+                                                                <option selected="selected"
+                                                                        value="<?= $value; ?>"><?= $value; ?></option>
+                                                            <?php else : ?>
+                                                                <option value="<?= $value; ?>"><?= $value; ?></option>
+                                                            <?php endif; ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="full-width-in-thin col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label for="select"
+                                                   class="col-lg-4 col-md-4 control-label"><?= $dependArray['wheel-6']['title']; ?>
+                                                :</label>
+                                            <div class="col-lg-8 col-md-8">
+                                                <input class="form-control add-advert-text"
+                                                       name="<?= $dependArray['wheel-6']['name']; ?>"
+                                                       type="text"
+                                                       value="<?= $this->adverstInfo[0]['wheels_et']; ?>"
+                                                >
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="full-width-in-thin col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label for="select"
+                                                   class="col-lg-4 col-md-4 control-label"><?= $dependArray['wheel-7']['title']; ?>
+                                                :</label>
+                                            <div class="col-lg-8 col-md-8">
+                                                <input class="form-control add-advert-text"
+                                                       name="<?= $dependArray['wheel-7']['name']; ?>"
+                                                       type="text"
+                                                       value="<?= $this->adverstInfo[0]['wheels_co_dia']; ?>"
+                                                >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php elseif ('tires' == $this->adverstInfo[0]['advert_type']) : ?>
+                                <div class="advert-type-2">
+                                    <div class="full-width-in-thin col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label for="select"
+                                                   class="col-lg-4 col-md-4 control-label"><?= $dependArray['tires-1']['title']; ?>
+                                                :</label>
+                                            <div class="col-lg-8 col-md-8">
+                                                <select name="<?= $dependArray['tires-1']['name']; ?>"
+                                                        class="form-control">
+                                                    <?php foreach ($dependArray['tires-1']['options'] as $key => $value) : ?>
+                                                        <?php if ($this->adverstInfo[0]['tires_t_dia'] == $value) : ?>
+                                                            <option selected="selected"
+                                                                    value="<?= $value; ?>"><?= $value; ?></option>
+                                                        <?php else : ?>
+                                                            <option value="<?= $value; ?>"><?= $value; ?></option>
+                                                        <?php endif; ?>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="full-width-in-thin col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label for="select"
+                                                   class="col-lg-4 col-md-4 control-label"><?= $dependArray['tires-2']['title']; ?>
+                                                :</label>
+                                            <div class="col-lg-8 col-md-8">
+                                                <select name="<?= $dependArray['tires-2']['name']; ?>"
+                                                        class="form-control">
+                                                    <?php foreach ($dependArray['tires-2']['options'] as $key => $value) : ?>
+                                                        <?php if ($this->adverstInfo[0]['tires_wt'] == $value) : ?>
+                                                            <option selected="selected"
+                                                                    value="<?= $value; ?>"><?= $value; ?></option>
+                                                        <?php else : ?>
+                                                            <option value="<?= $value; ?>"><?= $value; ?></option>
+                                                        <?php endif; ?>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="full-width-in-thin col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label for="select"
+                                                   class="col-lg-4 col-md-4 control-label"><?= $dependArray['tires-3']['title']; ?>
+                                                :</label>
+                                            <div class="col-lg-8 col-md-8">
+                                                <select name="<?= $dependArray['tires-3']['name']; ?>"
+                                                        class="form-control">
+                                                    <?php foreach ($dependArray['tires-3']['options'] as $key => $value) : ?>
+                                                        <?php if ($this->adverstInfo[0]['tires_ph'] == $value) : ?>
+                                                            <option selected="selected"
+                                                                    value="<?= $value; ?>"><?= $value; ?></option>
+                                                        <?php else : ?>
+                                                            <option value="<?= $value; ?>"><?= $value; ?></option>
+                                                        <?php endif; ?>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="full-width-in-thin col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label for="select"
+                                                   class="col-lg-4 col-md-4 control-label"><?= $dependArray['tires-4']['title']; ?>
+                                                :</label>
+                                            <div class="col-lg-8 col-md-8">
+                                                <select name="<?= $dependArray['tires-4']['name']; ?>"
+                                                        class="form-control">
+                                                    <?php foreach ($dependArray['tires-4']['options'] as $key => $value) : ?>
+                                                        <?php if ($this->adverstInfo[0]['tires_type'] == $key) : ?>
+                                                            <option selected="selected"
+                                                                    value="<?= $key; ?>"><?= $value; ?></option>
+                                                        <?php else : ?>
+                                                            <option value="<?= $key; ?>"><?= $value; ?></option>
+                                                        <?php endif; ?>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                            <div class="full-width-in-thin col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label for="select"
+                                           class="col-lg-2 col-md-2 control-label"><?= $dependArray['description']['title']; ?>
+                                        :</label>
+                                    <div class="col-lg-8 col-md-8">
+                                        <textarea class="form-control add-advert-text" name="description"
+                                                  type="text"><?= $this->adverstInfo[0]['advert_description']; ?></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="full-width-in-thin col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label for="select" class="col-lg-2 col-md-2 control-label">Добавить фото:</label>
+                                    <div class="col-lg-8 col-md-8">
+                                        <ul class="image-ul">
+                                            <?php for ($i = 0; $i < 10; $i++) : ?>
+                                                <li class="empty li-image add-image-<?= $i; ?>" data-filename="">
+                                                    <div><i class="fa fa-3x fa-plus"></i></div>
+                                                </li>
+                                            <?php endfor; ?>
+                                        </ul>
+                                        <input type="file" id="upload-file" style="display:none" multiple>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+                                <button id="save-advert" type="button" class="btn btn-orange btn-lg">Сохранить</button>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php else: ?>
+    <div>Извините но данная страница не существует</div>
+<?php endif; ?>

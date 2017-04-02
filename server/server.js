@@ -53,8 +53,11 @@ http.createServer(function(request, response) {
                 }
 
                 var img = gm();
+                // linux way - /var/www/caric.com/public/images/data/auto/
+                // win way - C:\\openserver\\domains\\caric.com\\public\\images\\data\\auto\\
+                var url = 'C:\\openserver\\domains\\caric.com\\public\\images\\data\\auto\\';
                 for (var i = 0; i < rows.length; i++) {
-                    img.append('/var/www/caric.com/public/images/data/auto/'+queryArray[i]+'_'+rows[i].title+'.PNG', true);
+                    img.append(url + queryArray[i] + '_' + rows[i].title + '.PNG', true);
                     console.log(queryArray[i]+'_'+rows[i].title+'.PNG');
                     if(i == rows.length - 1) {
                         response.writeHead(200, {'Content-Type': 'image/jpg'});
