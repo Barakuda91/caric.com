@@ -1,20 +1,36 @@
-var serverPort = 8080;
-var socketPort = 7788;
-var http    = require('http');
-var fs      = require('fs');
-var gm      = require('gm');
-var url     = require('url');
-var ws      = require('ws').Server;
-var mysql      = require('mysql');
-var wss     = new ws({ port: socketPort });
+const includer      = require('./lib/includer');
+const Helper        = require('./lib/helper');
+const Loger         = require('./lib/loger');
+const Mongo         = require('./lib/mongo');
+const config        = require('config');
+const http          = require('http');
+const fs            = require('fs');
+const gm            = require('gm');
+const url           = require('url');
+const route         = require('router');
+const ws            = require('ws').Server;
+const mysql         = require('promise-mysql');
+const queryString   = require('query-string');
 
-var connection = mysql.createConnection({
-    host     : 'localhost',
-    user     : 'root',
-    password : '',
-    database : 'db_caric_new'
-});
-connection.connect();
+const serverPort    = config.get('ports.serverPort');
+const socketPort    = config.get('ports.socketPort');
+const host          = config.get('access.mysql.host');
+const user          = config.get('access.mysql.user');
+const password      = config.get('access.mysql.password');
+const database      = 'fdhskjhjfkj';//config.get('access.mysql.database');
+const wss           = new ws({ port: socketPort });
+const loger         = new Loger('Start');
+let connection
+mysql.createConnection({host, user, password, database})
+    .then(function(conn){
+        if (conn) {
+            loger.log('Connect to Mysql');
+        }
+        connection = conn;
+
+    }).catch(Helper.errorHandler);
+
+
 
 
 
@@ -22,17 +38,22 @@ connection.connect();
 
 
 http.createServer(function(request, response) {
-    var headers = request.headers;
-    var method  = request.method;
-    var uri     = url.parse(request.url);
-    var reqType = uri.pathname;
-    var reqQuery= uri.query;
+    let headers = request.headers;
+    let method  = request.method;
+    let uri     = url.parse(request.url);
+    let reqType = uri.pathname;
+    let reqQuery= uri.query;
     delete uri;
 
     switch (reqType) {
         case '/get_from_makes':
-            var queryArray = reqQuery.split( /(?=(?:\d{3})+(?!\d))/ );
-            var queryStr = '(';
+            const parsed = queryString.parse(reqQuery);
+
+            if ( ['car', 'wheel'].indexOf(parsed.type) < 0 ) parsed.type = 'car';
+
+            let queryArray = parsed.q.split( /(?=(?:\d{3})+(?!\d))/ );
+            let queryStr = '(';
+
             queryArray.forEach(function (el,i) {
                 if(el[0] == 0 ) el = el[1]+el[2];
                 if(el[0] == 0 ) el = el[1];
@@ -43,7 +64,7 @@ http.createServer(function(request, response) {
             queryStr = queryStr.substring(0, queryStr.length - 1);
             queryStr += ')';
 
-            connection.query("SELECT `img_position`,`title` FROM `manufacture` WHERE `type` = 'car' AND `img_position` IN "+queryStr, function(err, rows, fields) {
+            connection.query("SELECT `img_position`,`title` FROM `manufacture` WHERE `type` = '" + parsed.type + "' AND `img_position` IN "+queryStr, function(err, rows, fields) {
                 if (err) {
                     console.log('SQL ERROR');
                     throw err;
@@ -52,13 +73,14 @@ http.createServer(function(request, response) {
                     return;
                 }
 
-                var img = gm();
+                let img = gm();
                 for (var i = 0; i < rows.length; i++) {
-                    img.append('/var/www/caric.com/public/images/data/auto/'+queryArray[i]+'_'+rows[i].title+'.PNG', true);
+                    img.append('/var/www/caric.com/public/images/data/auto/'+queryArray[i]+'_'+rows[i].title+'.PNG', true)
+
                     console.log(queryArray[i]+'_'+rows[i].title+'.PNG');
                     if(i == rows.length - 1) {
-                        response.writeHead(200, {'Content-Type': 'image/jpg'});
-                        img.stream('jpg').pipe(response);
+                        response.writeHead(200, {'Content-Type': 'image/png'});
+                        img.stream('png').pipe(response);
                     }
                 }
 

@@ -1,6 +1,7 @@
 .idea/*
 .idea/workspace.xml
-/application/configs/application.ini
+/configs/application.ini
 /server/node_modules/*
 /commit_message.txt
 commit_message.txt
+/node_modules/*
