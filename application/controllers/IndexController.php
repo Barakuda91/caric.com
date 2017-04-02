@@ -177,6 +177,7 @@ class IndexController extends Zend_Controller_Action
         $paginator->setItemCountPerPage($itemCount);
         $paginator->setCurrentPageNumber($page);
 
+        
         $rawItems = $paginator->getCurrentItems();
         $formattedItems = [];
         foreach ($rawItems as $key => $value) {
