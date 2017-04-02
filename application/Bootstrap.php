@@ -38,6 +38,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                 ]
             );
 
+
             $router->addRoute('routeUser', $routeUser);
 
             /* personal user account(adverts) */
