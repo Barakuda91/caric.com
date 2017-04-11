@@ -220,4 +220,109 @@ class Resourses
 
         return $result;
     }
+
+    /**
+     * Format adverts
+     *
+     * @param $data
+     * @return array
+     */
+    static public function formatAdverts($data)
+    {
+        $result = [];
+        try {
+            if (is_array($data)) {
+                foreach ($data as $key => $value) {
+                    $title = self::getHeaderTitleNameByType($value);
+
+                    $result[$key] = array_merge(
+                        ['advert_url' => self::getAdvertUrl($title, $value)],
+                        ['header_title' => $title],
+                        ['advert_price_formatted' => self::getFormattedPrice($value)],
+                        $value
+                    );
+                }
+            }
+
+        } catch (Exception $e) {
+
+        }
+
+        return $result;
+    }
+
+    /**
+     * Get formated url for advert page
+     * {domen}/advert/{formatted part}
+     * formatted part = advert-name-{DB id in HEX 16}
+     */
+    static public function getAdvertUrl($title, $value)
+    {
+        $result = strtolower(trim($title));
+        $result = str_replace(' ', '-', $result);
+        $result = str_replace('/', 'x', $result);
+        $result = $result . '-' . dechex((int)$value['advert_id']);
+
+        return $result;
+    }
+
+    /**
+     * @param $value
+     */
+    static public function getFormattedPrice($value)
+    {
+        switch ($value['advert_currency']) {
+            case Resourses::CURRENCY_UAH_CODE:
+                $currency = Resourses::CURRENCY_UAH_NAME;
+                break;
+
+            case Resourses::CURRENCY_USD_CODE:
+                $currency = Resourses::CURRENCY_USD_NAME;
+                break;
+
+            case Resourses::CURRENCY_EUR_CODE:
+                $currency = Resourses::CURRENCY_EUR_NAME;
+                break;
+        }
+        $formattedPrice = number_format($value['advert_price'], 0) . ' ' . $currency;
+
+        return $formattedPrice;
+    }
+
+    /**
+     * генерирует имя обьявления зависит от типа обьяввления
+     *
+     * @param $value
+     *
+     * @return string
+     */
+    static public function getHeaderTitleNameByType($value)
+    {
+        $headerTitle = '';
+        if (isset($value['advert_type'])) {
+            $parts = [];
+            switch ($value['advert_type']) {
+                case 'wheels':
+                    $parts[] = str_replace('_', ' ', $value['manufacture_title']);
+                    $parts[] = $value['model_title'];
+                    $parts[] = 'R' . $value['wheels_w_dia'];
+                    $parts[] = $value['wheels_nn'] . 'x' . $value['wheels_pcd'];
+
+                    $headerTitle = implode(' ', $parts);
+                    break;
+
+                case 'tires':
+                    $headerTitle = $value['tires_wt'] . '/' . $value['tires_ph'] . ' R' . $value['tires_t_dia'];
+                    break;
+
+                case 'spacers':
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        return $headerTitle;
+    }
 }

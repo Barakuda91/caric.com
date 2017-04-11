@@ -420,9 +420,11 @@ class User
                     'tires.t_dia as tires_t_dia',
                     'tires.type as tires_type'
                 ])
-                ->joinLeft('spacers', 'spacers.id = advert.spacers_id', '*')
-                ->where('advert.user_id =?', $this->userId)
-                ->where('advert.status =?', $status);
+                ->joinLeft('spacers', 'spacers.id = advert.spacers_id', '*');
+                if ($this->userId) { /* if has user id - get only this users adverts */
+                    $select->where('advert.user_id =?', $this->userId);
+                }
+                $select->where('advert.status =?', $status);
             if ($advertId && is_numeric($advertId)) {
                 $select->where('advert.id =?', $advertId);
             } else {

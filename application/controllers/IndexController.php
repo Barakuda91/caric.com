@@ -152,7 +152,7 @@ class IndexController extends Zend_Controller_Action
         $advertId = $this->getParam('advertId');
         $user = new User($this->userObj->email);
         $advertsRaw = $user->getUserAdverts($advertId);
-        $advertFormatted = $this->formatAdverts($advertsRaw);
+        $advertFormatted = Resourses::formatAdverts($advertsRaw);
         $this->view->adverstInfo = $advertFormatted;
         $this->_helper->viewRenderer('/editadvert');
     }
@@ -165,7 +165,7 @@ class IndexController extends Zend_Controller_Action
         }
         $user = new User($this->userObj->email);
         $advertsRaw = $user->getUserAdverts();
-        $advertFormatted = $this->formatAdverts($advertsRaw);
+        $advertFormatted = Resourses::formatAdverts($advertsRaw);
         $urlParams = $this->getAllParams();
 
         $urlPage = (isset($urlParams['page'])) ? substr($urlParams['page'], 1) : 1;
@@ -195,86 +195,12 @@ class IndexController extends Zend_Controller_Action
 
     }
 
-    private function formatAdverts($data)
-    {
-        $result = [];
-        try {
-            if (is_array($data)) {
-                foreach ($data as $key => $value) {
-                    $result[$key] = array_merge(
-                        ['header_title' => $this->getHeaderTitleNameByType($value)],
-                        ['advert_price_formatted' => $this->getFormattedPrice($value)],
-                        $value
-                    );
-                }
-            }
 
-        } catch (Exception $e) {
 
-        }
 
-        return $result;
-    }
 
-    /**
-     * @param $value
-     */
-    private function getFormattedPrice($value)
-    {
-        switch ($value['advert_currency']) {
-            case Resourses::CURRENCY_UAH_CODE:
-                $currency = Resourses::CURRENCY_UAH_NAME;
-                break;
 
-            case Resourses::CURRENCY_USD_CODE:
-                $currency = Resourses::CURRENCY_USD_NAME;
-                break;
 
-            case Resourses::CURRENCY_EUR_CODE:
-                $currency = Resourses::CURRENCY_EUR_NAME;
-                break;
-        }
-        $formattedPrice = number_format($value['advert_price'], 0) . ' ' . $currency;
-
-        return $formattedPrice;
-    }
-
-    /**
-     * генерирует имя обьявления зависит от типа обьяввления
-     *
-     * @param $value
-     *
-     * @return string
-     */
-    private function getHeaderTitleNameByType($value)
-    {
-        $headerTitle = '';
-        if (isset($value['advert_type'])) {
-            $parts = [];
-            switch ($value['advert_type']) {
-                case 'wheels':
-                    $parts[] = str_replace('_', ' ', $value['manufacture_title']);
-                    $parts[] = $value['model_title'];
-                    $parts[] = 'R' . $value['wheels_w_dia'];
-                    $parts[] = $value['wheels_nn'] . 'x' . $value['wheels_pcd'];
-
-                    $headerTitle = implode(' ', $parts);
-                    break;
-
-                case 'tires':
-                    $headerTitle = $value['tires_wt'] . '/' . $value['tires_ph'] . ' R' . $value['tires_t_dia'];
-                    break;
-
-                case 'spacers':
-                    break;
-
-                default:
-                    break;
-            }
-        }
-
-        return $headerTitle;
-    }
 
     /* personal cab messages */
     public function messagesAction()

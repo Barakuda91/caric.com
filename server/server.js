@@ -11,7 +11,7 @@ var wss     = new ws({ port: socketPort });
 var connection = mysql.createConnection({
     host     : 'localhost',
     user     : 'root',
-    password : '',
+    password : '1',
     database : 'db_caric_new'
 });
 connection.connect();

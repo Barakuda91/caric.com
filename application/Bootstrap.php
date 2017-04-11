@@ -114,6 +114,20 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
             $router->addRoute('testCall', $routeTest);
 
+            /* Set action for TEST requests */
+            $routeAdvert = new Zend_Controller_Router_Route_Regex(
+                '(advert)/([a-z0-9-\s.&]+)',
+                [
+                    'controller' => 'advert',
+                    'action' => 'index'
+                ],
+                [
+                    2 => 'name'
+                ]
+            );
+
+            $router->addRoute('routeAdvertPage', $routeAdvert);
+
             /* Set action for render main page resulst */
             $data = [
                 'tires', 'wheels', 'makes', 'spacers', 'brands'

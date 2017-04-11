@@ -8,11 +8,11 @@
             </li>
         <?php endif; ?>
         <?php foreach ($this->params['pages']->pagesInRange as $key => $value) : ?>
-            <? if ($this->params['currentPageNumber'] == $value) : ?>
+            <?php if ($this->params['currentPageNumber'] == $value) : ?>
                 <li class="active"><a href="/user/adverts/<?= $value; ?>"><?= $value; ?></a></li>
-            <? else : ?>
+            <?php else : ?>
                 <li><a href="/user/adverts/<?= $value; ?>"><?= $value; ?></a></li>
-            <? endif; ?>
+            <?php endif; ?>
         <?php endforeach; ?>
         <?php if (isset($this->params['pages']->next)) : ?>
             <li>

@@ -791,3 +791,24 @@ i.delete-photo:hover {
 .br {
     border: 1px solid green;
 }
+
+/* advert page css */
+.advert-img-height {
+    height: 360px;
+}
+
+.advert-price-height {
+    height: 60px;
+}
+
+.advert-name-height {
+    height: 60px;
+}
+
+.advert-gallery-height {
+    height: 180px;
+}
+
+.advert-options-height {
+    height: 180px;
+}

@@ -1,0 +1,39 @@
+<?php echo '<pre>';
+        //var_dump($this->params);
+        var_dump($this->advertInfo);
+
+      echo '</pre>';
+?>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 visible-sm visible-xs hidden-lg hidden-md advert-name-height br"><?= $this->advertInfo[0]['header_title']; ?></div>
+        <div class="col-lg-5 col-md-6 col-sm-12 br">
+            <div class="row">
+                <div class="col-xs-12 advert-img-height br">foto</div>
+                <div class="col-xs-12 advert-price-height br"><?= $this->advertInfo[0]['advert_price_formatted']; ?></div>
+            </div>
+        </div>
+        <div class="col-lg-7 col-md-6 br">
+            <div class="row">
+                <div class="col-xs-12 hidden-sm hidden-xs advert-name-height br"><?= $this->advertInfo[0]['header_title']; ?></div>
+                <div class="col-xs-12 hidden-xs br">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-4 advert-gallery-height br">foto 1</div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 advert-gallery-height br">foto 2</div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 advert-gallery-height br">foto 3</div>
+                    </div>
+                </div>
+                <div class="col-xs-12 advert-options-height br">opcii</div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sx-12 br"><?= $this->advertInfo[0]['advert_description']; ?></div>
+    </div>
+</div>
+
+
+
+
