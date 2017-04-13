@@ -1,19 +1,19 @@
-const Loger = require('./loger');
-const loger = new Loger('Helper');
-const spawn = require('child_process').spawn;
-/*
- * Helper error code 10****
- */
-class Helper {
-    static errorHandler(err)
-    {
-        if(err) {
-            loger.log(err.code);
-        }
-    }
+class IndexController {
+    constructor (includer) {
+        this.connection     = includer.get('connection');
+        this.queryString    = includer.get('queryString');
+        this.url            = includer.get('url');
 
-    static serverGetMultiImage (req, res) {
-        const parsed = queryString.parse(reqQuery);
+    }
+    getImage(req, res) {
+        //let headers = req.headers;
+        //let method  = req.method;
+        let uri     = this.url.parse(req.url);
+        //let reqType = uri.pathname;
+        let reqQuery= uri.query;
+        //delete uri;
+
+        const parsed = this.queryString.parse(reqQuery);
 
         if ( ['car', 'wheel'].indexOf(parsed.type) < 0 ) parsed.type = 'car';
 
@@ -34,7 +34,7 @@ class Helper {
             if (err) {
                 console.log('SQL ERROR');
                 throw err;
-                response.writeHead(200, {'Content-Type': 'image/png'});
+                res.writeHead(200, {'Content-Type': 'image/png'});
                 // отдавать шаблом с нонеймом
                 return;
             }
@@ -45,13 +45,14 @@ class Helper {
 
                 console.log(queryArray[i]+'_'+rows[i].title+'.PNG');
                 if(i == rows.length - 1) {
-                    response.writeHead(200, {'Content-Type': 'image/png'});
-                    img.stream('png').pipe(response);
+                    res.writeHead(200, {'Content-Type': 'image/png'});
+                    img.stream('png').pipe(res);
                 }
             }
-
-        });
+         });
     }
 }
 
-module.exports = Helper;
+
+
+module.exports = IndexController;
