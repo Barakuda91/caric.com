@@ -1,0 +1,23 @@
+{
+  "name": "caric_spa",
+  "description": "a Sails application",
+  "main": "app.js",
+  "authors": [
+    "Barakuda_tm"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "angular": "^*",
+    "angular-route": "*",
+    "angular-resource": "*"
+  }
+}

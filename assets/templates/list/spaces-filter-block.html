@@ -1,0 +1,36 @@
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 bottom-line-x3">
+        <h3>Проставки</h3>
+    </div>
+</div>
+<div class="row mt-5">
+    <div class="col-lg-4 col-md-3 col-sm-3 text-right">
+        Материал:
+    </div>
+    <div class="col-lg-2 col-md-3 col-sm-3">
+        <select ng-model="material" class="form-control">
+            <option value="" disabled selected>материал</option>
+            <option value="{{item.key}}" ng-repeat="item in optMaterial">{{item.value}}</option>
+        </select>
+    </div>
+    <div class="col-lg-2 col-md-3 col-sm-3 text-right">
+        <input type="text" class="form-control">
+    </div>
+    <div class="col-lg-4 col-md-3 col-sm-3">
+        Точек крепежа:
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-3 col-md-3 col-sm-3 text-right">
+        Ширина:
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-3">
+        <input type="text">
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-3 text-right">
+        <input type="text">
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-3">
+        Диаметр окружности:
+    </div>
+</div>
